@@ -1,0 +1,196 @@
+.DevTool > *::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.DevTool > *::-webkit-scrollbar-track {
+  background: #151515;
+}
+.DevTool > *::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+.DevTool > *::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 5px;
+}
+.DevTool > * {
+  scrollbar-color: #888 #151515;
+  scrollbar-width: thin;
+  font-family: "Inter", sans-serif;
+}
+.DevTool > button {
+  outline: none;
+}
+.DevTool {
+  width: 87vw;
+  min-height: 45vh;
+  max-height: 70vh;
+  overflow: hidden;
+  position: fixed;
+  bottom: 15px;
+  left: -100vh;
+  padding: 1rem;
+  background: #151515;
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 3px 35px 5px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s;
+  z-index: 1000000;
+}
+.devtool-toggler-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  z-index: 1000001;
+  background: #151515;
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  padding: 0;
+  transition: transform 0.3s;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+.devtool-toggler-btn:hover {
+  transform: scale(1.1);
+}
+.loading-devtool-toggler {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  z-index: 1000001;
+  background: #151515;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  font-size: 2rem;
+  padding: 0;
+  transition: transform 0.3s;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+.devtool-toggler-btn > img {
+  margin-top: -10%;
+  margin-left: -10%;
+  width: 120%;
+  height: 120%;
+}
+.hide-devtool {
+  left: -200vw;
+}
+.show-devtool {
+  left: 15px;
+}
+.DevToolsContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  overflow: auto;
+}
+.DevToolsTitle {
+  margin-top: 0;
+  font-size: 1.2rem;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  font-weight: 800;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-left: 1rem;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #333;
+  background: #151515;
+  z-index: 1000002;
+}
+.DevtoolContentContainer {
+  display: flex;
+}
+.DevtoolsSelectors {
+  max-height: 300px;
+}
+.DevtoolsSelectors > .DevtoolAction:first-child {
+  margin-top: 0;
+}
+.DevtoolAction {
+  display: flex;
+  cursor: pointer;
+  margin: 10px 5px;
+  font-weight: 600;
+  padding: 2px 15px;
+  align-items: center;
+  transition: all 0.2s;
+  border: 1px solid #333;
+}
+.DevtoolAction > svg {
+  margin-right: 0.6rem;
+}
+.DevtoolAction.active {
+  background: #333;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+.DevtoolAction:hover {
+  background: #333;
+  border: 1px solid #333;
+}
+.DevToolTreeViewContainer {
+  flex-grow: 1;
+  position: relative;
+  margin-left: 1.5rem;
+  border: 1px solid #333;
+}
+.DevToolTreeViewTitle {
+  top: 35px;
+  display: flex;
+  padding: 0 1rem;
+  position: sticky;
+  z-index: 1000005;
+  align-items: center;
+  background: #151515;
+  border-bottom: 1px solid #333;
+}
+.DevToolTreeViewTitle > h3 {
+  line-height: 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-right: 1.6rem;
+}
+.DevToolTreeViewTitle > h5 {
+  line-height: 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-right: 1.6rem;
+}
+.collapse-data-btn {
+  position: absolute;
+  right: 5px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 5px 10px;
+  margin-left: 1rem;
+  background: #151515;
+  border: 1px solid #333;
+}
+.collapse-data-btn:hover {
+  background: #333;
+  border: 1px solid #333;
+}
+.DevToolTreeView {
+  padding: 1rem 5%;
+  min-height: 150%;
+}

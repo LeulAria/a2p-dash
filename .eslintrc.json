@@ -1,0 +1,67 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "unused-imports",
+        "no-unused-vars-rest"
+    ],
+    "rules": {
+        "no-use-before-define": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "no-unused-vars": "off",
+        "quotes": "off",
+        "camelcase": "off",
+        "no-undef": "off",
+        "no-console": "off",
+        "no-shadow": "off",
+        "no-nested-ternary": "off",
+        "react/prop-types": "off",
+        "react/no-unused-prop-types": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/require-default-props": "off",
+        "react/jsx-filename-extension": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+            "warn",
+            {
+              "vars": "all",
+              "varsIgnorePattern": "^_",
+              "args": "after-used",
+              "argsIgnorePattern": "^_"
+            }
+        ],
+        "max-len": [
+            "warn", {
+                "code": 200,
+                "ignoreUrls": true,
+                "ignoreComments": true,
+                "ignoreStrings": true,
+                "ignoreTemplateLiterals": true
+            }
+        ],
+        "sort-imports": [
+            "error",
+            {
+              "ignoreDeclarationSort": true
+            }
+        ]
+    }
+}
