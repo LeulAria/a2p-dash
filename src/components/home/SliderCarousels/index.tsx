@@ -2,6 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { Box, Grid, Paper } from '@material-ui/core';
 import { Theme, makeStyles } from '@material-ui/core/styles';
+import Particles from "react-tsparticles";
 import FirstItem from './firstItem';
 import SecondItem from './secondItem';
 import ImageHolder from '../image_container/imageHolder';
@@ -72,6 +73,70 @@ const Gallery = () => {
   const classes = useStyles();
   return (
     <Paper className={classes.parent}>
+      <Particles
+        id="tsparticles-caroucel"
+        // init={}
+        // loaded={this.particlesLoaded}
+        options={{
+          background: {
+            color: {
+              value: "#0068BF",
+            },
+          },
+          fpsLimit: 60,
+          interactivity: {
+            detectsOn: "canvas",
+            modes: {
+              bubble: {
+                distance: 200,
+                duration: 20,
+                opacity: 0.8,
+                size: 20,
+              },
+              push: {
+                quantity: 4,
+              },
+              repulse: {
+                distance: 200,
+                duration: 0.6,
+              },
+            },
+          },
+          particles: {
+            color: {
+              value: "#E6C3DA83",
+            },
+            links: {
+              color: "#A2BDE6CE",
+              distance: 150,
+              enable: true,
+              opacity: 0.5,
+              width: 1,
+            },
+            collisions: {
+              enable: true,
+            },
+            move: {
+              direction: "none",
+              enable: true,
+              outMode: "bounce",
+              random: false,
+              speed: 2,
+              straight: false,
+            },
+            number: {
+              density: {
+                enable: true,
+                value_area: 1000,
+              },
+              value: 30,
+            },
+            opacity: {
+              value: 0.6,
+            },
+          },
+        }}
+      />
       <Carousel
         autoPlay
         showThumbs={false}

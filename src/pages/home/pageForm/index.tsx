@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box, Grid, Theme, Typography, makeStyles,
 } from '@material-ui/core';
+import Particles from "react-tsparticles";
 import UserForm from './userForm';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -9,6 +10,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     marginTop: '1rem',
     minHeight: '500px',
+  },
+  particlesBG: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    zIndex: 3,
   },
   imageHolder: {
     position: 'absolute',
@@ -96,6 +105,82 @@ export default function PageForm() {
   return (
     <div id="back-to-top-anchor">
       <Box className={classes.imageBox}>
+        <Particles
+          className={classes.particlesBG}
+          id="tsparticlesFooter"
+          // init={}
+          // loaded={this.particlesLoaded}
+          options={{
+            // background: {
+            // colo/r: {
+            // value: "#0068BF00",
+            // },
+            // },
+            fpsLimit: 60,
+            interactivity: {
+              detectsOn: "canvas",
+              events: {
+                onClick: {
+                  enable: true,
+                  mode: "push",
+                },
+                onHover: {
+                  enable: true,
+                  mode: "repulse",
+                },
+                resize: true,
+              },
+              modes: {
+                bubble: {
+                  distance: 200,
+                  duration: 10,
+                  opacity: 0.8,
+                  size: 40,
+                },
+                push: {
+                  quantity: 14,
+                },
+                repulse: {
+                  distance: 200,
+                  duration: 0.6,
+                },
+              },
+            },
+            particles: {
+              color: {
+                value: "#AAB7FF",
+              },
+              links: {
+                color: "#3E7CC4AD",
+                distance: 150,
+                enable: true,
+                opacity: 0.5,
+                width: 1,
+              },
+              collisions: {
+                enable: true,
+              },
+              move: {
+                direction: "none",
+                enable: true,
+                outMode: "bounce",
+                random: false,
+                speed: 2,
+                straight: false,
+              },
+              number: {
+                density: {
+                  enable: true,
+                  value_area: 1000,
+                },
+                value: 30,
+              },
+              opacity: {
+                value: 0.6,
+              },
+            },
+          }}
+        />
         <svg viewBox="0 0 520 298">
           <path
             fill="#0068BF"
