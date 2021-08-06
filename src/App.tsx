@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 import {
   CssBaseline,
   IconButton,
   ThemeProvider,
   createTheme,
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 
-import { BrowserRouter } from 'react-router-dom';
-import { SnackbarProvider } from 'notistack';
-import FireQueryProvider from './FireQuery';
-import firebase from './firebase';
-import Router from './Router';
-import AuthProvider from './contexts/auth/AuthProvider';
-import SnackBarProvider from './contexts/snackbar/SnackBarContext';
-import NavBadgeProvider from './contexts/navBadgeCount';
-import { useAppTheme } from './contexts/theme';
-import LoadingOverlayProvider from './contexts/loading';
+import { BrowserRouter } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
+import FireQueryProvider from "./FireQuery";
+import firebase from "./firebase";
+import Router from "./Router";
+import AuthProvider from "./contexts/auth/AuthProvider";
+import SnackBarProvider from "./contexts/snackbar/SnackBarContext";
+import NavBadgeProvider from "./contexts/navBadgeCount";
+import { useAppTheme } from "./contexts/theme";
+import LoadingOverlayProvider from "./contexts/loading";
 
 const App: React.FC = () => {
   const notistackRef = React.createRef<any>();
@@ -27,16 +27,16 @@ const App: React.FC = () => {
 
   const theme = createTheme({
     palette: {
-      type: appTheme === 'light' ? 'light' : 'dark',
+      type: appTheme === "light" ? "light" : "dark",
       primary: {
-        light: '#0068BF',
-        main: '#0068BF',
-        dark: '#0068BF',
+        light: "#0068BF",
+        main: "#0068BF",
+        dark: "#0068BF",
       },
       secondary: {
-        light: '#33F',
-        main: '#11F',
-        dark: '#0505FF',
+        light: "#33F",
+        main: "#11F",
+        dark: "#0505FF",
       },
     },
     typography: {
@@ -123,13 +123,13 @@ const App: React.FC = () => {
             }}
             action={(key) => (
               <IconButton color="primary" onClick={onClickDismiss(key)}>
-                <CloseIcon style={{ color: '#FFF' }} />
+                <CloseIcon style={{ color: "#FFF" }} />
               </IconButton>
             )}
             maxSnack={5}
             anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
+              vertical: "bottom",
+              horizontal: "right",
             }}
             dense
           >

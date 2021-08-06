@@ -1,10 +1,8 @@
-import firebase from 'firebase/app';
-import 'firebase/storage';
+import firebase from "firebase/app";
+import "firebase/storage";
 
-import {
-  useCallback, useContext, useEffect, useState,
-} from 'react';
-import { FireQueryContext } from '../../../index';
+import { useCallback, useContext, useEffect, useState } from "react";
+import { FireQueryContext } from "../../../index";
 
 export const useFireStorage = <T>(path?: string) => {
   const {
@@ -34,11 +32,11 @@ export const useFireStorage = <T>(path?: string) => {
   const uploadFile = useCallback(
     (
       storageRef: firebase.storage.Reference,
-      file: Blob | Uint8Array | ArrayBuffer,
+      file: Blob | Uint8Array | ArrayBuffer
     ) => {
       setLoading(true);
       storageRef.put(file).on(
-        'state_changed',
+        "state_changed",
         (snap) => {
           const percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
           setProgress(percentage);
@@ -50,10 +48,10 @@ export const useFireStorage = <T>(path?: string) => {
         () => {
           setSuccess(true);
           getDownloadURL(storageRef);
-        },
+        }
       );
     },
-    [],
+    []
   );
 
   const deleteFromStorage = useCallback((deleteRef: firebase.storage.Reference) => {
@@ -81,7 +79,7 @@ export const useFireStorage = <T>(path?: string) => {
         setLoading(false);
       }
     },
-    [firebase, getDownloadURL],
+    [firebase, getDownloadURL]
   );
 
   const deleteFile = useCallback(
@@ -100,7 +98,7 @@ export const useFireStorage = <T>(path?: string) => {
         setLoading(false);
       }
     },
-    [firebase],
+    [firebase]
   );
 
   const deleteDir = useCallback(
@@ -131,14 +129,14 @@ export const useFireStorage = <T>(path?: string) => {
         setLoading(false);
       }
     },
-    [firebase],
+    [firebase]
   );
 
   const upload = useCallback(
     (
       file: Blob | Uint8Array | ArrayBuffer,
       fileName: string,
-      prevAddress?: string,
+      prevAddress?: string
     ) => {
       setLoading(true);
       if (firebase) {
@@ -157,7 +155,7 @@ export const useFireStorage = <T>(path?: string) => {
         setLoading(false);
       }
     },
-    [firebase, uploadFile, deleteFile],
+    [firebase, uploadFile, deleteFile]
   );
 
   useEffect(() => {

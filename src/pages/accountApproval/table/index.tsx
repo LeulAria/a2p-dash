@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
   DataGrid,
   GridCellParams,
   GridColDef,
   GridToolbar,
-} from '@material-ui/data-grid';
+} from "@material-ui/data-grid";
 import {
   Box,
   Button,
@@ -13,17 +13,17 @@ import {
   Theme,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import LockIcon from '@material-ui/icons/Lock';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { useSnackbar } from 'notistack';
-import ShowDialog from './show';
-import EditDialog from './edit';
-import { AuthContext } from '../../../contexts/auth/AuthProvider';
-import firebase from '../../../firebase';
-import CustomLoadingOverlay from '../../util/CustomLoadingOverlay';
-import NoData from '../../util/NoData';
+} from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import LockIcon from "@material-ui/icons/Lock";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import { useSnackbar } from "notistack";
+import ShowDialog from "./show";
+import EditDialog from "./edit";
+import { AuthContext } from "../../../contexts/auth/AuthProvider";
+import firebase from "../../../firebase";
+import CustomLoadingOverlay from "../../util/CustomLoadingOverlay";
+import NoData from "../../util/NoData";
 
 interface IProps {
   loading: boolean;
@@ -34,26 +34,26 @@ interface IProps {
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     borderRadius: 3,
-    '& .MuiDataGrid-toolbar': {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      padding: '0 1rem',
+    "& .MuiDataGrid-toolbar": {
+      display: "flex",
+      justifyContent: "flex-end",
+      padding: "0 1rem",
       borderBottom:
-          theme.palette.type === 'dark' ? '1px solid #555' : '1px solid #ddd',
+          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
-    '& .MuiButton-label': {
-      margin: '0 10px',
-      color: theme.palette.type === 'dark' ? '#999' : '#666',
+    "& .MuiButton-label": {
+      margin: "0 10px",
+      color: theme.palette.type === "dark" ? "#999" : "#666",
     },
-    '& .MuiButton-root': {
+    "& .MuiButton-root": {
       borderRadius: 0,
       borderLeft:
-          theme.palette.type === 'dark' ? '1px solid #555' : '1px solid #ddd',
+          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
-    '& .MuiSvgIcon-root': {
-      fontSize: '1.5rem',
+    "& .MuiSvgIcon-root": {
+      fontSize: "1.5rem",
     },
-    '& .MuiDataGridPanelFooter-root': {
+    "& .MuiDataGridPanelFooter-root": {
       borderRadius: 0,
     },
   },
@@ -78,39 +78,39 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
 
   const columns: GridColDef[] = [
     {
-      field: 'id',
+      field: "id",
       hide: true,
-      headerName: 'Id',
-      description: 'id of the order',
+      headerName: "Id",
+      description: "id of the order",
       width: 130,
     },
     {
-      field: 'userName',
-      headerName: 'User Name',
-      description: 'client name who ordered',
+      field: "userName",
+      headerName: "User Name",
+      description: "client name who ordered",
       width: 130,
     },
     {
-      field: 'email',
-      headerName: 'email',
-      description: 'email of the user who ordered',
+      field: "email",
+      headerName: "email",
+      description: "email of the user who ordered",
       width: 130,
     },
     {
-      field: 'UserRole',
-      headerName: 'User Role',
-      description: 'userRole',
+      field: "UserRole",
+      headerName: "User Role",
+      description: "userRole",
       width: 180,
     },
     {
-      field: 'isEmailVerified',
-      headerName: 'Email Verified',
-      description: 'the ordered solution type',
+      field: "isEmailVerified",
+      headerName: "Email Verified",
+      description: "the ordered solution type",
       width: 150,
     },
     {
-      field: 'block',
-      headerName: 'Block',
+      field: "block",
+      headerName: "Block",
       sortable: false,
       filterable: false,
       width: 130,
@@ -134,13 +134,13 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
                 width: 100,
                 borderRadius: 20,
                 fontWeight: 700,
-                position: 'relative',
+                position: "relative",
               }}
               onClick={() => {
                 setLoading(true);
                 firebase
                   .firestore()
-                  .collection('users')
+                  .collection("users")
                   .doc(id)
                   .update({
                     isBlocked: !data.isBlocked,
@@ -148,10 +148,10 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
                   .then(() => {
                     enqueueSnackbar(
                       `${data.userName || data.clientName} ${
-                        !data.isBlocked ? 'Blocked' : 'Unblocked'
+                        !data.isBlocked ? "Blocked" : "Unblocked"
                       } Successfully!`,
                       {
-                        variant: 'success',
+                        variant: "success",
                       },
                     );
                     setLoading(false);
@@ -159,9 +159,9 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
                   .catch((err) => {
                     setLoading(false);
                     enqueueSnackbar(
-                      err?.code || 'Error occurred please try again!!',
+                      err?.code || "Error occurred please try again!!",
                       {
-                        variant: 'error',
+                        variant: "error",
                       },
                     );
                   });
@@ -176,7 +176,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
                 >
                   <LockOpenIcon />
                   {' '}
-                  {' UnBlock'}
+                  {" UnBlock"}
                 </Box>
               ) : (
                 <Box
@@ -187,11 +187,11 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
                 >
                   <LockIcon />
                   {' '}
-                  {' Block'}
+                  {" Block"}
                 </Box>
               )}
               {loading && (
-                <CircularProgress size="20px" style={{ position: 'absolute' }} />
+                <CircularProgress size="20px" style={{ position: "absolute" }} />
               )}
             </Button>
           </Box>
@@ -200,8 +200,8 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
       },
     },
     {
-      field: 'accept',
-      headerName: 'Attend',
+      field: "accept",
+      headerName: "Attend",
       sortable: false,
       filterable: false,
       width: 100,
@@ -228,23 +228,23 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
                 setLoading(true);
                 firebase
                   .firestore()
-                  .collection('users')
+                  .collection("users")
                   .doc(id)
                   .update({
-                    accountStatus: 'approved',
+                    accountStatus: "approved",
                   })
                   .then(() => {
                     setLoading(false);
-                    enqueueSnackbar('Account approved Successfully!', {
-                      variant: 'success',
+                    enqueueSnackbar("Account approved Successfully!", {
+                      variant: "success",
                     });
                   })
                   .catch((err) => {
                     setLoading(false);
                     enqueueSnackbar(
-                      err?.code || 'Error occurred please try again!!',
+                      err?.code || "Error occurred please try again!!",
                       {
-                        variant: 'error',
+                        variant: "error",
                       },
                     );
                   });
@@ -252,7 +252,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
             >
               Approve
               {loading && (
-                <CircularProgress size="20px" style={{ position: 'absolute' }} />
+                <CircularProgress size="20px" style={{ position: "absolute" }} />
               )}
             </Button>
           </Box>
@@ -261,8 +261,8 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
       },
     },
     {
-      field: 'view',
-      headerName: 'View',
+      field: "view",
+      headerName: "View",
       width: 100,
       sortable: false,
       filterable: false,
@@ -279,7 +279,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
               setViewDialogData(data);
             }}
           >
-            <VisibilityIcon style={{ color: '#666', fontSize: '1.3rem' }} />
+            <VisibilityIcon style={{ color: "#666", fontSize: "1.3rem" }} />
           </IconButton>
         );
         return button;
@@ -288,7 +288,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
   ];
 
   return (
-    <div style={{ height: 480, width: '100%' }}>
+    <div style={{ height: 480, width: "100%" }}>
       <DataGrid
         rows={rows}
         className={classes.root}

@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 
-import App from './App';
-import AppThemeProvider from './contexts/theme';
+import App from "./App";
+import AppThemeProvider from "./contexts/theme";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,7 +13,7 @@ ReactDOM.render(
       <App />
     </AppThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
+  document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change

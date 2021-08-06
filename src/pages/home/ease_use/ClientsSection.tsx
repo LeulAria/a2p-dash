@@ -1,16 +1,14 @@
-import React from 'react';
-import './style.css';
-import {
-  Box, Divider,
-} from '@material-ui/core';
-import awbIMG from '../../../assets/clients/awb.png';
-import awtarIMG from '../../../assets/clients/awtar.png';
-import enatIMG from '../../../assets/clients/enat.png';
-import omniIMG from '../../../assets/clients/omni.png';
-import rideIMG from '../../../assets/clients/ride.png';
-import unhcrIMG from '../../../assets/clients/unhcr.png';
-import weyeIMG from '../../../assets/clients/weye.png';
-import uuid from '../../../utils/uuid';
+import React from "react";
+import "./style.css";
+import { Box, Divider } from "@material-ui/core";
+import awbIMG from "../../../assets/clients/awb.png";
+import awtarIMG from "../../../assets/clients/awtar.png";
+import enatIMG from "../../../assets/clients/enat.png";
+import omniIMG from "../../../assets/clients/omni.png";
+import rideIMG from "../../../assets/clients/ride.png";
+import unhcrIMG from "../../../assets/clients/unhcr.png";
+import weyeIMG from "../../../assets/clients/weye.png";
+import uuid from "../../../utils/uuid";
 
 const ClientsSection = () => {
   const clients = [
@@ -40,9 +38,9 @@ const ClientsSection = () => {
   return (
     <Box mx="10%">
       <Box mx="10%" my={10}>
-        {' '}
+        {" "}
         <Divider />
-        {' '}
+        {" "}
       </Box>
       <Box
         my={2}

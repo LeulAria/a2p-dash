@@ -1,6 +1,6 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import { Box, Container, Typography } from '@material-ui/core';
+import React from "react";
+import { Helmet } from "react-helmet";
+import { Box, Container, Typography } from "@material-ui/core";
 
 const NotFound: React.FC = () => (
   <>
@@ -9,11 +9,11 @@ const NotFound: React.FC = () => (
     </Helmet>
     <Box
       style={{
-        marginTop: '18vh',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        justifyContent: 'center',
+        marginTop: "18vh",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        justifyContent: "center",
       }}
     >
       <Container maxWidth="sm">
@@ -28,17 +28,17 @@ const NotFound: React.FC = () => (
           404: The page you are looking for isn’t here
         </Typography>
         <Typography align="center" color="textPrimary" variant="subtitle2">
-          You either tried some shady route or you came here by mistake.
-          Whichever it is, try using the navigation
+          You either tried some shady route or you came here by mistake. Whichever it
+          is, try using the navigation
         </Typography>
-        <Box style={{ textAlign: 'center' }}>
+        <Box style={{ textAlign: "center" }}>
           <img
             alt="Under development"
             src="/static/img/notfound.svg"
             style={{
               marginTop: 50,
-              display: 'inline-block',
-              maxWidth: '100%',
+              display: "inline-block",
+              maxWidth: "100%",
               width: 560,
             }}
           />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -13,35 +13,36 @@ import {
   Tooltip,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import SearchIcon from '@material-ui/icons/Search';
-import InspectionsPointsDisplay from './table';
-import { useFireQuery } from '../../FireQuery';
-import useSearch from '../../hooks/useSearch';
+} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import SearchIcon from "@material-ui/icons/Search";
+import InspectionsPointsDisplay from "./table";
+import { useFireQuery } from "../../FireQuery";
+import useSearch from "../../hooks/useSearch";
+import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
     maxWidth: 2024,
-    margin: 'auto',
-    overflow: 'hidden',
+    margin: "auto",
+    overflow: "hidden",
   },
   searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
   },
   searchInput: {
     fontSize: theme.typography.fontSize,
   },
   block: {
-    display: 'block',
+    display: "block",
   },
   addInspection: {
     marginRight: theme.spacing(1),
     borderRadius: 10,
   },
   contentWrapper: {
-    margin: '20px 16px',
+    margin: "20px 16px",
   },
 }));
 
@@ -50,22 +51,17 @@ const InspectionDetail = () => {
   const history = useHistory();
   const [orders, setOrders] = useState<any[]>([]);
 
-  const {
-    data, loading,
-  } = useFireQuery('orders', {
+  const { data, loading } = useFireQuery("orders", {
     query: [
-      ['hasSalesReviewer ==', false],
-      ['hasTechReviewer ==', false],
-      ['status ==', 'pending'],
+      ["hasSalesReviewer ==", false],
+      ["hasTechReviewer ==", false],
+      ["status ==", "pending"],
     ],
     snapshotListener: true,
   });
 
-  const [filterSearchKey, setFilterSearchKey] = useState('');
-  const {
-    filtered,
-    reFilter,
-  } = useSearch(orders, filterSearchKey);
+  const [filterSearchKey, setFilterSearchKey] = useState("");
+  const { filtered, reFilter } = useSearch(orders, filterSearchKey);
 
   useEffect(() => {
     if (data) {
@@ -90,6 +86,10 @@ const InspectionDetail = () => {
 
   return (
     <Box>
+      <Helmet>
+        <title>Client Orders</title>
+      </Helmet>
+
       <Box fontWeight={800} fontSize="1.4rem" mb={2}>
         Client Orders
       </Box>

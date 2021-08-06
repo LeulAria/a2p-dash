@@ -1,13 +1,13 @@
-import React from 'react';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { InputLabel } from '@material-ui/core';
+import React from "react";
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { InputLabel } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   lable: {
-    marginLeft: '.8rem',
+    marginLeft: ".8rem",
   },
   formControl: {
     marginTop: theme.spacing(1),

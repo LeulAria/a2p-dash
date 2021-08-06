@@ -1,10 +1,10 @@
-import { Box, Button, CircularProgress } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
-import firebase from '../../firebase';
-import accountBlockedIllustration from '../../assets/auth/accountBlocked.svg';
+import { Box, Button, CircularProgress } from "@material-ui/core";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import { AuthContext } from "../../contexts/auth/AuthProvider";
+import firebase from "../../firebase";
+import accountBlockedIllustration from "../../assets/auth/accountBlocked.svg";
 
 const Blocked = () => {
   const { user } = useContext(AuthContext);
@@ -14,7 +14,7 @@ const Blocked = () => {
 
   firebase
     .firestore()
-    .collection('users')
+    .collection("users")
     .doc(user.uid)
     .onSnapshot(
       (res) => {
@@ -22,37 +22,37 @@ const Blocked = () => {
         if (data) {
           setIsBlocked(data?.isBlocked);
           if (data?.isStuff) {
-            if (!(data?.accountStatus === 'approved')) {
+            if (!(data?.accountStatus === "approved")) {
               if (data.roles.isAdmin) {
-                history.push('/app/dashboard-admin');
+                history.push("/app/dashboard-admin");
               } else if (data.roles.isClient) {
-                history.push('/app/user/orders');
+                history.push("/app/user/orders");
               } else if (data.roles.isSalesSupport) {
-                history.push('/app/orders');
+                history.push("/app/orders");
               } else if (data.roles.isTechSupport) {
-                history.push('/app/subscribers');
+                history.push("/app/subscribers");
               } else {
-                history.push('/');
+                history.push("/");
               }
             }
           }
           if (!data?.isBlocked) {
             if (!data.isStuff) {
-              history.push('/app/user/orders');
+              history.push("/app/user/orders");
             } else if (data.isStuff) {
               if (data.roles.isAdmin) {
-                history.push('/app/dashboard-admin');
+                history.push("/app/dashboard-admin");
               } else if (data.roles.isClient) {
-                history.push('/app/user/orders');
+                history.push("/app/user/orders");
               } else if (data.roles.isSalesSupport) {
-                history.push('/app/orders');
+                history.push("/app/orders");
               } else if (data.roles.isTechSupport) {
-                history.push('/app/subscribers');
+                history.push("/app/subscribers");
               } else {
-                history.push('/');
+                history.push("/");
               }
             } else {
-              history.push('/');
+              history.push("/");
             }
           }
         }
@@ -61,7 +61,7 @@ const Blocked = () => {
         }
       },
       (err) => {
-        console.log('USER NOT FOUND: ', err.code);
+        console.log("USER NOT FOUND: ", err.code);
       },
     );
 
@@ -86,7 +86,7 @@ const Blocked = () => {
     >
       <Box maxWidth={400} maxHeight={400}>
         <img
-          style={{ maxWidth: '400px' }}
+          style={{ maxWidth: "400px" }}
           width="80%"
           src={accountBlockedIllustration}
           alt="Account Blocked"
@@ -104,7 +104,7 @@ const Blocked = () => {
           variant="contained"
           color="primary"
           disabled={loading}
-          style={{ position: 'relative' }}
+          style={{ position: "relative" }}
           onClick={() => {
             reloadState();
           }}
@@ -112,7 +112,7 @@ const Blocked = () => {
           <RefreshIcon />
           Refresh
           {loading && (
-            <CircularProgress size="30px" style={{ position: 'absolute' }} />
+            <CircularProgress size="30px" style={{ position: "absolute" }} />
           )}
         </Button>
       </Box>

@@ -1,8 +1,8 @@
 import React, {
   createContext, useDebugValue, useEffect, useReducer,
-} from 'react';
-import authReducer from './reducers';
-import firebase from '../../firebase';
+} from "react";
+import authReducer from "./reducers";
+import firebase from "../../firebase";
 
 const initialState: any = {
   use: null,
@@ -16,7 +16,7 @@ interface IProps {
 
 const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [user, dispatch] = useReducer(authReducer, [], () => {
-    const localData = localStorage.getItem('User');
+    const localData = localStorage.getItem("User");
     return localData ? { ...JSON.parse(localData) } : initialState;
   });
 
@@ -25,17 +25,17 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
 
     if (role) {
       if (role?.isAdmin) {
-        userRole.push('ADMIN');
-        userRole.push('LOGGED_IN');
+        userRole.push("ADMIN");
+        userRole.push("LOGGED_IN");
       } else if (role?.isSalesSupport) {
-        userRole.push('SALSE');
-        userRole.push('LOGGED_IN');
+        userRole.push("SALSE");
+        userRole.push("LOGGED_IN");
       } else if (role?.isTechSupport) {
-        userRole.push('TECH_SUPPORT');
-        userRole.push('LOGGED_IN');
+        userRole.push("TECH_SUPPORT");
+        userRole.push("LOGGED_IN");
       } else if (role?.isClient) {
-        userRole.push('CLIENT');
-        userRole.push('LOGGED_IN');
+        userRole.push("CLIENT");
+        userRole.push("LOGGED_IN");
       }
     }
 
@@ -44,14 +44,14 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem('User', JSON.stringify(user));
+      localStorage.setItem("User", JSON.stringify(user));
     } else {
       localStorage.clear();
     }
   }, [user]);
 
   useDebugValue(user || user);
-  useDebugValue(user ? 'Their is user' : 'No user found');
+  useDebugValue(user ? "Their is user" : "No user found");
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((res) => {
@@ -63,7 +63,7 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
           };
           firebase
             .firestore()
-            .collection('users')
+            .collection("users")
             .doc(res.uid)
             .onSnapshot((res) => {
               const userData = res.data();
@@ -73,7 +73,7 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
               };
               const userRole: string[] = getUserRoles(user.roles);
               dispatch({
-                type: 'SET_USER',
+                type: "SET_USER",
                 payload: { ...user, UserRole: userRole },
               });
             });

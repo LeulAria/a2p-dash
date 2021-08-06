@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -13,43 +13,43 @@ import {
   Tooltip,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
-import SearchIcon from '@material-ui/icons/Search';
-import { useFireQuery } from '../../FireQuery';
-import InspectionsPointsDisplay from './table';
-import useSearch from '../../hooks/useSearch';
+} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
+import SearchIcon from "@material-ui/icons/Search";
+import { useFireQuery } from "../../FireQuery";
+import InspectionsPointsDisplay from "./table";
+import useSearch from "../../hooks/useSearch";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
     maxWidth: 2024,
-    margin: 'auto',
-    overflow: 'hidden',
+    margin: "auto",
+    overflow: "hidden",
   },
   searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.02)',
+    borderBottom: "1px solid rgba(0, 0, 0, 0.02)",
   },
   searchInput: {
     fontSize: theme.typography.fontSize,
   },
   block: {
-    display: 'block',
+    display: "block",
   },
   addInspection: {
     margin: theme.spacing(1),
     borderRadius: 10,
   },
   contentWrapper: {
-    margin: '20px 16px',
+    margin: "20px 16px",
   },
   btnActive: {
     background: theme.palette.primary.main,
-    color: '#fff',
-    '&:hover': {
+    color: "#fff",
+    "&:hover": {
       background: theme.palette.primary.main,
-      color: '#fff',
+      color: "#fff",
     },
   },
 }));
@@ -59,18 +59,15 @@ const InspectionDetail = () => {
   const history = useHistory();
   const [approve, setApprove] = useState(true);
   const [orders, setOrders] = useState<any[]>([]);
-  const [filterSearchKey, setFilterSearchKey] = useState('');
-  const {
-    filtered,
-    reFilter,
-  } = useSearch(orders, filterSearchKey);
+  const [filterSearchKey, setFilterSearchKey] = useState("");
+  const { filtered, reFilter } = useSearch(orders, filterSearchKey);
 
-  const { data, loading, refetch } = useFireQuery('orders', {
+  const { data, loading, refetch } = useFireQuery("orders", {
     query: [
-      ['status in', ['pending subscription', 'pending subscription approval']],
-      ['hasSalesReviewer ==', true],
-      ['hasTechReviewer ==', true],
-      ['isPayApproved ==', true],
+      ["status in", ["pending subscription", "pending subscription approval"]],
+      ["hasSalesReviewer ==", true],
+      ["hasTechReviewer ==", true],
+      ["isPayApproved ==", true],
     ],
     snapshotListener: true,
   });
@@ -138,8 +135,8 @@ const InspectionDetail = () => {
                     onClick={() => {
                       refetch({
                         query: [
-                          ['status ==', 'subscribed'],
-                          ['isSubscriptionApproved ==', true],
+                          ["status ==", "subscribed"],
+                          ["isSubscriptionApproved ==", true],
                         ],
                       });
                       setApprove(false);
@@ -159,15 +156,15 @@ const InspectionDetail = () => {
                       refetch({
                         query: [
                           [
-                            'status in',
+                            "status in",
                             [
-                              'pending subscription',
-                              'pending subscription approval',
+                              "pending subscription",
+                              "pending subscription approval",
                             ],
                           ],
-                          ['hasSalesReviewer ==', true],
-                          ['hasTechReviewer ==', true],
-                          ['isPayApproved ==', true],
+                          ["hasSalesReviewer ==", true],
+                          ["hasTechReviewer ==", true],
+                          ["isPayApproved ==", true],
                         ],
                       });
                       setApprove(true);

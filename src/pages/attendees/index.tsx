@@ -1,81 +1,82 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from "react";
 import {
   AppBar,
   Box,
   Button,
+  createStyles,
   Divider,
   Grid,
   IconButton,
+  makeStyles,
   Paper,
   TextField,
   Theme,
   Toolbar,
   Tooltip,
-  createStyles,
-  makeStyles,
-} from '@material-ui/core';
-import clsx from 'clsx';
-import { useHistory } from 'react-router-dom';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
-import SearchIcon from '@material-ui/icons/Search';
-import InspectionsPointsDisplay from './table';
-import { useFireQuery } from '../../FireQuery';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
-import useSearch from '../../hooks/useSearch';
+} from "@material-ui/core";
+import clsx from "clsx";
+import {useHistory} from "react-router-dom";
+import InspectionsPointsDisplay from "./table";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import {useFireQuery} from "../../FireQuery";
+import {AuthContext} from "../../contexts/auth/AuthProvider";
+import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
+import SearchIcon from "@material-ui/icons/Search";
+import useSearch from "../../hooks/useSearch";
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  paper: {
-    maxWidth: 2024,
-    margin: 'auto',
-    overflow: 'hidden',
-  },
-  searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.02)',
-  },
-  searchInput: {
-    fontSize: theme.typography.fontSize,
-  },
-  block: {
-    display: 'block',
-  },
-  addInspection: {
-    marginRight: theme.spacing(1),
-    borderRadius: 10,
-  },
-  contentWrapper: {
-    margin: '20px 16px',
-  },
-  btnActive: {
-    background: theme.palette.primary.main,
-    color: '#fff',
-    '&:hover': {
-      background: theme.palette.primary.main,
-      color: '#fff',
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      maxWidth: 2024,
+      margin: "auto",
+      overflow: "hidden",
     },
-  },
-}));
+    searchBar: {
+      borderBottom: "1px solid rgba(0, 0, 0, 0.02)",
+    },
+    searchInput: {
+      fontSize: theme.typography.fontSize,
+    },
+    block: {
+      display: "block",
+    },
+    addInspection: {
+      marginRight: theme.spacing(1),
+      borderRadius: 10,
+    },
+    contentWrapper: {
+      margin: "20px 16px",
+    },
+    btnActive: {
+      background: theme.palette.primary.main,
+      color: "#fff",
+      "&:hover": {
+        background: theme.palette.primary.main,
+        color: "#fff",
+      },
+    },
+  })
+);
 
 const InspectionDetail = () => {
   const classes = useStyles();
   const history = useHistory();
   const [approve, setApprove] = useState(true);
   const [orders, setOrders] = useState<any[]>([]);
-  const { user } = useContext(AuthContext);
-  const [filterSearchKey, setFilterSearchKey] = useState('');
+  const {user} = useContext(AuthContext);
+  const [filterSearchKey, setFilterSearchKey] = useState("");
   const {
     filtered,
+    loading: loadingFilter,
     reFilter,
   } = useSearch(orders, filterSearchKey);
 
-  const {
-    data, loading, refetch,
-  } = useFireQuery('orders', {
+  const {data, loading, error, refetch} = useFireQuery("orders", {
     query: [
-      ['status in', ['attended payment', 'payment approval']],
-      ['currentSalesReviewer ==', user.uid],
-      ['hasSalesReviewer ==', true],
-      ['isPayApproved ==', false],
+      ["status in", ["attended payment", "payment approval"]],
+      ["currentSalesReviewer ==", user.uid],
+      ["hasSalesReviewer ==", true],
+      ["isPayApproved ==", false],
     ],
     snapshotListener: true,
   });
@@ -85,13 +86,13 @@ const InspectionDetail = () => {
       setOrders(
         data.map((order: any) => ({
           id: order.id,
-          payed: { id: order.id, data: { ...order } },
+          payed: {id: order.id, data: {...order}},
           // restore: { id: order.id, data: { ...order } },
-          order_form: { id: order.id, data: { ...order } },
+          order_form: {id: order.id, data: {...order}},
           clientName: order.clientName,
           solutions: order.solutions,
-          view: { id: order.id, data: { ...order } },
-        })),
+          view: {id: order.id, data: {...order}},
+        }))
       );
     }
   }, [data]);
@@ -107,7 +108,7 @@ const InspectionDetail = () => {
         Attendees
       </Box>
       <Divider />
-      <Box my={2} />
+      <Box my={2}></Box>
 
       <Paper className={classes.paper}>
         <Box>
@@ -142,9 +143,9 @@ const InspectionDetail = () => {
                     onClick={() => {
                       refetch({
                         query: [
-                          ['isPayApproved ==', true],
-                          ['hasSalesReviewer ==', true],
-                          ['payApproval ==', 'done'],
+                          ["isPayApproved ==", true],
+                          ["hasSalesReviewer ==", true],
+                          ["payApproval ==", "done"],
                         ],
                       });
                       setApprove(false);
@@ -163,10 +164,10 @@ const InspectionDetail = () => {
                     onClick={() => {
                       refetch({
                         query: [
-                          ['status in', ['attended payment', 'payment approval']],
-                          ['currentSalesReviewer ==', user.uid],
-                          ['hasSalesReviewer ==', true],
-                          ['isPayApproved ==', false],
+                          ["status in", ["attended payment", "payment approval"]],
+                          ["currentSalesReviewer ==", user.uid],
+                          ["hasSalesReviewer ==", true],
+                          ["isPayApproved ==", false],
                         ],
                       });
                       setApprove(true);
@@ -181,7 +182,7 @@ const InspectionDetail = () => {
                     Pending Payment
                   </Button>
                 </Grid>
-                <Grid item xs />
+                <Grid item xs></Grid>
                 <Grid item>
                   <Button
                     disableElevation

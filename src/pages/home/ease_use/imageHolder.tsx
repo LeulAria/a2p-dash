@@ -1,25 +1,25 @@
-import React from 'react';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import ImageList from '@material-ui/core/ImageList';
-import ImageListItem from '@material-ui/core/ImageListItem';
+import React from "react";
+import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import ImageList from "@material-ui/core/ImageList";
+import ImageListItem from "@material-ui/core/ImageListItem";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    height: '100%',
-    [theme.breakpoints.down('sm')]: {
-      width: '80%',
-      maxWidth: '350px',
-      margin: 'auto',
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    height: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "80%",
+      maxWidth: "350px",
+      margin: "auto",
     },
   },
   gridList: {
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden',
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
   },
 }));
 

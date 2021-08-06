@@ -1,1 +1,1 @@
-export * from './useFireStorage';
+export * from "./useFireStorage";

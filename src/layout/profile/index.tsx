@@ -1,40 +1,41 @@
-import React, { useContext } from 'react';
-import { Theme, withStyles } from '@material-ui/core/styles';
-import Menu, { MenuProps } from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import React, { useContext } from "react";
+import { Theme, withStyles } from "@material-ui/core/styles";
+import Menu, { MenuProps } from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import {
   Box, Divider, IconButton, Tooltip,
-} from '@material-ui/core';
-import { useSnackbar } from 'notistack';
-import { useHistory } from 'react-router';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
-import firebase from '../../firebase';
-import UserEditDialog from './UserEditDialog';
-import { useAppTheme } from '../../contexts/theme';
-import { useLoadingOverlay } from '../../contexts/loading';
+} from "@material-ui/core";
+import { useSnackbar } from "notistack";
+import { useHistory } from "react-router";
+import { AuthContext } from "../../contexts/auth/AuthProvider";
+import firebase from "../../firebase";
+import UserEditDialog from "./UserEditDialog";
+import { useAppTheme } from "../../contexts/theme";
+import { useLoadingOverlay } from "../../contexts/loading";
 
 const StyledMenu = withStyles((theme: Theme) => ({
   paper: {
-    border: theme.palette.type === 'dark' ? '1px solid #444' : '1px solid #d3d4d5',
+    borderRadius: 0,
+    border: theme.palette.type === "dark" ? "1px solid #444" : "1px solid #d3d4d5",
     boxShadow:
-      theme.palette.type === 'dark'
-        ? '0 1px 10px rgba(0,0,0,0.2)'
-        : '0 1px 10px rgba(0,0,0,0.2)',
-    minWidth: '200px',
+      theme.palette.type === "dark"
+        ? "0 1px 10px rgba(0,0,0,0.2)"
+        : "0 1px 10px rgba(0,0,0,0.2)",
+    minWidth: "200px",
   },
 }))((props: MenuProps) => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'right',
+      vertical: "bottom",
+      horizontal: "right",
     }}
     transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
+      vertical: "top",
+      horizontal: "right",
     }}
     {...props}
   />
@@ -42,10 +43,11 @@ const StyledMenu = withStyles((theme: Theme) => ({
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
+    borderRadius: 0,
     minWidth: 250,
-    '&:focus': {
+    "&:focus": {
       backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.common.white,
       },
     },
@@ -70,7 +72,7 @@ export default function UserProfile() {
   };
 
   const toggleAppTheme = () => {
-    toggelTheme(theme === 'light' ? 'dark' : 'light');
+    toggelTheme(theme === "light" ? "dark" : "light");
   };
 
   const handleSignout = async () => {
@@ -89,17 +91,17 @@ export default function UserProfile() {
       .auth()
       .signOut()
       .then(() => {
-        enqueueSnackbar('Logged out successfully!', {
-          variant: 'success',
+        enqueueSnackbar("Logged out successfully!", {
+          variant: "success",
         });
         toggleLoading(false);
-        dispatch({ type: 'LOGOUT' });
-        history.push('/logout');
+        dispatch({ type: "LOGOUT" });
+        history.push("/logout");
       })
       .catch((error) => {
         toggleLoading(false);
         enqueueSnackbar(error.code, {
-          variant: 'success',
+          variant: "success",
         });
       });
   };
@@ -140,9 +142,14 @@ export default function UserProfile() {
         onClose={handleCloseDialogMenu}
       >
         <Box mx={2} my={1} width="100%" overflow="hidden">
-          <Box fontWeight={700}>
-            Signed in as
+          <Box fontWeight={900} mb={1}>
+            Signed in as:
+            {" "}
+          </Box>
+          <Box fontWeight={600}>
             {user.userName || user.clientName}
+            , &nbsp;&nbsp;&nbsp;
+            {user.email}
           </Box>
         </Box>
         <Divider />
@@ -156,7 +163,7 @@ export default function UserProfile() {
         </StyledMenuItem>
         <StyledMenuItem onClick={toggleAppTheme}>
           <ListItemIcon>
-            {theme === 'light' ? (
+            {theme === "light" ? (
               <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
                 <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />

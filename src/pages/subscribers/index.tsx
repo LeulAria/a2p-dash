@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -13,35 +13,35 @@ import {
   Tooltip,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import SearchIcon from '@material-ui/icons/Search';
-import InspectionsPointsDisplay from './table';
-import { useFireQuery } from '../../FireQuery';
-import useSearch from '../../hooks/useSearch';
+} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import SearchIcon from "@material-ui/icons/Search";
+import InspectionsPointsDisplay from "./table";
+import { useFireQuery } from "../../FireQuery";
+import useSearch from "../../hooks/useSearch";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
     maxWidth: 2024,
-    margin: 'auto',
-    overflow: 'hidden',
+    margin: "auto",
+    overflow: "hidden",
   },
   searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
   },
   searchInput: {
     fontSize: theme.typography.fontSize,
   },
   block: {
-    display: 'block',
+    display: "block",
   },
   addInspection: {
     marginRight: theme.spacing(1),
     borderRadius: 10,
   },
   contentWrapper: {
-    margin: '20px 16px',
+    margin: "20px 16px",
   },
 }));
 
@@ -49,20 +49,15 @@ const InspectionDetail = () => {
   const classes = useStyles();
   const history = useHistory();
   const [orders, setOrders] = useState<any[]>([]);
-  const [filterSearchKey, setFilterSearchKey] = useState('');
-  const {
-    filtered,
-    reFilter,
-  } = useSearch(orders, filterSearchKey);
+  const [filterSearchKey, setFilterSearchKey] = useState("");
+  const { filtered, reFilter } = useSearch(orders, filterSearchKey);
 
-  const {
-    data, loading,
-  } = useFireQuery('orders', {
+  const { data, loading } = useFireQuery("orders", {
     query: [
-      ['status ==', 'payed'],
-      ['hasSalesReviewer ==', true],
-      ['hasTechReviewer ==', false],
-      ['isPayApproved ==', true],
+      ["status ==", "payed"],
+      ["hasSalesReviewer ==", true],
+      ["hasTechReviewer ==", false],
+      ["isPayApproved ==", true],
     ],
     snapshotListener: true,
   });

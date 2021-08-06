@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   FormControl,
   FormHelperText,
@@ -8,7 +8,7 @@ import {
   Theme,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   formControl: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     marginTop: theme.spacing(2),
   },
   root: {
-    marginLeft: '-0.2rem',
+    marginLeft: "-0.2rem",
   },
 }));
 
@@ -51,7 +51,7 @@ export default function SimpleSelect({ field, errors }: any) {
           <MenuItem value="SMS Campaign">SMS Campaign</MenuItem>
           <MenuItem value="Both">Both</MenuItem>
         </Select>
-        <FormHelperText style={{ color: 'red' }}>
+        <FormHelperText style={{ color: "red" }}>
           {errors.solutions ? errors.solutions.message : null}
         </FormHelperText>
       </FormControl>

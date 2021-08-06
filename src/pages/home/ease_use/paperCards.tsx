@@ -1,49 +1,49 @@
-import React from 'react';
-import { Box, Paper, Typography } from '@material-ui/core';
-import { Theme, makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { Box, Paper, Typography } from "@material-ui/core";
+import { Theme, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) => ({
   title2: {
-    color: 'white',
-    fontSize: '24px',
+    color: "white",
+    fontSize: "24px",
     fontWeight: 700,
-    marginBottom: '10px',
+    marginBottom: "10px",
   },
   subTitle: {
-    fontSize: '18px',
+    fontSize: "18px",
     fontWeight: 600,
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
     },
   },
   card: {
-    borderRadius: '0.5rem',
-    marginBottom: '3rem',
-    backgroundColor: '#0093F7',
-    minHeight: '8.5rem',
-    maxWidth: '300px',
-    margin: 'auto',
-    heigh: '200px',
+    borderRadius: "0.5rem",
+    marginBottom: "3rem",
+    backgroundColor: "#0093F7",
+    minHeight: "8.5rem",
+    maxWidth: "300px",
+    margin: "auto",
+    heigh: "200px",
   },
   cardContainer: {
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      alignItems: 'center',
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      alignItems: "center",
     },
   },
   cardContainerIcon: {
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-      justifyContent: 'center',
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      justifyContent: "center",
     },
   },
   cardContainerTitle: {
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      marginTop: '1rem',
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      marginTop: "1rem",
     },
   },
 }));
@@ -74,9 +74,9 @@ export default function Api({ Svgs, title, hasDescription = false }: any) {
           width="60%"
           className={classes.cardContainerTitle}
           style={{
-            display: !hasDescription ? 'flex' : '',
-            justifyContent: !hasDescription ? 'flex-start' : 'center',
-            alignItems: 'center',
+            display: !hasDescription ? "flex" : "",
+            justifyContent: !hasDescription ? "flex-start" : "center",
+            alignItems: "center",
           }}
         >
           <Typography variant="h5" align="center" className={classes.title2}>

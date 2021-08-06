@@ -1,28 +1,28 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from "react";
 import {
   DataGrid,
   GridCellParams,
   GridColDef,
   GridToolbar,
-} from '@material-ui/data-grid';
+} from "@material-ui/data-grid";
 import {
   Box,
   Button,
-  IconButton,
-  Theme,
   createStyles,
+  IconButton,
   makeStyles,
-} from '@material-ui/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import { useSnackbar } from 'notistack';
-import { useHistory } from 'react-router';
-import ShowDialog from './show';
-import { AuthContext } from '../../../contexts/auth/AuthProvider';
-import { useFireMutation } from '../../../FireQuery';
-import OrderForm from './orderForm';
-import NoData from '../../util/NoData';
-import CustomLoadingOverlay from '../../util/CustomLoadingOverlay';
+  Theme,
+} from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import ShowDialog from "./show";
+import {AuthContext} from "../../../contexts/auth/AuthProvider";
+import {useFireMutation} from "../../../FireQuery";
+import OrderForm from "./orderForm";
+import PostAddIcon from "@material-ui/icons/PostAdd";
+import {useSnackbar} from "notistack";
+import {useHistory} from "react-router";
+import NoData from "../../util/NoData";
+import CustomLoadingOverlay from "../../util/CustomLoadingOverlay";
 
 interface IProps {
   loading: boolean;
@@ -30,49 +30,51 @@ interface IProps {
   approve: boolean;
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  root: {
-    borderRadius: 3,
-    '& .MuiDataGrid-toolbarContainer': {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      borderBottom:
-          theme.palette.type === 'dark' ? '1px solid #555' : '1px solid #ddd',
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      borderRadius: 3,
+      "& .MuiDataGrid-toolbar": {
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: "0 1rem",
+        borderBottom:
+          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
+      },
+      "& .MuiButton-label": {
+        margin: "0 10px",
+        color: theme.palette.type === "dark" ? "#999" : "#666",
+      },
+      "& .MuiButton-root": {
+        borderRadius: 0,
+        borderLeft:
+          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
+      },
+      "& .MuiSvgIcon-root": {
+        fontSize: "1.5rem",
+      },
+      "& .MuiDataGridPanelFooter-root": {
+        borderRadius: 0,
+      },
     },
-    '& .MuiDataGrid-toolbar': {
-      display: 'flex',
-      padding: '0 1rem',
-    },
-    '& .MuiButton-label': {
-      margin: '0 10px',
-      color: theme.palette.type === 'dark' ? '#999' : '#666',
-    },
-    '& .MuiButton-root': {
-      borderRadius: 0,
-      borderLeft:
-          theme.palette.type === 'dark' ? '1px solid #555' : '1px solid #ddd',
-    },
-    '& .MuiSvgIcon-root': {
-      fontSize: '1.5rem',
-    },
-    '& .MuiDataGridPanelFooter-root': {
-      borderRadius: 0,
-    },
-  },
-}));
+  })
+);
 
-const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
+const DataGridDisplay: React.FC<IProps> = ({loading, rows, approve}) => {
   const classes = useStyles();
   const [viewDialog, setViewDialog] = useState(false);
   const [viewDialogData, setViewDialogData] = useState<any>({});
-  const { user } = useContext(AuthContext);
-  const {
-    mutate,
-  } = useFireMutation('orders');
-  const { enqueueSnackbar } = useSnackbar();
+  const {user} = useContext(AuthContext);
+  const {data, loading: loadingMutation, error, mutate} = useFireMutation("orders");
+  const {enqueueSnackbar} = useSnackbar();
   const history = useHistory();
 
   // Edit Form Dialog
+  const [editDialog, setEditDialog] = useState(false);
+  const [editDialogData, setEditDialogData] = useState<any>({});
+  const closeEditDialog = () => {
+    setEditDialog(false);
+  };
   const closeShowDialog = () => {
     setViewDialog(false);
   };
@@ -87,10 +89,10 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
 
   const columns: GridColDef[] = [
     {
-      field: 'id',
+      field: "id",
       hide: true,
-      headerName: 'Id',
-      description: 'id of the order',
+      headerName: "Id",
+      description: "id of the order",
       width: 130,
     },
     // {
@@ -101,7 +103,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
     //   width: 120,
     //   hide: !approve,
     //   renderCell: (params: GridCellParams) => {
-    //     const { data } = params.value?.valueOf() as {
+    //     const { id, data } = params.value?.valueOf() as {
     //       id: string;
     //       data: any;
     //     };
@@ -136,7 +138,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
     //                 });
     //               })
     //               .catch((err: any) => {
-    //                 enqueueSnackbar(err?.code || "Errro occurred please try atain!", {
+    //                 enqueueSnackbar(err?.code || "Errro occured please try atain!", {
     //                   variant: "error"
     //                 });
     //               });
@@ -150,25 +152,25 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
     //   },
     // },
     {
-      field: 'clientName',
-      headerName: 'Client Name',
-      description: 'client name who ordered',
-      width: 150,
+      field: "clientName",
+      headerName: "Client Name",
+      description: "client name who ordered",
+      width: 180,
     },
     {
-      field: 'solutions',
-      headerName: 'Solution',
-      description: 'the ordered solution type',
-      width: 130,
+      field: "solutions",
+      headerName: "Solution",
+      description: "the ordered solution type",
+      width: 180,
     },
     {
-      field: 'payed',
-      headerName: 'Has Payed',
+      field: "payed",
+      headerName: "Has Payed",
       sortable: false,
       filterable: false,
-      width: 170,
+      width: 200,
       renderCell: (params: GridCellParams) => {
-        const { id, data } = params.value?.valueOf() as {
+        const {id, data} = params.value?.valueOf() as {
           id: string;
           data: any;
         };
@@ -179,41 +181,40 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
               disableElevation
               size="small"
               variant="contained"
-              color="primary"
               disabled={
-                data.status === 'payment approval'
-                || data.isPayApproved
-                || !data.isDetailFilled
+                data.status === "payment approval" ||
+                data.isPayApproved ||
+                !data.isDetailFilled
               }
               style={{
                 borderRadius: 20,
                 fontWeight: 700,
               }}
               onClick={() => {
-                mutate('UPDATE', id, {
-                  status: 'payment approval',
+                mutate("UPDATE", id, {
+                  status: "payment approval",
                   currentReviourRef: `firestore:ref(users/${user.uid})`,
                   currentReviour: user.uid,
-                  payApproval: 'pending',
+                  payApproval: "pending",
                   isPayApproved: false,
                 })
-                  .then(() => {
-                    enqueueSnackbar('Panging admin approval in payment.', {
-                      variant: 'success',
+                  .then((res) => {
+                    enqueueSnackbar("Panding admin approval in paymet.", {
+                      variant: "success",
                     });
                   })
                   .catch((err: any) => {
-                    enqueueSnackbar(err?.code || 'Error occurred please try attain!', {
-                      variant: 'error',
+                    enqueueSnackbar(err?.code || "Errro occured please try atain!", {
+                      variant: "error",
                     });
                   });
               }}
             >
               {data.isPayApproved
-                ? 'Order Payed'
-                : data.status === 'payment approval'
-                  ? 'Pending Approval'
-                  : 'Mark as payed'}
+                ? "Order Payed"
+                : data.status === "payment approval"
+                ? "Pending Approval"
+                : "Mark as payed"}
             </Button>
           </Box>
         );
@@ -221,14 +222,14 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
       },
     },
     {
-      field: 'order_form',
-      headerName: 'Order Form',
-      description: 'Add Order Information.',
-      width: 130,
+      field: "order_form",
+      headerName: "Order Form",
+      description: "Add Order Information.",
+      width: 170,
       sortable: false,
       filterable: false,
       renderCell: (params: GridCellParams) => {
-        const { data } = params.value?.valueOf() as {
+        const {id, data} = params.value?.valueOf() as {
           id: string;
           data: any;
         };
@@ -237,35 +238,33 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
           <Button
             disableElevation
             size="small"
-            variant="contained"
+            variant="outlined"
             color="primary"
             style={{
-              position: 'relative',
+              position: "relative",
               borderRadius: 20,
               fontWeight: 700,
             }}
             onClick={() => {
               history.push(`/app/order/form/${data.id}`, {
-                data: JSON.parse(JSON.stringify({ ...data })),
+                data: JSON.parse(JSON.stringify({...data})),
               });
             }}
           >
-            <PostAddIcon />
-            {' '}
-            Detail
+            <PostAddIcon /> Detail
           </Button>
         );
         return button;
       },
     },
     {
-      field: 'view',
-      headerName: 'View',
+      field: "view",
+      headerName: "View",
       width: 100,
       sortable: false,
       filterable: false,
       renderCell: (params: GridCellParams) => {
-        const { data } = params.value?.valueOf() as {
+        const {id, data} = params.value?.valueOf() as {
           id: string;
           data: any;
         };
@@ -277,7 +276,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
               setViewDialogData(data);
             }}
           >
-            <VisibilityIcon style={{ color: '#666', fontSize: '1.3rem' }} />
+            <VisibilityIcon style={{color: "#666", fontSize: "1.3rem"}} />
           </IconButton>
         );
         return button;
@@ -286,7 +285,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
   ];
 
   return (
-    <div style={{ height: 480, width: '100%' }}>
+    <div style={{height: 480, width: "100%"}}>
       <DataGrid
         rows={rows}
         className={classes.root}

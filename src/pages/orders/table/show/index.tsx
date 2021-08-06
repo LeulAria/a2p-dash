@@ -1,14 +1,14 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import { Box, Grid } from '@material-ui/core';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import { Box, Grid } from "@material-ui/core";
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import DisplayText from '../../../../components/shared/DisplayText';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import DisplayText from "../../../../components/shared/DisplayText";
 
 dayjs.extend(relativeTime);
 
@@ -44,7 +44,7 @@ const ShowDialog = ({
         </Box>
         <DialogContent dividers>
           <DialogContentText
-            style={{ minWidth: 300, outline: 'none' }}
+            style={{ minWidth: 300, outline: "none" }}
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
@@ -55,10 +55,7 @@ const ShowDialog = ({
                   title="Client Name"
                   value={viewDialogData?.clientName}
                 />
-                <DisplayText
-                  title="User Role"
-                  value={viewDialogData?.companyName}
-                />
+                <DisplayText title="User Role" value={viewDialogData?.companyName} />
                 <DisplayText
                   title="Phone Number"
                   value={viewDialogData?.phoneNumber}

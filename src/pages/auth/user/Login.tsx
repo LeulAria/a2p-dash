@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import {
   Box,
   Button,
@@ -9,32 +9,32 @@ import {
   Typography,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { useHistory, useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
-import { Controller, useForm } from 'react-hook-form';
-import { useSnackbar } from 'notistack';
-import TextComponent from '../../../components/shared/TextComponent';
-import firebase from '../../../firebase';
-import { useFireMutation } from '../../../FireQuery';
-import { AuthContext } from '../../../contexts/auth/AuthProvider';
-import { useSnackBar } from '../../../contexts/snackbar/SnackBarContext';
-import { redirectUserHome } from '../../../utils/userRoleUtils';
-import Navbar from '../../../components/home/Navigationbar/Navbar';
-import uuid from '../../../utils/uuid';
+} from "@material-ui/core";
+import { useHistory, useLocation } from "react-router";
+import { Link } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import { useSnackbar } from "notistack";
+import TextComponent from "../../../components/shared/TextComponent";
+import firebase from "../../../firebase";
+import { useFireMutation } from "../../../FireQuery";
+import { AuthContext } from "../../../contexts/auth/AuthProvider";
+import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
+import { redirectUserHome } from "../../../utils/userRoleUtils";
+import Navbar from "../../../components/home/Navigationbar/Navbar";
+import uuid from "../../../utils/uuid";
 
 const useStyles = makeStyles(() => createStyles({
   root: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   wrapper: {
-    position: 'relative',
+    position: "relative",
   },
   buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
@@ -45,28 +45,28 @@ const useStyles = makeStyles(() => createStyles({
 
 export const signUpFields = [
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'outlined',
-    type: 'email',
+    name: "email",
+    label: "Email Address",
+    variant: "outlined",
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
   {
-    name: 'password',
-    label: 'Password',
-    variant: 'outlined',
-    type: 'password',
+    name: "password",
+    label: "Password",
+    variant: "outlined",
+    type: "password",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       minLength: {
-        value: '6',
-        message: 'password must be at least 6 characters',
+        value: "6",
+        message: "password must be at least 6 characters",
       },
     },
   },
@@ -76,15 +76,15 @@ const Signup = () => {
   const classes = useStyles();
   const history = useHistory();
   const location: any = useLocation();
-  const [userEmail, setUserEmail] = useState(location?.state?.email || '');
-  const [pass, setPass] = useState(location?.state?.password || '');
+  const [userEmail, setUserEmail] = useState(location?.state?.email || "");
+  const [pass, setPass] = useState(location?.state?.password || "");
   const [loadingCred, setLoadingCred] = useState(false);
   const { mutate } = useFireMutation(
-    `/notifications/${location.state ? location.state.uid : ''}/notifications`,
+    `/notifications/${location.state ? location.state.uid : ""}/notifications`,
   );
   const { enqueueSnackbar } = useSnackbar();
 
-  const { mutate: mutateUser } = useFireMutation('online');
+  const { mutate: mutateUser } = useFireMutation("online");
 
   const [loggingIn, setLogginIn] = useState(false);
   const { user } = useContext(AuthContext);
@@ -112,12 +112,12 @@ const Signup = () => {
             setUserEmail(email);
             setPass(password);
             mutate(
-              'ADD',
+              "ADD",
               null,
               {
-                msg: 'Change your current temporary password!',
-                type: 'warning',
-                redirect: '/app/change-password',
+                msg: "Change your current temporary password!",
+                type: "warning",
+                redirect: "/app/change-password",
                 seen: false,
               },
               {
@@ -128,10 +128,10 @@ const Signup = () => {
         } else {
           setSnackbar({
             open: true,
-            type: 'error',
-            message: 'Your account was not found try registering again!',
+            type: "error",
+            message: "Your account was not found try registering again!",
           });
-          history.push('/');
+          history.push("/");
         }
       }
     }
@@ -160,14 +160,14 @@ const Signup = () => {
             isOnline: true,
           });
 
-          mutateUser('ADD', res.user.uid, {
+          mutateUser("ADD", res.user.uid, {
             isOnline: true,
             id: res.user.uid,
           });
 
           setSnackbar({
             open: true,
-            type: 'success',
+            type: "success",
             message: `Welcome ${data.email}!`,
           });
         }
@@ -176,7 +176,7 @@ const Signup = () => {
         console.error(err);
         setLogginIn(false);
         enqueueSnackbar(err.code, {
-          variant: 'error',
+          variant: "error",
         });
       });
   };

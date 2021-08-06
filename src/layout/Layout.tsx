@@ -1,35 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
-import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Drawer from '@material-ui/core/Drawer';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Divider from '@material-ui/core/Divider';
-import { Avatar, Badge, Box } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import React, { useContext, useEffect, useState } from "react";
+import clsx from "clsx";
+import { NavLink } from "react-router-dom";
+import AppBar from "@material-ui/core/AppBar";
+import Drawer from "@material-ui/core/Drawer";
+import MenuIcon from "@material-ui/icons/Menu";
+import Toolbar from "@material-ui/core/Toolbar";
+import Divider from "@material-ui/core/Divider";
+import { Avatar, Badge, Box } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {
   Theme, createStyles, makeStyles, useTheme,
-} from '@material-ui/core/styles';
-import NotificationBar from './notification/NotificationBar';
-import { AuthContext } from '../contexts/auth/AuthProvider';
-import { useNavBadge } from '../contexts/navBadgeCount';
-import UserProfile from './profile';
-import teklogixLogo from '../assets/logos/teclogix-logo.png';
-import uuid from '../utils/uuid';
+} from "@material-ui/core/styles";
+import NotificationBar from "./notification/NotificationBar";
+import { AuthContext } from "../contexts/auth/AuthProvider";
+import { useNavBadge } from "../contexts/navBadgeCount";
+import UserProfile from "./profile";
+import teklogixLogo from "../assets/logos/teclogix-logo.png";
+import uuid from "../utils/uuid";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   appBar: {
     borderBottom:
-        theme.palette.type === 'dark' ? '1px solid #222' : '1px solid #ddd',
+        theme.palette.type === "dark" ? "1px solid #222" : "1px solid #ddd",
     // transition: theme.transitions.create(["margin", "width"], {
     //   easing: theme.transitions.easing.easeInOut,
     //   duration: theme.transitions.duration.leavingScreen,
@@ -46,47 +46,47 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     marginRight: theme.spacing(2),
   },
   hide: {
-    display: 'none',
+    display: "none",
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
   },
   drawerPaper: {
-    marginTop: '64px',
+    marginTop: "64px",
     width: drawerWidth,
-    borderRight: 'none',
+    borderRight: "none",
   },
   drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     marginTop: 68,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   userAvatar: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     padding: theme.spacing(0, 1),
     height: 68,
     borderRight:
-        theme.palette.type === 'dark' ? '1px solid #222' : '1px solid #ddd',
-    justifyContent: 'flex-end',
+        theme.palette.type === "dark" ? "1px solid #222" : "1px solid #ddd",
+    justifyContent: "flex-end",
   },
   content: {
     flexGrow: 1,
-    width: '100%',
+    width: "100%",
     // background: "#f7f7f7",
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
   },
   contentShift: {
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -94,62 +94,62 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   toolbar: {
     minHeight: 62,
-    display: 'flex',
-    justifySelf: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifySelf: "space-between",
+    alignItems: "center",
   },
   drawerLists: {
     borderRight:
-        theme.palette.type === 'dark' ? '1px solid #222' : '1px solid #ddd',
-    height: '100%',
+        theme.palette.type === "dark" ? "1px solid #222" : "1px solid #ddd",
+    height: "100%",
   },
   logos: {
-    height: '30px',
-    [theme.breakpoints.down('sm')]: {
-      height: '24px',
+    height: "30px",
+    [theme.breakpoints.down("sm")]: {
+      height: "24px",
     },
   },
   navLink: {
-    width: '100%',
-    margin: 'auto',
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none',
-    padding: '10px 1rem 5px',
-    justifyContent: 'flex-start',
-    color: theme.palette.type === 'dark' ? '#f4f4f4' : '#555',
-    '&:hover': {
-      color: theme.palette.type === 'dark' ? '#999' : '#333',
+    width: "100%",
+    margin: "auto",
+    display: "flex",
+    alignItems: "center",
+    textDecoration: "none",
+    padding: "10px 1rem 5px",
+    justifyContent: "flex-start",
+    color: theme.palette.type === "dark" ? "#f4f4f4" : "#555",
+    "&:hover": {
+      color: theme.palette.type === "dark" ? "#999" : "#333",
     },
   },
   currentActiveRoute: {
     borderRight:
-        theme.palette.type === 'dark'
-          ? '2px solid #0068BF !important'
-          : '2px solid #0068BF !important',
-    color: theme.palette.type === 'dark' ? '#89C' : '#56B',
+        theme.palette.type === "dark"
+          ? "2px solid #0068BF !important"
+          : "2px solid #0068BF !important",
+    color: theme.palette.type === "dark" ? "#89C" : "#56B",
     fontWeight: 700,
-    '&:hover': {
-      color: theme.palette.type === 'dark' ? '#89C' : '#56B',
+    "&:hover": {
+      color: theme.palette.type === "dark" ? "#89C" : "#56B",
     },
   },
-  '@keyframes routeActive': {
-    '0%': {
+  "@keyframes routeActive": {
+    "0%": {
       opacity: 0.7,
-      transform: 'translateX(-20px)',
+      transform: "translateX(-20px)",
       background: theme.palette.primary.main,
       zIndex: 9000,
     },
-    '100%': {
+    "100%": {
       opacity: 1,
-      transform: 'translateX(0px)',
+      transform: "translateX(0px)",
       background: theme.palette.primary.main,
       zIndex: 9000,
     },
   },
   navTitle: {
-    fontSize: '.93em',
-    marginTop: '-5px',
+    fontSize: ".93em",
+    marginTop: "-5px",
   },
 }));
 
@@ -162,8 +162,8 @@ export default function Layout({
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const { user } = useContext(AuthContext);
-  const [username, setUserName] = useState('');
-  const [_, setRole] = useState('');
+  const [username, setUserName] = useState("");
+  const [_, setRole] = useState("");
   const { badges } = useNavBadge();
 
   useEffect(() => {
@@ -175,7 +175,7 @@ export default function Layout({
     const navs: any[] = [];
     if (user) {
       if (user.UserRole) {
-        if (user.UserRole.includes('ADMIN')) {
+        if (user.UserRole.includes("ADMIN")) {
           navs.push(
             {
               icon: (
@@ -194,8 +194,8 @@ export default function Layout({
                   />
                 </svg>
               ),
-              title: 'Dashboard',
-              path: '/app/dashboard-admin',
+              title: "Dashboard",
+              path: "/app/dashboard-admin",
               badge: badges.dashboard,
             },
             {
@@ -212,8 +212,8 @@ export default function Layout({
                   <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z" />
                 </svg>
               ),
-              title: 'Payments',
-              path: '/app/approvals-payment',
+              title: "Payments",
+              path: "/app/approvals-payment",
               badge: badges.paymetPending,
             },
             {
@@ -229,8 +229,8 @@ export default function Layout({
                   <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z" />
                 </svg>
               ),
-              title: 'Subscriptions',
-              path: '/app/approvals-subscription',
+              title: "Subscriptions",
+              path: "/app/approvals-subscription",
               badge: badges.subscriptionPending,
             },
             {
@@ -247,8 +247,8 @@ export default function Layout({
                   <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z" />
                 </svg>
               ),
-              title: 'Employees',
-              path: '/app/employees',
+              title: "Employees",
+              path: "/app/employees",
             },
             {
               icon: (
@@ -263,13 +263,13 @@ export default function Layout({
                   <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
                 </svg>
               ),
-              title: 'Users',
-              path: '/app/users',
+              title: "Users",
+              path: "/app/users",
               badge: badges.usersPending,
             },
           );
         }
-        if (user.UserRole.includes('SALSE')) {
+        if (user.UserRole.includes("SALSE")) {
           navs.push(
             {
               icon: (
@@ -286,8 +286,8 @@ export default function Layout({
                   <path d="M5 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
                 </svg>
               ),
-              title: 'Orders',
-              path: '/app/orders',
+              title: "Orders",
+              path: "/app/orders",
             },
             {
               icon: (
@@ -303,8 +303,8 @@ export default function Layout({
                   <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
                 </svg>
               ),
-              title: 'Attendees',
-              path: '/app/attendees',
+              title: "Attendees",
+              path: "/app/attendees",
             },
             {
               icon: (
@@ -320,12 +320,12 @@ export default function Layout({
                   <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                 </svg>
               ),
-              title: 'Chat',
-              path: '/app/chat',
+              title: "Chat",
+              path: "/app/chat",
             },
           );
         }
-        if (user.UserRole.includes('TECH_SUPPORT')) {
+        if (user.UserRole.includes("TECH_SUPPORT")) {
           navs.push(
             {
               icon: (
@@ -342,8 +342,8 @@ export default function Layout({
                   <path d="M5 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
                 </svg>
               ),
-              title: 'Orders',
-              path: '/app/subscribers',
+              title: "Orders",
+              path: "/app/subscribers",
             },
             {
               icon: (
@@ -359,8 +359,8 @@ export default function Layout({
                   <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
                 </svg>
               ),
-              title: 'Attendees',
-              path: '/app/attended-subscribers',
+              title: "Attendees",
+              path: "/app/attended-subscribers",
             },
             {
               icon: (
@@ -376,12 +376,12 @@ export default function Layout({
                   <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                 </svg>
               ),
-              title: 'Chat',
-              path: '/app/chat',
+              title: "Chat",
+              path: "/app/chat",
             },
           );
         }
-        if (user.UserRole.includes('CLIENT')) {
+        if (user.UserRole.includes("CLIENT")) {
           navs.push(
             {
               icon: (
@@ -396,8 +396,8 @@ export default function Layout({
                   <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
                 </svg>
               ),
-              title: 'Orders',
-              path: '/app/user/orders',
+              title: "Orders",
+              path: "/app/user/orders",
             },
             // {
             //   icon: (
@@ -433,8 +433,8 @@ export default function Layout({
                   <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
                 </svg>
               ),
-              title: 'Support',
-              path: '/app/chat',
+              title: "Support",
+              path: "/app/chat",
             },
           );
         }
@@ -467,11 +467,7 @@ export default function Layout({
             </IconButton>
           </Box>
           <Box>
-            <img
-              src={teklogixLogo}
-              className={classes.logos}
-              alt="Teklogix Logo"
-            />
+            <img src={teklogixLogo} className={classes.logos} alt="Teklogix Logo" />
           </Box>
           <Box ml="auto" display="flex">
             <NotificationBar />
@@ -512,7 +508,7 @@ export default function Layout({
             </Box>
             <Box>
               <IconButton size="small" onClick={handleDrawerClose}>
-                {theme.direction === 'ltr' ? (
+                {theme.direction === "ltr" ? (
                   <ChevronLeftIcon />
                 ) : (
                   <ChevronRightIcon />
@@ -537,7 +533,7 @@ export default function Layout({
                     <Badge
                       badgeContent={nav?.badge}
                       color="secondary"
-                      style={{ marginLeft: '2rem' }}
+                      style={{ marginLeft: "2rem" }}
                     />
                   </Box>
                 </Box>

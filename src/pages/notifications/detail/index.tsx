@@ -1,51 +1,51 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import {
   Avatar, Box, Card, Chip, Theme, makeStyles,
-} from '@material-ui/core';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
-import ExtensionIcon from '@material-ui/icons/Extension';
-import { useFireQueryData } from '../../../FireQuery';
-import { AuthContext } from '../../../contexts/auth/AuthProvider';
-import OrderDetailForm from './OrderDetailForm';
+} from "@material-ui/core";
+import AutorenewIcon from "@material-ui/icons/Autorenew";
+import ExtensionIcon from "@material-ui/icons/Extension";
+import { useFireQueryData } from "../../../FireQuery";
+import { AuthContext } from "../../../contexts/auth/AuthProvider";
+import OrderDetailForm from "./OrderDetailForm";
 
 const useStyles = makeStyles((theme: Theme) => ({
   parentBox: {
-    [theme.breakpoints.down('md')]: {
-      alignItems: 'center',
+    [theme.breakpoints.down("md")]: {
+      alignItems: "center",
     },
   },
   parent: {
-    width: '80%',
-    padding: '0 5%',
-    margin: 'auto',
+    width: "80%",
+    padding: "0 5%",
+    margin: "auto",
     borderRadius: 10,
   },
   regBtn: {
-    [theme.breakpoints.up('md')]: {
-      width: '70%',
+    [theme.breakpoints.up("md")]: {
+      width: "70%",
     },
-    color: 'white',
-    fontSize: '14px',
-    textTransform: 'none',
-    letterSpacing: '1px',
+    color: "white",
+    fontSize: "14px",
+    textTransform: "none",
+    letterSpacing: "1px",
   },
   wrapper: {
-    width: '100%',
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
+    width: "100%",
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
   },
   buttonProgress: {
-    color: 'yellow',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    color: "yellow",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
   checkBoxContainer: {
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '7rem',
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: "7rem",
     },
   },
   formControl: {
@@ -56,78 +56,78 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(2),
   },
   root: {
-    marginLeft: '-0.2rem',
+    marginLeft: "-0.2rem",
   },
   orderLogo: {
     background: theme.palette.primary.main,
-    color: '#fff',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+    color: "#fff",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
   },
   chipStyle: {
-    margin: '10px',
+    margin: "10px",
   },
   chipStyleStatus: {
-    padding: '1rem',
-    fontWeight: 'bolder',
+    padding: "1rem",
+    fontWeight: "bolder",
   },
 }));
 
 export const orderForm = [
   {
-    name: 'clientName',
-    label: 'Client Name',
-    variant: 'outlined',
-    size: 'small',
-    type: 'text',
+    name: "clientName",
+    label: "Client Name",
+    variant: "outlined",
+    size: "small",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'companyName',
-    label: 'Company Name',
-    variant: 'outlined',
-    size: 'small',
-    type: 'text',
+    name: "companyName",
+    label: "Company Name",
+    variant: "outlined",
+    size: "small",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'companyUrl',
-    label: 'Company Url',
-    variant: 'outlined',
-    size: 'small',
-    type: 'text',
+    name: "companyUrl",
+    label: "Company Url",
+    variant: "outlined",
+    size: "small",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'outlined',
-    size: 'small',
-    type: 'email',
+    name: "email",
+    label: "Email Address",
+    variant: "outlined",
+    size: "small",
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
   {
-    name: 'phoneNumber',
-    label: 'Tel',
-    variant: 'outlined',
-    size: 'small',
-    type: 'tel',
+    name: "phoneNumber",
+    label: "Tel",
+    variant: "outlined",
+    size: "small",
+    type: "tel",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-        message: 'invalid format',
+        message: "invalid format",
       },
     },
   },
@@ -146,7 +146,7 @@ export default function OrderDetail() {
     data,
     // loading: loadingOrder,
     // error: orderError
-  } = useFireQueryData('orders', user.uid);
+  } = useFireQueryData("orders", user.uid);
 
   // const {
   //   control,
@@ -179,8 +179,8 @@ export default function OrderDetail() {
           <Box display="flex" flexDirection="column" justifyContent="center" p={5}>
             <Card className={classes.orderLogo} variant="outlined">
               <Box m={3} display="flex" flexDirection="column" alignItems="center">
-                <Avatar style={{ width: '100px', height: '100px' }}>
-                  <ExtensionIcon style={{ fontSize: '3rem' }} />
+                <Avatar style={{ width: "100px", height: "100px" }}>
+                  <ExtensionIcon style={{ fontSize: "3rem" }} />
                 </Avatar>
                 <Box mt={2} fontWeight={700} fontSize="1.4rem">
                   {data?.solutions}
@@ -206,7 +206,7 @@ export default function OrderDetail() {
               flexWrap="wrap"
               alignItems="center"
               justifyContent="center"
-              flexDirection={{ sm: 'flex', xs: 'flex' }}
+              flexDirection={{ sm: "flex", xs: "flex" }}
             >
               <Chip
                 className={classes.chipStyle}
@@ -220,23 +220,23 @@ export default function OrderDetail() {
             </Box>
             <Box display="flex" flexWrap="wrap" justifyContent="center">
               <Box fontWeight={800} mx={1}>
-                {data?.billingStarted ? 'Billing Not Started' : 'Billing Started'}
+                {data?.billingStarted ? "Billing Not Started" : "Billing Started"}
                 <br />
               </Box>
               <Box fontWeight={800} mx={1}>
                 {data?.currentSalesReviewer
-                  ? 'Sales Reviewer Name'
-                  : 'No Sales Reviewer'}
+                  ? "Sales Reviewer Name"
+                  : "No Sales Reviewer"}
                 <br />
               </Box>
               <Box fontWeight={800} mx={1}>
                 {data?.currentTechReviewer
-                  ? 'Tech Reviewer Name'
-                  : 'No Tech Reviewer'}
+                  ? "Tech Reviewer Name"
+                  : "No Tech Reviewer"}
                 <br />
               </Box>
               <Box fontWeight={800} mx={1}>
-                {data?.isPayApproved ? 'Payed' : 'Not Payed'}
+                {data?.isPayApproved ? "Payed" : "Not Payed"}
                 <br />
                 {/* {data?.currentSalesReviewerRef}<br />
                 {data?.currentTechReviewerRef}<br /> */}

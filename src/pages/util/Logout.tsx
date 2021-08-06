@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box, Button } from '@material-ui/core';
-import logoutIllustration from '../../assets/auth/logout.svg';
+import React from "react";
+import { Box, Button } from "@material-ui/core";
+import logoutIllustration from "../../assets/auth/logout.svg";
 
 const Logout = () => (
   <Box
@@ -13,7 +13,7 @@ const Logout = () => (
   >
     <Box maxWidth={400} maxHeight={400}>
       <img
-        style={{ maxWidth: '400px' }}
+        style={{ maxWidth: "400px" }}
         width="80%"
         src={logoutIllustration}
         alt="Logout"

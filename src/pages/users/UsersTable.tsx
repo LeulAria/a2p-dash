@@ -1,38 +1,38 @@
-import React from 'react';
+import React from "react";
 import {
   DataGrid,
   GridCellParams,
   GridColDef,
   GridToolbar,
-} from '@material-ui/data-grid';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+} from "@material-ui/data-grid";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import {
   IconButton, Theme, createStyles, makeStyles,
-} from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import NoData from '../util/NoData';
-import CustomLoadingOverlay from '../util/CustomLoadingOverlay';
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import NoData from "../util/NoData";
+import CustomLoadingOverlay from "../util/CustomLoadingOverlay";
 
 const columns: GridColDef[] = [
   {
-    field: 'id',
+    field: "id",
     hide: true,
-    headerName: 'ID',
+    headerName: "ID",
     width: 70,
   },
-  { field: 'full_name', headerName: 'Full name', width: 180 },
-  { field: 'user_email', headerName: 'Email', width: 170 },
-  { field: 'user_role', headerName: 'User Role', width: 170 },
+  { field: "full_name", headerName: "Full name", width: 180 },
+  { field: "user_email", headerName: "Email", width: 170 },
+  { field: "user_role", headerName: "User Role", width: 170 },
   {
-    field: 'phonenumber',
-    headerName: 'Phone Number',
-    description: 'User Phone number',
+    field: "phonenumber",
+    headerName: "Phone Number",
+    description: "User Phone number",
     sortable: false,
     width: 170,
   },
   {
-    field: 'view',
-    headerName: 'See Detail',
+    field: "view",
+    headerName: "See Detail",
     width: 130,
     renderCell: (params: GridCellParams) => {
       const { id } = params;
@@ -40,7 +40,7 @@ const columns: GridColDef[] = [
       const btn = (
         <Link to={`/users/${id}/detail`}>
           <IconButton>
-            <VisibilityIcon style={{ color: '#666', fontSize: '1.6rem' }} />
+            <VisibilityIcon style={{ color: "#666", fontSize: "1.6rem" }} />
           </IconButton>
         </Link>
       );
@@ -58,26 +58,26 @@ interface IProps {
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     borderRadius: 3,
-    '& .MuiDataGrid-toolbar': {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      padding: '0 1rem',
+    "& .MuiDataGrid-toolbar": {
+      display: "flex",
+      justifyContent: "flex-end",
+      padding: "0 1rem",
       borderBottom:
-          theme.palette.type === 'dark' ? '1px solid #555' : '1px solid #ddd',
+          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
-    '& .MuiButton-label': {
-      margin: '0 10px',
-      color: theme.palette.type === 'dark' ? '#999' : '#666',
+    "& .MuiButton-label": {
+      margin: "0 10px",
+      color: theme.palette.type === "dark" ? "#999" : "#666",
     },
-    '& .MuiButton-root': {
+    "& .MuiButton-root": {
       borderRadius: 0,
       borderLeft:
-          theme.palette.type === 'dark' ? '1px solid #555' : '1px solid #ddd',
+          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
-    '& .MuiSvgIcon-root': {
-      fontSize: '1.5rem',
+    "& .MuiSvgIcon-root": {
+      fontSize: "1.5rem",
     },
-    '& .MuiDataGridPanelFooter-root': {
+    "& .MuiDataGridPanelFooter-root": {
       borderRadius: 0,
     },
   },
@@ -87,7 +87,7 @@ const UsersTable: React.FC<IProps> = ({ status, rows }: any) => {
   const classes = useStyles();
 
   return (
-    <div style={{ height: 440, width: '100%' }}>
+    <div style={{ height: 440, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}

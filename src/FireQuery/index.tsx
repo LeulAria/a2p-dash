@@ -1,12 +1,10 @@
-import React, {
-  Suspense, createContext, lazy, useEffect, useReducer,
-} from 'react';
-import { fireReducer } from './FireQuery/reducers';
-import LoadingDevtools from './FireQuery/DevTool/LoadingDevtools';
+import React, { Suspense, createContext, lazy, useEffect, useReducer } from "react";
+import { fireReducer } from "./FireQuery/reducers";
+import LoadingDevtools from "./FireQuery/DevTool/LoadingDevtools";
 
-export * from './FireQuery/hooks';
+export * from "./FireQuery/hooks";
 
-const DevTool = lazy(() => import('./FireQuery/DevTool'));
+const DevTool = lazy(() => import("./FireQuery/DevTool"));
 
 const initialState: any = {
   devtools: false,
@@ -28,21 +26,21 @@ const FireQueryProvider: React.FC<IProps> = ({
   firebase,
 }) => {
   const [firequery, dispatch] = useReducer(fireReducer, [], () => {
-    const localData = localStorage.getItem('firequery');
+    const localData = localStorage.getItem("firequery");
     return localData ? { ...JSON.parse(localData), firebase } : initialState;
   });
 
   useEffect(() => {
-    dispatch({ type: 'INIT', devtools, firebase });
+    dispatch({ type: "INIT", devtools, firebase });
   }, []);
 
   useEffect(() => {
     localStorage.setItem(
-      'firequery',
+      "firequery",
       JSON.stringify({
         devtools: firequery.devtools,
         querys: firequery.querys,
-      }),
+      })
     );
   }, [firequery]);
 

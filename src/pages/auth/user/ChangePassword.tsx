@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import {
   Box,
   Button,
@@ -9,28 +9,28 @@ import {
   Typography,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { useHistory, useLocation } from 'react-router';
-import { Controller, useForm } from 'react-hook-form';
-import TextComponent from '../../../components/shared/TextComponent';
-import firebase from '../../../firebase';
-import { useSnackBar } from '../../../contexts/snackbar/SnackBarContext';
-import { redirectUserHome } from '../../../utils/userRoleUtils';
-import { useFireMutation } from '../../../FireQuery';
-import uuid from '../../../utils/uuid';
+} from "@material-ui/core";
+import { useHistory, useLocation } from "react-router";
+import { Controller, useForm } from "react-hook-form";
+import TextComponent from "../../../components/shared/TextComponent";
+import firebase from "../../../firebase";
+import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
+import { redirectUserHome } from "../../../utils/userRoleUtils";
+import { useFireMutation } from "../../../FireQuery";
+import uuid from "../../../utils/uuid";
 
 const useStyles = makeStyles(() => createStyles({
   root: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   wrapper: {
-    position: 'relative',
+    position: "relative",
   },
   buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
@@ -43,11 +43,11 @@ const ChangePasswords: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const location: any = useLocation<any>();
-  const [userEmail] = useState(location.state?.email || '');
-  const [pass] = useState(location.state?.password || '');
+  const [userEmail] = useState(location.state?.email || "");
+  const [pass] = useState(location.state?.password || "");
   const { setSnackbar } = useSnackBar();
   const [sendingMsg, setSendingMsg] = useState(false);
-  const { mutate: mutateUser } = useFireMutation('online');
+  const { mutate: mutateUser } = useFireMutation("online");
 
   const {
     control,
@@ -63,31 +63,31 @@ const ChangePasswords: React.FC = () => {
 
   const changePassword = [
     {
-      name: 'password',
-      label: 'Password',
-      variant: 'outlined',
-      type: 'password',
+      name: "password",
+      label: "Password",
+      variant: "outlined",
+      type: "password",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '6',
-          message: 'password must be at least 6 characters',
+          value: "6",
+          message: "password must be at least 6 characters",
         },
       },
     },
     {
-      name: 'confirmPassword',
-      label: 'Confirm Password',
-      variant: 'outlined',
-      type: 'password',
+      name: "confirmPassword",
+      label: "Confirm Password",
+      variant: "outlined",
+      type: "password",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '6',
-          message: 'password must be at least 6 characters',
+          value: "6",
+          message: "password must be at least 6 characters",
         },
-        validate: (value: string) => (value !== getValues('password')
-          ? 'Confirm password must me same as password'
+        validate: (value: string) => (value !== getValues("password")
+          ? "Confirm password must me same as password"
           : true),
       },
     },
@@ -98,7 +98,7 @@ const ChangePasswords: React.FC = () => {
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        mutateUser('ADD', user?.uid, {
+        mutateUser("ADD", user?.uid, {
           isOnline: true,
           id: user?.uid,
         });
@@ -109,11 +109,11 @@ const ChangePasswords: React.FC = () => {
         .then(() => {
           setSendingMsg(false);
 
-          return firebase.firestore().collection('users').doc(user.uid).update({
+          return firebase.firestore().collection("users").doc(user.uid).update({
             isPassChanged: true,
           });
         })
-        .then(() => firebase.firestore().collection('users').doc(user.uid).get())
+        .then(() => firebase.firestore().collection("users").doc(user.uid).get())
         .then((userData: any) => {
           const userRoles = userData.data();
           history.push(redirectUserHome(userRoles?.roles));
@@ -122,7 +122,7 @@ const ChangePasswords: React.FC = () => {
           setSnackbar({
             open: true,
             message: error.code,
-            type: 'error',
+            type: "error",
           });
           setSendingMsg(false);
         });

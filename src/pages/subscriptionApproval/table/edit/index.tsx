@@ -1,11 +1,11 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import { Box } from '@material-ui/core';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import { Box } from "@material-ui/core";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 
 const EditDialog = ({
   editDialog,
@@ -21,7 +21,7 @@ const EditDialog = ({
   };
 
   const handleSave = () => {
-    console.log('Save');
+    console.log("Save");
   };
 
   return (
@@ -42,7 +42,7 @@ const EditDialog = ({
         </DialogTitle>
         <DialogContent dividers>
           <DialogContentText
-            style={{ minWidth: 300, outline: 'none' }}
+            style={{ minWidth: 300, outline: "none" }}
             id="scroll-dialog-description"
             tabIndex={-1}
           >

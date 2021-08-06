@@ -1,13 +1,11 @@
-import React, {
-  createContext, useContext, useState,
-} from 'react';
+import React, { createContext, useContext, useState } from "react";
 
-type ThemeType = 'light' | 'dark';
+type ThemeType = "light" | "dark";
 
 export const initialState = {
-  theme: localStorage.getItem('theme') === 'dark' ? 'dark' : 'light' || 'light',
+  theme: localStorage.getItem("theme") === "dark" ? "dark" : "light" || "light",
   toggelTheme: (theme: ThemeType) => {
-    const t = 'theme';
+    const t = "theme";
     console.log(theme, t);
   },
 };
@@ -20,12 +18,12 @@ const AppThemeProvider = ({
   children: JSX.Element | JSX.Element[];
 }) => {
   const [theme, setTheme] = useState<ThemeType>(
-    localStorage.getItem('theme') === 'dark' ? 'dark' : 'light' || 'light',
+    localStorage.getItem("theme") === "dark" ? "dark" : "light" || "light",
   );
 
   const toggelTheme = (theme: ThemeType): void => {
     setTheme(theme);
-    localStorage.setItem('theme', theme);
+    localStorage.setItem("theme", theme);
   };
 
   return (

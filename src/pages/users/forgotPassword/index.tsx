@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import {
   Box,
   Button,
@@ -9,13 +9,13 @@ import {
   Typography,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { RouteComponentProps, useHistory, useLocation } from 'react-router';
-import { Controller, useForm } from 'react-hook-form';
-import TextComponent from '../../../components/shared/TextComponent';
-import firebase from '../../../firebase';
-import { useSnackBar } from '../../../contexts/snackbar/SnackBarContext';
-import uuid from '../../../utils/uuid';
+} from "@material-ui/core";
+import { RouteComponentProps, useHistory, useLocation } from "react-router";
+import { Controller, useForm } from "react-hook-form";
+import TextComponent from "../../../components/shared/TextComponent";
+import firebase from "../../../firebase";
+import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
+import uuid from "../../../utils/uuid";
 
 interface Props extends RouteComponentProps<{ state?: string }> {
   // props.location.state.myStateProp
@@ -24,16 +24,16 @@ interface Props extends RouteComponentProps<{ state?: string }> {
 
 const useStyles = makeStyles(() => createStyles({
   root: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   wrapper: {
-    position: 'relative',
+    position: "relative",
   },
   buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
@@ -44,15 +44,15 @@ const useStyles = makeStyles(() => createStyles({
 
 export const signUpFields = [
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'outlined',
-    type: 'email',
+    name: "email",
+    label: "Email Address",
+    variant: "outlined",
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
@@ -62,15 +62,15 @@ const ForgotPass: React.FC<Props> = () => {
   const classes = useStyles();
   const history = useHistory();
   const location: any = useLocation<any>();
-  const [userEmail, setUserEmail] = useState(location.state?.email || '');
-  const [pass, setPass] = useState(location.state?.password || '');
+  const [userEmail, setUserEmail] = useState(location.state?.email || "");
+  const [pass, setPass] = useState(location.state?.password || "");
   const { setSnackbar } = useSnackBar();
   const [sendingMsg, setSendingMsg] = useState(false);
 
   useEffect(() => {
     if (history) {
-      setUserEmail(location.state?.email || '');
-      setPass(location.state?.password || '');
+      setUserEmail(location.state?.email || "");
+      setPass(location.state?.password || "");
     }
   }, []);
 
@@ -94,17 +94,17 @@ const ForgotPass: React.FC<Props> = () => {
         .then(() => {
           setSnackbar({
             open: true,
-            message: 'Email confirmation sent!',
-            type: 'success',
+            message: "Email confirmation sent!",
+            type: "success",
           });
           setSendingMsg(false);
-          history.push('/user/login');
+          history.push("/user/login");
         })
         .catch((error) => {
           setSnackbar({
             open: true,
             message: error.code,
-            type: 'error',
+            type: "error",
           });
           setSendingMsg(false);
         });
@@ -165,10 +165,7 @@ const ForgotPass: React.FC<Props> = () => {
                   Send Confirmation
                 </Button>
                 {sendingMsg && (
-                  <CircularProgress
-                    size={30}
-                    className={classes.buttonProgress}
-                  />
+                  <CircularProgress size={30} className={classes.buttonProgress} />
                 )}
               </div>
             </Box>

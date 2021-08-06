@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { Box, Button } from '@material-ui/core';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
-import pendingApprovementIllustration from '../../assets/app/pendingApprovement.svg';
+import React, { useContext } from "react";
+import { Box, Button } from "@material-ui/core";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import { AuthContext } from "../../contexts/auth/AuthProvider";
+import pendingApprovementIllustration from "../../assets/app/pendingApprovement.svg";
 
 const NoChat = ({ fetchChatStatus }: { fetchChatStatus: () => void }) => {
   const { user } = useContext(AuthContext);
@@ -16,7 +16,7 @@ const NoChat = ({ fetchChatStatus }: { fetchChatStatus: () => void }) => {
     >
       <Box maxWidth={400} maxHeight={400}>
         <img
-          style={{ maxWidth: '400px' }}
+          style={{ maxWidth: "400px" }}
           width="80%"
           src={pendingApprovementIllustration}
           alt="No Chat Available."
@@ -27,8 +27,8 @@ const NoChat = ({ fetchChatStatus }: { fetchChatStatus: () => void }) => {
       </Box>
       <Box fontWeight={500} fontSize="1rem" textAlign="center">
         {user.roles.isClient
-          ? 'Waiting for customer supports to accept your order.'
-          : ''}
+          ? "Waiting for customer supports to accept your order."
+          : ""}
       </Box>
       <Box mt={3}>
         <Button

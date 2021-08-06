@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
-const useSearch = (data: any, searchKey = '') => {
+const useSearch = (data: any, searchKey = "") => {
   const [loading, setLoading] = useState(false);
   const [filtered, setFiltered] = useState([]);
 

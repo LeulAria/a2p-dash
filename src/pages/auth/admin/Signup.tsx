@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import {
   Box,
   Button,
@@ -9,29 +9,29 @@ import {
   Typography,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import { Controller, useForm } from 'react-hook-form';
-import firebase from 'firebase';
-import TextComponent from '../../../components/shared/TextComponent';
-import { useFireMutation } from '../../../FireQuery';
-import AuthSelectors from '../../../components/auth/AuthSelectors';
-import { useSnackBar } from '../../../contexts/snackbar/SnackBarContext';
-import uuid from '../../../utils/uuid';
+} from "@material-ui/core";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import firebase from "firebase";
+import TextComponent from "../../../components/shared/TextComponent";
+import { useFireMutation } from "../../../FireQuery";
+import AuthSelectors from "../../../components/auth/AuthSelectors";
+import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
+import uuid from "../../../utils/uuid";
 
 const useStyles = makeStyles(() => createStyles({
   root: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   wrapper: {
-    position: 'relative',
+    position: "relative",
   },
   buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
@@ -42,38 +42,38 @@ const useStyles = makeStyles(() => createStyles({
 
 export const signUpFields = [
   {
-    name: 'userName',
-    label: 'User Name',
-    variant: 'outlined',
-    type: 'text',
+    name: "userName",
+    label: "User Name",
+    variant: "outlined",
+    type: "text",
     rules: {
-      required: 'this field is required',
-      message: 'user name must be at least 4 characters',
+      required: "this field is required",
+      message: "user name must be at least 4 characters",
     },
   },
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'outlined',
-    type: 'email',
+    name: "email",
+    label: "Email Address",
+    variant: "outlined",
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
   {
-    name: 'password',
-    label: 'Password',
-    variant: 'outlined',
-    type: 'password',
+    name: "password",
+    label: "Password",
+    variant: "outlined",
+    type: "password",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       minLength: {
-        value: '6',
-        message: 'password must be at least 6 characters',
+        value: "6",
+        message: "password must be at least 6 characters",
       },
     },
   },
@@ -85,8 +85,8 @@ const Signup = () => {
   const [isAtuthing, setIsAtuthing] = useState(false);
   const { setSnackbar } = useSnackBar();
 
-  const { loading, success, mutate } = useFireMutation('users');
-  const { mutate: mutateUser } = useFireMutation('online');
+  const { loading, success, mutate } = useFireMutation("users");
+  const { mutate: mutateUser } = useFireMutation("online");
 
   const {
     control,
@@ -102,18 +102,18 @@ const Signup = () => {
       .then((userCred) => {
         if (userCred) {
           mutate(
-            'ADD',
+            "ADD",
             userCred.user?.uid,
             {
               id: userCred.user?.uid,
               ...data,
               isOnline: true,
               roles: {
-                isTechSupport: data.role === 'TECH_SUPPORT',
-                isSalesSupport: data.role === 'SALES_SUPPORT',
+                isTechSupport: data.role === "TECH_SUPPORT",
+                isSalesSupport: data.role === "SALES_SUPPORT",
               },
               isEmailVerified: userCred.user?.emailVerified,
-              accountStatus: 'pending',
+              accountStatus: "pending",
               isStuff: true,
             },
             {
@@ -122,7 +122,7 @@ const Signup = () => {
             },
           );
 
-          mutateUser('ADD', userCred.user?.uid, {
+          mutateUser("ADD", userCred.user?.uid, {
             isOnline: true,
             id: userCred.user?.uid,
           });
@@ -133,10 +133,10 @@ const Signup = () => {
         setIsAtuthing(false);
         setSnackbar({
           open: true,
-          message: 'Account created successfully...',
-          type: 'success',
+          message: "Account created successfully...",
+          type: "success",
         });
-        history.push('/auth-admin/login', {
+        history.push("/auth-admin/login", {
           email: data.email,
         });
       })
@@ -146,7 +146,7 @@ const Signup = () => {
         setSnackbar({
           open: true,
           message: err.code,
-          type: 'error',
+          type: "error",
         });
       });
   };
@@ -163,7 +163,7 @@ const Signup = () => {
         justifyContent="center"
         minHeight="90vh"
       >
-        <Box maxWidth={450}>
+        <Box maxWidth={350}>
           <Typography>
             <Box fontWeight={900} fontSize="2.5rem" textAlign="center">
               Signup A2P
@@ -195,7 +195,7 @@ const Signup = () => {
               render={({ field }) => <AuthSelectors {...field} />}
               control={control}
               rules={{
-                required: 'this field is required',
+                required: "this field is required",
               }}
             />
 

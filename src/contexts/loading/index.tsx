@@ -1,10 +1,10 @@
-import React, {
-  createContext, useContext, useState,
-} from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 export const initialState = {
   loading: false,
-  toggleLoading: (loading: boolean) => { console.log(loading); },
+  toggleLoading: (loading: boolean) => {
+    console.log(loading);
+  },
 };
 
 export const LoadingContext = createContext(initialState);

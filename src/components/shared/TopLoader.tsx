@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
-import LoadingBar from 'react-top-loading-bar';
+import LoadingBar from "react-top-loading-bar";
 
 const TopLoader = () => {
   const ref = useRef<any>(null);

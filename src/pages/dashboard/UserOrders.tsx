@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useContext, useState } from "react";
+import { Helmet } from "react-helmet";
 import {
   AppBar,
   Avatar,
@@ -13,68 +13,68 @@ import {
   Toolbar,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
-import ExtensionIcon from '@material-ui/icons/Extension';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { useFireQuery } from '../../FireQuery';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
+} from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
+import ExtensionIcon from "@material-ui/icons/Extension";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import { useFireQuery } from "../../FireQuery";
+import { AuthContext } from "../../contexts/auth/AuthProvider";
 
-import OrderStatus from '../../components/dashboard/orderStatus';
-import ChooseSolution from './chooseSolution';
+import OrderStatus from "../../components/dashboard/orderStatus";
+import ChooseSolution from "./chooseSolution";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   liElement: {
-    fontSize: '1rem',
+    fontSize: "1rem",
     fontWeight: 600,
   },
   status: {
-    position: 'absolute',
+    position: "absolute",
     top: 5,
     right: 15,
   },
   orderCardContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifySelf: 'space-between',
-    height: '230px',
-    borderRadius: '15px',
-    boxShadow: '0 1px 12px rgba(0,0,0,0.3)',
-    background: 'linear-gradient(90deg, #78466B 0%, #5E3FFB 100%)',
+    display: "flex",
+    flexDirection: "column",
+    justifySelf: "space-between",
+    height: "230px",
+    borderRadius: "15px",
+    boxShadow: "0 1px 12px rgba(0,0,0,0.3)",
+    background: "linear-gradient(90deg, #78466B 0%, #5E3FFB 100%)",
   },
   orderCardTitle: {
-    whiteSpace: 'nowrap',
-    fontWeight: 'bolder',
-    fontSize: '1.2rem',
-    textAlign: 'center',
-    color: '#FFF',
+    whiteSpace: "nowrap",
+    fontWeight: "bolder",
+    fontSize: "1.2rem",
+    textAlign: "center",
+    color: "#FFF",
   },
   orderCardStatus: {
-    color: '#FFF',
+    color: "#FFF",
     fontWeight: 500,
   },
   orderCardBottomAction: {
-    display: 'flex',
-    background: '#1115',
-    padding: '1rem',
-    marginTop: 'auto',
+    display: "flex",
+    background: "#1115",
+    padding: "1rem",
+    marginTop: "auto",
   },
   chip: {
-    background: theme.palette.type === 'dark' ? '#1114' : '#1116',
-    boxShadow: '0 1px 10px rgba(0,0,0,0.2)',
-    color: '#FFF',
-    cursor: 'pointer',
-    padding: '.8rem .6rem',
-    margin: '5px',
+    background: theme.palette.type === "dark" ? "#1114" : "#1116",
+    boxShadow: "0 1px 10px rgba(0,0,0,0.2)",
+    color: "#FFF",
+    cursor: "pointer",
+    padding: ".8rem .6rem",
+    margin: "5px",
     borderRadius: 5,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexBasis: '110px',
-    transition: '.2s all',
-    '&:hover': {
-      transform: 'scale(1.052)',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    flexBasis: "110px",
+    transition: ".2s all",
+    "&:hover": {
+      transform: "scale(1.052)",
     },
   },
 }));
@@ -84,11 +84,8 @@ const UserOrders = () => {
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
 
-  const {
-    data: datas,
-    loading,
-  } = useFireQuery('orders', {
-    query: [['uid ==', user.uid]],
+  const { data: datas, loading } = useFireQuery("orders", {
+    query: [["uid ==", user.uid]],
     snapshotListener: true,
   });
 
@@ -100,8 +97,8 @@ const UserOrders = () => {
 
       <Box
         style={{
-          minHeight: '100%',
-          padding: '0',
+          minHeight: "100%",
+          padding: "0",
         }}
       >
         <AppBar position="static" color="transparent" elevation={0}>
@@ -126,12 +123,12 @@ const UserOrders = () => {
             </Box>
           </Toolbar>
         </AppBar>
-        <Divider style={{ marginTop: '1.3rem', marginBottom: '2.3rem' }} />
+        <Divider style={{ marginTop: "1.3rem", marginBottom: "2.3rem" }} />
         <Container>
           <Box style={{ paddingTop: 3 }}>
             <Grid container spacing={8}>
               {!loading && datas ? (
-                datas.map((data: any) => (data.solutions === 'Both' ? (
+                datas.map((data: any) => (data.solutions === "Both" ? (
                   <>
                     <Grid item key={Math.random()} lg={4} md={6} xs={12}>
                       <OrderStatus
@@ -180,7 +177,7 @@ const UserOrders = () => {
                               Payment
                             </Box>
                             <Box fontWeight={300} fontSize=".8rem">
-                              {data.isPayed ? 'Payed' : 'Not Payed'}
+                              {data.isPayed ? "Payed" : "Not Payed"}
                             </Box>
                           </Box>
                           <Box fontWeight={500} className={classes.chip}>
@@ -188,9 +185,9 @@ const UserOrders = () => {
                               Subscription
                             </Box>
                             <Box fontWeight={300} fontSize=".8rem">
-                              {data.status === 'subscribed'
-                                ? 'subscribed'
-                                : 'Not Started'}
+                              {data.status === "subscribed"
+                                ? "subscribed"
+                                : "Not Started"}
                             </Box>
                           </Box>
                         </Box>
@@ -206,7 +203,7 @@ const UserOrders = () => {
                     lg={4}
                     md={6}
                     xs={12}
-                    style={{ marginTop: '-1rem' }}
+                    style={{ marginTop: "-1rem" }}
                   >
                     <Box position="relative" maxWidth={350}>
                       <Skeleton height={340} />
@@ -218,7 +215,7 @@ const UserOrders = () => {
                     lg={4}
                     md={6}
                     xs={12}
-                    style={{ marginTop: '-1rem' }}
+                    style={{ marginTop: "-1rem" }}
                   >
                     <Box position="relative" maxWidth={350}>
                       <Skeleton height={340} />
@@ -230,7 +227,7 @@ const UserOrders = () => {
                     lg={4}
                     md={6}
                     xs={12}
-                    style={{ marginTop: '-1rem' }}
+                    style={{ marginTop: "-1rem" }}
                   >
                     <Box position="relative" maxWidth={350}>
                       <Skeleton height={340} />

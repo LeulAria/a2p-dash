@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Box } from '@material-ui/core';
-import { useParams } from 'react-router';
-import confirmEmailIllustration from '../../assets/auth/confirmEmail.svg';
+import React, { useEffect, useState } from "react";
+import { Box } from "@material-ui/core";
+import { useParams } from "react-router";
+import confirmEmailIllustration from "../../assets/auth/confirmEmail.svg";
 
 const CheckEmail = () => {
   const param = useParams<{ email: string }>();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     if (param) {
@@ -24,7 +24,7 @@ const CheckEmail = () => {
     >
       <Box maxWidth={400} maxHeight={400}>
         <img
-          style={{ maxWidth: '400px' }}
+          style={{ maxWidth: "400px" }}
           width="80%"
           src={confirmEmailIllustration}
           alt="Confirm Email"
@@ -35,11 +35,11 @@ const CheckEmail = () => {
       </Box>
       <Box fontWeight={500} fontSize="1rem" textAlign="center">
         We Have sent an Email
-        {' '}
-        <a href="https://mail.google.com/" style={{ color: '#34C' }}>
-          {email ? `to ${email}` : ''}
+        {" "}
+        <a href="https://mail.google.com/" style={{ color: "#34C" }}>
+          {email ? `to ${email}` : ""}
         </a>
-        {' '}
+        {" "}
         verify to proceed...
       </Box>
     </Box>

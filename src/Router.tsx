@@ -1,17 +1,17 @@
-import React, { useContext, useState } from 'react';
-import ReactRoleAccessRouter from 'react-rolebased-router';
-import SnackBar from './components/shared/SnackBar';
-import routes from './config/routes';
-import { AuthContext } from './contexts/auth/AuthProvider';
-import Error from './pages/util/Error';
-import firebase from './firebase';
-import Blocked from './pages/util/Blocked';
-import { redirectUserHome, redirectUserLogin } from './utils/userRoleUtils';
-import ChangePasswords from './pages/auth/user/ChangePassword';
-import OverlayLoading from './components/shared/OverlayLoading';
-import { useLoadingOverlay } from './contexts/loading';
-import CheckEmail from './pages/auth/CheckEmail';
-import BackToTop from './components/shared/BackToTop';
+import React, { useContext, useState } from "react";
+import ReactRoleAccessRouter from "react-rolebased-router";
+import SnackBar from "./components/shared/SnackBar";
+import routes from "./config/routes";
+import { AuthContext } from "./contexts/auth/AuthProvider";
+import Error from "./pages/util/Error";
+import firebase from "./firebase";
+import Blocked from "./pages/util/Blocked";
+import { redirectUserHome, redirectUserLogin } from "./utils/userRoleUtils";
+import ChangePasswords from "./pages/auth/user/ChangePassword";
+import OverlayLoading from "./components/shared/OverlayLoading";
+import { useLoadingOverlay } from "./contexts/loading";
+import CheckEmail from "./pages/auth/CheckEmail";
+import BackToTop from "./components/shared/BackToTop";
 
 const Router: React.FC = () => {
   const [isBlocked, setIsBlocked] = useState(false);
@@ -28,14 +28,14 @@ const Router: React.FC = () => {
 
       firebase
         .firestore()
-        .collection('users')
+        .collection("users")
         .doc(user.uid)
         .get()
         .then((res) => {
           const data = res.data();
           if (data) {
             if (data?.isStuff) {
-              if (data?.accountStatus === 'pending') {
+              if (data?.accountStatus === "pending") {
                 setApproved(false);
               }
             } else {
@@ -56,14 +56,14 @@ const Router: React.FC = () => {
 
   firebase
     .firestore()
-    .collection('users')
+    .collection("users")
     .doc(user?.uid)
     .onSnapshot(
       (res) => {
         const data = res.data();
         if (data) {
           if (data?.roles?.isStuff) {
-            if (data?.accountStatus === 'approved') {
+            if (data?.accountStatus === "approved") {
               setApproved(true);
             }
           }
@@ -83,7 +83,7 @@ const Router: React.FC = () => {
         }
       },
       (err) => {
-        console.log('USER NOT FOUND: ', err.code);
+        console.log("USER NOT FOUND: ", err.code);
       },
     );
 
@@ -92,7 +92,7 @@ const Router: React.FC = () => {
       {loading && <OverlayLoading />}
       <ReactRoleAccessRouter
         routes={routes}
-        userAuthRoles={user?.UserRole ? user.UserRole : ['NOT_LOGGED_IN']}
+        userAuthRoles={user?.UserRole ? user.UserRole : ["NOT_LOGGED_IN"]}
         loginRedirectPath={user ? redirectUserHome(user) : redirectUserLogin(user)}
         isUserAuthenticated={!!user}
         blocked={{

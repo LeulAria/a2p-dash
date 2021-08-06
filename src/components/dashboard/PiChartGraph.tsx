@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { ResponsivePie } from '@nivo/pie';
-import { Box, CircularProgress } from '@material-ui/core';
-import { useFireQuery } from '../../FireQuery';
+import React, { useEffect, useState } from "react";
+import { ResponsivePie } from "@nivo/pie";
+import { Box, CircularProgress } from "@material-ui/core";
+import { useFireQuery } from "../../FireQuery";
 
 interface PiChartData {
   id: string;
@@ -11,10 +11,7 @@ interface PiChartData {
 }
 
 const PiChartGraph = () => {
-  const {
-    data: orders,
-    loading,
-  } = useFireQuery('orders', {
+  const { data: orders, loading } = useFireQuery("orders", {
     snapshotListener: true,
   });
   const [data, setData] = useState<PiChartData[]>([]);
@@ -27,43 +24,43 @@ const PiChartGraph = () => {
 
     if (orders) {
       orders.forEach((order: any) => {
-        if (order.status === 'pending') {
+        if (order.status === "pending") {
           unattended += 1;
-        } else if (order.status === 'attended payment') {
+        } else if (order.status === "attended payment") {
           attended += 1;
-        } else if (order.status === 'attended payment') {
+        } else if (order.status === "attended payment") {
           attended += 1;
-        } else if (order.status === 'subscribed') {
+        } else if (order.status === "subscribed") {
           subscribed += 1;
-        } else if (order?.payApproval === 'done') {
+        } else if (order?.payApproval === "done") {
           payed += 1;
         }
       });
 
       setData([
         {
-          id: 'subscribed',
-          label: 'Subscribed',
+          id: "subscribed",
+          label: "Subscribed",
           value: subscribed,
-          color: 'hsl(149, 70%, 50%)',
+          color: "hsl(149, 70%, 50%)",
         },
         {
-          id: 'attended',
-          label: 'Attended',
+          id: "attended",
+          label: "Attended",
           value: attended,
-          color: 'hsl(104, 70%, 50%)',
+          color: "hsl(104, 70%, 50%)",
         },
         {
-          id: 'unattended',
-          label: 'Unattended',
+          id: "unattended",
+          label: "Unattended",
           value: unattended,
-          color: 'hsl(204, 70%, 50%)',
+          color: "hsl(204, 70%, 50%)",
         },
         {
-          id: 'payed',
-          label: 'Payed',
+          id: "payed",
+          label: "Payed",
           value: payed,
-          color: 'hsl(311, 70%, 50%)',
+          color: "hsl(311, 70%, 50%)",
         },
       ]);
     }
@@ -72,58 +69,56 @@ const PiChartGraph = () => {
   return (
     <>
       <Box fontSize=".8rem">Chart data for all orders status.</Box>
-      <Box
-        height="100%"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Box height="100%" display="flex" alignItems="center" justifyContent="center">
         {loading && data.length === 0 ? (
           <CircularProgress />
         ) : (
           <ResponsivePie
             data={data}
             margin={{
-              top: 40, right: 80, bottom: 80, left: 80,
+              top: 40,
+              right: 80,
+              bottom: 80,
+              left: 80,
             }}
             innerRadius={0.5}
             padAngle={0.7}
             cornerRadius={3}
             activeOuterRadiusOffset={8}
             borderWidth={1}
-            borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+            borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
             arcLinkLabelsSkipAngle={10}
             arcLinkLabelsTextColor="#333333"
             arcLinkLabelsThickness={2}
-            arcLinkLabelsColor={{ from: 'color' }}
+            arcLinkLabelsColor={{ from: "color" }}
             arcLabelsSkipAngle={10}
-            arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+            arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
             tooltip={({ datum: { id, value, color } }) => (
               <div
                 style={{
-                  borderRadius: '5px !important',
+                  borderRadius: "5px !important",
                   padding: 12,
                   color,
-                  background: '#222222',
+                  background: "#222222",
                   width: 150,
                   fontWeight: 500,
-                  fontSize: '.8rem',
-                  textAlign: 'center',
+                  fontSize: ".8rem",
+                  textAlign: "center",
                 }}
               >
                 <span>
                   Orders
                   {' '}
-                  <span style={{ textTransform: 'capitalize' }}>{id}</span>
+                  <span style={{ textTransform: "capitalize" }}>{id}</span>
                 </span>
                 <br />
                 <div
                   style={{
                     fontWeight: 900,
-                    fontSize: '1.2rem',
-                    width: '100%',
+                    fontSize: "1.2rem",
+                    width: "100%",
                     textShadow: `0 0px 1px ${color}`,
-                    textAlign: 'center',
+                    textAlign: "center",
                   }}
                 >
                   {value}
@@ -132,19 +127,19 @@ const PiChartGraph = () => {
             )}
             defs={[
               {
-                id: 'dots',
-                type: 'patternDots',
-                background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
+                id: "dots",
+                type: "patternDots",
+                background: "inherit",
+                color: "rgba(255, 255, 255, 0.3)",
                 size: 4,
                 padding: 1,
                 stagger: true,
               },
               {
-                id: 'lines',
-                type: 'patternLines',
-                background: 'inherit',
-                color: 'rgba(255, 255, 255, 0.3)',
+                id: "lines",
+                type: "patternLines",
+                background: "inherit",
+                color: "rgba(255, 255, 255, 0.3)",
                 rotation: -45,
                 lineWidth: 6,
                 spacing: 10,
@@ -153,73 +148,73 @@ const PiChartGraph = () => {
             fill={[
               {
                 match: {
-                  id: 'ruby',
+                  id: "ruby",
                 },
-                id: 'dots',
+                id: "dots",
               },
               {
                 match: {
-                  id: 'c',
+                  id: "c",
                 },
-                id: 'dots',
+                id: "dots",
               },
               {
                 match: {
-                  id: 'go',
+                  id: "go",
                 },
-                id: 'dots',
+                id: "dots",
               },
               {
                 match: {
-                  id: 'python',
+                  id: "python",
                 },
-                id: 'dots',
+                id: "dots",
               },
               {
                 match: {
-                  id: 'scala',
+                  id: "scala",
                 },
-                id: 'lines',
+                id: "lines",
               },
               {
                 match: {
-                  id: 'lisp',
+                  id: "lisp",
                 },
-                id: 'lines',
+                id: "lines",
               },
               {
                 match: {
-                  id: 'elixir',
+                  id: "elixir",
                 },
-                id: 'lines',
+                id: "lines",
               },
               {
                 match: {
-                  id: 'javascript',
+                  id: "javascript",
                 },
-                id: 'lines',
+                id: "lines",
               },
             ]}
             legends={[
               {
-                anchor: 'bottom',
-                direction: 'row',
+                anchor: "bottom",
+                direction: "row",
                 justify: false,
                 translateX: 0,
                 translateY: 56,
                 itemsSpacing: 0,
                 itemWidth: 100,
                 itemHeight: 18,
-                itemTextColor: '#999',
-                itemDirection: 'left-to-right',
+                itemTextColor: "#999",
+                itemDirection: "left-to-right",
                 itemOpacity: 1,
                 symbolSize: 18,
-                symbolShape: 'circle',
+                symbolShape: "circle",
                 effects: [
                   {
-                    on: 'hover',
+                    on: "hover",
                     style: {
-                      itemTextColor: '#000',
+                      itemTextColor: "#000",
                     },
                   },
                 ],

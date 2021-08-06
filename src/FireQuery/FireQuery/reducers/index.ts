@@ -1,6 +1,6 @@
 export const fireReducer = (state: any, action: any) => {
   switch (action.type) {
-    case 'INIT':
+    case "INIT":
       const firestore = action.firebase.firestore();
       state = {
         ...state,

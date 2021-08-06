@@ -1,10 +1,8 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from "firebase/app";
+import "firebase/firestore";
 
-import {
-  useCallback, useContext, useEffect, useRef, useState,
-} from 'react';
-import { FireQueryContext } from '../../../index';
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { FireQueryContext } from "../../../index";
 
 interface QueryConfig {
   query?: any;
@@ -34,7 +32,7 @@ export const useFireQuery = <T>(collectionNameArg: string, config?: QueryConfig)
     firequery: { firebase },
   } = useContext(FireQueryContext);
 
-  const [collectionName, setCollectionName] = useState('');
+  const [collectionName, setCollectionName] = useState("");
   const collectionNameRef = useRef<CollectionName>({ collectionName });
 
   const [fireQueryStates, setFireQueryStates] = useState<FireQueryStateType>({
@@ -67,14 +65,14 @@ export const useFireQuery = <T>(collectionNameArg: string, config?: QueryConfig)
 
   const refQueryGenerator = (
     $ref: firebase.firestore.Query,
-    config?: QueryConfig,
+    config?: QueryConfig
   ) => {
     let $refEdited = $ref;
 
     if (config) {
       if (config.query) {
         config.query.forEach((q: any) => {
-          const fc = q[0].trim().split(' ');
+          const fc = q[0].trim().split(" ");
           if (fc[0] && fc[1] && q[1]) {
             $refEdited = $refEdited.where(fc[0], fc[1], q[1]);
           }
@@ -82,11 +80,11 @@ export const useFireQuery = <T>(collectionNameArg: string, config?: QueryConfig)
       }
       if (config.orderBy) {
         config.orderBy.forEach((orders: string) => {
-          const [orderBy, order] = orders.split(' ');
+          const [orderBy, order] = orders.split(" ");
           if (order) {
             $refEdited = $refEdited.orderBy(
               orderBy,
-              order === 'desc' ? 'desc' : 'asc',
+              order === "desc" ? "desc" : "asc"
             );
           }
         });
@@ -142,7 +140,7 @@ export const useFireQuery = <T>(collectionNameArg: string, config?: QueryConfig)
           firstSnapDoc: null,
           lastSnapDoc: null,
         });
-      },
+      }
     );
 
     return unsub;
@@ -177,7 +175,7 @@ export const useFireQuery = <T>(collectionNameArg: string, config?: QueryConfig)
           firstSnapDoc: null,
           lastSnapDoc: null,
         });
-      },
+      }
     );
   };
 
@@ -219,7 +217,7 @@ export const useFireQuery = <T>(collectionNameArg: string, config?: QueryConfig)
                   lastSnapDoc: null,
                 });
                 rej(err);
-              },
+              }
             );
 
             return () => unsub && unsub();
@@ -255,14 +253,14 @@ export const useFireQuery = <T>(collectionNameArg: string, config?: QueryConfig)
                 lastSnapDoc: null,
               });
               rej(err);
-            },
+            }
           );
 
           return () => unsub && unsub();
         });
       }
     },
-    [collectionName],
+    [collectionName]
   );
 
   const refetch = useCallback(
@@ -285,7 +283,7 @@ export const useFireQuery = <T>(collectionNameArg: string, config?: QueryConfig)
         fetchGet($ref);
       }
     },
-    [collectionName],
+    [collectionName]
   );
 
   useEffect(() => {

@@ -1,53 +1,53 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from "react";
 import {
   Box, Button, CircularProgress, Theme, makeStyles,
-} from '@material-ui/core';
-import { Controller, useForm } from 'react-hook-form';
-import Solutions from './solutionTypes';
-import { useFireMutation } from '../../../FireQuery';
-import TextComponent from '../../../components/shared/TextComponent';
-import { useSnackBar } from '../../../contexts/snackbar/SnackBarContext';
-import { AuthContext } from '../../../contexts/auth/AuthProvider';
-import uuid from '../../../utils/uuid';
+} from "@material-ui/core";
+import { Controller, useForm } from "react-hook-form";
+import Solutions from "./solutionTypes";
+import { useFireMutation } from "../../../FireQuery";
+import TextComponent from "../../../components/shared/TextComponent";
+import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
+import { AuthContext } from "../../../contexts/auth/AuthProvider";
+import uuid from "../../../utils/uuid";
 
 const useStyles = makeStyles((theme: Theme) => ({
   parentBox: {
-    [theme.breakpoints.down('md')]: {
-      alignItems: 'center',
+    [theme.breakpoints.down("md")]: {
+      alignItems: "center",
     },
   },
   parent: {
-    width: '80%',
-    padding: '0 5%',
-    margin: 'auto',
+    width: "80%",
+    padding: "0 5%",
+    margin: "auto",
     borderRadius: 10,
   },
   regBtn: {
-    [theme.breakpoints.up('md')]: {
-      width: '70%',
+    [theme.breakpoints.up("md")]: {
+      width: "70%",
     },
-    color: 'white',
-    fontSize: '14px',
-    textTransform: 'none',
-    letterSpacing: '1px',
+    color: "white",
+    fontSize: "14px",
+    textTransform: "none",
+    letterSpacing: "1px",
   },
   wrapper: {
-    width: '100%',
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
+    width: "100%",
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
   },
   buttonProgress: {
-    color: 'yellow',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    color: "yellow",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
   checkBoxContainer: {
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '7rem',
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: "7rem",
     },
   },
   formControl: {
@@ -58,68 +58,68 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(2),
   },
   root: {
-    marginLeft: '-0.2rem',
+    marginLeft: "-0.2rem",
   },
   orderLogo: {
     background: theme.palette.primary.main,
-    color: '#fff',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+    color: "#fff",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
   },
 }));
 
 export const orderForm = [
   {
-    name: 'clientName',
-    label: 'Client Name',
-    variant: 'outlined',
-    type: 'text',
+    name: "clientName",
+    label: "Client Name",
+    variant: "outlined",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'companyName',
-    label: 'Company Name',
-    variant: 'outlined',
+    name: "companyName",
+    label: "Company Name",
+    variant: "outlined",
     disabled: true,
-    type: 'text',
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'companyUrl',
-    label: 'Company Url',
-    variant: 'outlined',
-    type: 'text',
+    name: "companyUrl",
+    label: "Company Url",
+    variant: "outlined",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'outlined',
+    name: "email",
+    label: "Email Address",
+    variant: "outlined",
     disabled: true,
-    type: 'email',
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
   {
-    name: 'phoneNumber',
-    label: 'Tel',
-    variant: 'outlined',
-    type: 'tel',
+    name: "phoneNumber",
+    label: "Tel",
+    variant: "outlined",
+    type: "tel",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-        message: 'invalid format',
+        message: "invalid format",
       },
     },
   },
@@ -133,7 +133,7 @@ export default function OrderDetailForm({ data }: any) {
     loading,
     success,
     mutate: mutateOrder,
-  } = useFireMutation('orders');
+  } = useFireMutation("orders");
   const { user } = useContext(AuthContext);
 
   const {
@@ -153,7 +153,7 @@ export default function OrderDetailForm({ data }: any) {
 
   const onSubmit = (data: any) => {
     mutateOrder(
-      'UPDATE',
+      "UPDATE",
       user.uid,
       {
         ...user,
@@ -170,8 +170,8 @@ export default function OrderDetailForm({ data }: any) {
     if (success) {
       setSnackbar({
         open: true,
-        message: 'Order updated successfully.',
-        type: 'success',
+        message: "Order updated successfully.",
+        type: "success",
       });
     }
   }, [success]);
@@ -180,8 +180,8 @@ export default function OrderDetailForm({ data }: any) {
     if (errorOrder) {
       setSnackbar({
         open: true,
-        message: 'Error occurred please try again!',
-        type: 'error',
+        message: "Error occurred please try again!",
+        type: "error",
       });
     }
   }, [errorOrder]);
@@ -227,7 +227,7 @@ export default function OrderDetailForm({ data }: any) {
               )}
               control={control}
               rules={{
-                required: 'this field is required',
+                required: "this field is required",
               }}
             />
 

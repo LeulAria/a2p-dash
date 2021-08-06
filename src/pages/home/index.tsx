@@ -1,15 +1,16 @@
-import React from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Gallery from '../../components/home/SliderCarousels/index';
+import React from "react";
+import { ThemeProvider } from "@material-ui/core/styles";
+import useScrollTrigger from "@material-ui/core/useScrollTrigger";
+import Gallery from "../../components/home/SliderCarousels/index";
 // import { makeStyles } from '@material-ui/core/styles';
-import SMSMADE from './sms_made_simple/index';
-import Sms from './sms';
-import Res from './resource_section';
-import Ease from './ease_use';
-import Form from './pageForm';
-import Navbar from '../../components/home/Navigationbar/Navbar';
-import theme from '../../pages/home/Theme/landingForm';
+import SMSMADE from "./sms_made_simple/index";
+import Sms from "./sms";
+import Res from "./resource_section";
+import Ease from "./ease_use";
+import Form from "./pageForm";
+import Navbar from "../../components/home/Navigationbar/Navbar";
+import theme from "../../pages/home/Theme/landingForm";
+import { Helmet } from "react-helmet";
 
 interface Props {
   /**
@@ -38,6 +39,10 @@ function ElevationScroll(props: Props) {
 
 const Home = () => (
   <div>
+    <Helmet>
+      <title>A2P | Home</title>
+    </Helmet>
+
     <ThemeProvider theme={theme}>
       <ElevationScroll>
         <Navbar />

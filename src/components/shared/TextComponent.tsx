@@ -1,5 +1,5 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import React from "react";
+import TextField from "@material-ui/core/TextField";
 
 export default function TextComponent({
   field,
@@ -11,7 +11,7 @@ export default function TextComponent({
   autofocus = false,
   value,
   disabled = false,
-  size = 'medium',
+  size = "medium",
   hidden = false,
 }: any) {
   return (
@@ -27,8 +27,8 @@ export default function TextComponent({
       helperText={errors[`${name}`] ? errors[`${name}`].message : null}
       error={errors[`${name}`]}
       disabled={disabled}
-      value={hidden ? '' : value}
-      style={{ marginTop: '.8rem' }}
+      value={hidden ? "" : value}
+      style={{ marginTop: ".8rem" }}
     />
   );
 }

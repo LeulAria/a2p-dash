@@ -1,8 +1,8 @@
 export default (state: any, action: any) => {
   switch (action.type) {
-    case 'SET_USER':
+    case "SET_USER":
       return { ...state, ...action.payload };
-    case 'LOGOUT':
+    case "LOGOUT":
       localStorage.clear();
       return null;
     default:

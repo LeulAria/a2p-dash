@@ -1,11 +1,11 @@
 import React, {
   useContext, useEffect, useRef, useState,
-} from 'react';
-import { Box, CircularProgress } from '@material-ui/core';
-import ChatCard from '../../components/chat/ChatCard';
-import firebase from '../../firebase';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
-import uuid from '../../utils/uuid';
+} from "react";
+import { Box, CircularProgress } from "@material-ui/core";
+import ChatCard from "../../components/chat/ChatCard";
+import firebase from "../../firebase";
+import { AuthContext } from "../../contexts/auth/AuthProvider";
+import uuid from "../../utils/uuid";
 
 const ChatContent = ({ currentOpenedChatId }: any) => {
   const { user } = useContext(AuthContext);
@@ -16,7 +16,7 @@ const ChatContent = ({ currentOpenedChatId }: any) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const scrollToBottom = () => {
     if (messagesEndRef?.current) {
-      messagesEndRef?.current.scrollIntoView({ behavior: 'smooth' });
+      messagesEndRef?.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -31,7 +31,7 @@ const ChatContent = ({ currentOpenedChatId }: any) => {
 
       unsub = db
         .collection(`/chats/${currentOpenedChatId}/messages/`)
-        .orderBy('createdAt')
+        .orderBy("createdAt")
         .onSnapshot((chat) => {
           const messages = chat.docs.map((d) => d.data());
           setMessages(messages);
@@ -40,8 +40,8 @@ const ChatContent = ({ currentOpenedChatId }: any) => {
 
           if (unsub && currentOpenedChatId.length > 0) {
             db.collection(`/chats/${currentOpenedChatId}/messages/`)
-              .where('seen', '==', false)
-              .where('uid', 'not-in', [user.id, 'Server'])
+              .where("seen", "==", false)
+              .where("uid", "not-in", [user.id, "Server"])
               .get()
               .then((res) => {
                 const batch = firebase.firestore().batch();

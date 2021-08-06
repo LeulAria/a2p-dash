@@ -1,10 +1,10 @@
-import React from 'react';
-import { LinearProgress } from '@material-ui/core';
+import React from "react";
+import { LinearProgress } from "@material-ui/core";
 import {
   GridOverlay,
   GridToolbarContainer,
   GridToolbarExport,
-} from '@material-ui/data-grid';
+} from "@material-ui/data-grid";
 
 // const useStyles = makeStyles(() => createStyles({
 //   toolBarButton: {
@@ -18,7 +18,7 @@ import {
 function CustomLoadingOverlay(): JSX.Element {
   return (
     <GridOverlay>
-      <div style={{ position: 'absolute', top: 0, width: '100%' }}>
+      <div style={{ position: "absolute", top: 0, width: "100%" }}>
         <LinearProgress />
       </div>
     </GridOverlay>
@@ -26,7 +26,7 @@ function CustomLoadingOverlay(): JSX.Element {
 }
 
 export const CustomLoading = (): JSX.Element => (
-  <div style={{ position: 'absolute', top: 0, width: '100%' }}>
+  <div style={{ position: "absolute", top: 0, width: "100%" }}>
     <LinearProgress />
   </div>
 );

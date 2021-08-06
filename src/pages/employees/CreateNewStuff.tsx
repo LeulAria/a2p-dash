@@ -1,55 +1,57 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
-import { TransitionProps } from '@material-ui/core/transitions';
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
+import { TransitionProps } from "@material-ui/core/transitions";
 import {
   Box, CircularProgress, Theme, makeStyles,
-} from '@material-ui/core';
-import { Controller, useForm } from 'react-hook-form';
-import { useFireMutation } from '../../FireQuery';
-import { useSnackBar } from '../../contexts/snackbar/SnackBarContext';
-import TextComponent from '../../components/shared/TextComponent';
-import AuthSelectors from '../../components/auth/AuthSelectors';
-import UserPassDialog from './UserPassDialog';
-import firebase from '../../firebase';
-import uuid from '../../utils/uuid';
+} from "@material-ui/core";
+import { Controller, useForm } from "react-hook-form";
+import { useFireMutation } from "../../FireQuery";
+import { useSnackBar } from "../../contexts/snackbar/SnackBarContext";
+import TextComponent from "../../components/shared/TextComponent";
+import AuthSelectors from "../../components/auth/AuthSelectors";
+import UserPassDialog from "./UserPassDialog";
+import firebase from "../../firebase";
+import uuid from "../../utils/uuid";
 
-const Transition = React.forwardRef((
-  props: TransitionProps & { children?: React.ReactElement<any, any> },
-  ref: React.Ref<unknown>,
-) => <Slide direction="up" ref={ref} {...props} />);
+const Transition = React.forwardRef(
+  (
+    props: TransitionProps & { children?: React.ReactElement<any, any> },
+    ref: React.Ref<unknown>,
+  ) => <Slide direction="up" ref={ref} {...props} />,
+);
 
 const useStyles = makeStyles((theme: Theme) => ({
   parentBox: {
-    [theme.breakpoints.down('md')]: {
-      alignItems: 'center',
+    [theme.breakpoints.down("md")]: {
+      alignItems: "center",
     },
   },
   parent: {
-    width: '100%',
-    borderRadius: '0',
+    width: "100%",
+    borderRadius: "0",
   },
   wrapper: {
-    width: '100%',
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
+    width: "100%",
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
   },
   buttonProgress: {
-    color: 'yellow',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    color: "yellow",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
   checkBoxContainer: {
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '7rem',
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: "7rem",
     },
   },
   formControl: {
@@ -60,44 +62,44 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(2),
   },
   root: {
-    marginLeft: '-0.2rem',
+    marginLeft: "-0.2rem",
   },
 }));
 
 export const signUpFields = [
   {
-    name: 'userName',
-    label: 'User Name',
-    variant: 'outlined',
-    type: 'text',
+    name: "userName",
+    label: "User Name",
+    variant: "outlined",
+    type: "text",
     rules: {
-      required: 'this field is required',
-      message: 'user name must be at least 4 characters',
+      required: "this field is required",
+      message: "user name must be at least 4 characters",
     },
   },
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'outlined',
-    type: 'email',
+    name: "email",
+    label: "Email Address",
+    variant: "outlined",
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
   {
-    name: 'password',
-    label: 'Password',
-    variant: 'outlined',
-    type: 'password',
+    name: "password",
+    label: "Password",
+    variant: "outlined",
+    type: "password",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       minLength: {
-        value: '6',
-        message: 'password must be at least 6 characters',
+        value: "6",
+        message: "password must be at least 6 characters",
       },
     },
   },
@@ -105,13 +107,11 @@ export const signUpFields = [
 
 export default function CreateNewStuff({ open, handleClose }: any) {
   const classes = useStyles();
-  const {
-    loading, mutate,
-  } = useFireMutation('users');
+  const { loading, mutate } = useFireMutation("users");
   const { setSnackbar } = useSnackBar();
   const [cred] = useState<{ email: string; password: string }>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [setLoadingUserCreation, setUetLoadingUserCreation] = useState(false);
   const [newUserCred, setNewUserCred] = useState<any>(null);
@@ -148,19 +148,19 @@ export default function CreateNewStuff({ open, handleClose }: any) {
               )
               .then((userCred) => {
                 if (userCred) {
-                  console.log('CREATE USER WITH EMAIL: ');
+                  console.log("CREATE USER WITH EMAIL: ");
                   mutate(
-                    'ADD',
+                    "ADD",
                     userCred.user?.uid,
                     {
                       id: userCred.user?.uid,
                       ...newUserCred,
                       roles: {
-                        isTechSupport: newUserCred.role === 'TECH_SUPPORT',
-                        isSalesSupport: newUserCred.role === 'SALES_SUPPORT',
+                        isTechSupport: newUserCred.role === "TECH_SUPPORT",
+                        isSalesSupport: newUserCred.role === "SALES_SUPPORT",
                       },
                       isEmailVerified: userCred.user?.emailVerified,
-                      accountStatus: 'approved',
+                      accountStatus: "approved",
                       isStuff: true,
                     },
                     {
@@ -178,8 +178,8 @@ export default function CreateNewStuff({ open, handleClose }: any) {
                     .signInWithEmailAndPassword(cred.email, cred.password)
                     .then(() => {
                       setSnackbar({
-                        type: 'success',
-                        message: 'User created successfully!',
+                        type: "success",
+                        message: "User created successfully!",
                         open: true,
                       });
                       setUetLoadingUserCreation(false);
@@ -191,7 +191,7 @@ export default function CreateNewStuff({ open, handleClose }: any) {
                   setSnackbar({
                     open: true,
                     message: err.code,
-                    type: 'error',
+                    type: "error",
                   });
                   reset();
                 },
@@ -205,7 +205,7 @@ export default function CreateNewStuff({ open, handleClose }: any) {
         },
         (err) => {
           setSnackbar({
-            type: 'error',
+            type: "error",
             message: err.code,
             open: true,
           });
@@ -233,7 +233,7 @@ export default function CreateNewStuff({ open, handleClose }: any) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title" style={{ textAlign: 'center' }}>
+        <DialogTitle id="alert-dialog-slide-title" style={{ textAlign: "center" }}>
           <Box fontWeight={600}>Create New Stuff User</Box>
         </DialogTitle>
         <DialogContent>
@@ -262,7 +262,7 @@ export default function CreateNewStuff({ open, handleClose }: any) {
               render={({ field }) => <AuthSelectors {...field} />}
               control={control}
               rules={{
-                required: 'this field is required',
+                required: "this field is required",
               }}
             />
 

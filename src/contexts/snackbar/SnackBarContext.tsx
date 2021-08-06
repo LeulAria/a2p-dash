@@ -1,24 +1,23 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 type SnackBarType = {
   open: boolean;
-  type: 'success' | 'warning' | 'error' | 'info';
+  type: "success" | "warning" | "error" | "info";
   message: string;
 };
 
 export const initialState = {
   snackBar: {
     open: false,
-    type: 'success',
-    message: '',
+    type: "success",
+    message: "",
   },
   setSnackbar: (_: SnackBarType) => ({
     open: false,
-    type: 'success',
-    message: '',
+    type: "success",
+    message: "",
   }),
-  resetSnackBar: () => {
-  },
+  resetSnackBar: () => {},
 };
 
 export const SnackBarContext = createContext(initialState);
@@ -37,8 +36,8 @@ const SnackBarProvider = ({
 }) => {
   const [snackBar, setAlert] = useState<SnackBarType>({
     open: false,
-    type: 'success',
-    message: '',
+    type: "success",
+    message: "",
   });
 
   const setSnackbar = (alert: SnackBarType) => {
@@ -49,8 +48,8 @@ const SnackBarProvider = ({
   const resetSnackBar = () => {
     setAlert({
       open: false,
-      type: 'success',
-      message: '',
+      type: "success",
+      message: "",
     });
   };
 

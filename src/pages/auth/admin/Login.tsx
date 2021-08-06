@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import {
   Box,
   Button,
@@ -9,17 +9,17 @@ import {
   Typography,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { RouteComponentProps, useHistory, useLocation } from 'react-router';
-import { Controller, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import TextComponent from '../../../components/shared/TextComponent';
-import firebase from '../../../firebase';
-import { AuthContext } from '../../../contexts/auth/AuthProvider';
-import { useSnackBar } from '../../../contexts/snackbar/SnackBarContext';
-import { getUserRoles, redirectUserHome } from '../../../utils/userRoleUtils';
-import { useFireMutation } from '../../../FireQuery';
-import uuid from '../../../utils/uuid';
+} from "@material-ui/core";
+import { RouteComponentProps, useHistory, useLocation } from "react-router";
+import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import TextComponent from "../../../components/shared/TextComponent";
+import firebase from "../../../firebase";
+import { AuthContext } from "../../../contexts/auth/AuthProvider";
+import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
+import { getUserRoles, redirectUserHome } from "../../../utils/userRoleUtils";
+import { useFireMutation } from "../../../FireQuery";
+import uuid from "../../../utils/uuid";
 
 interface Props extends RouteComponentProps<{ state?: string }> {
   // props.location.state.myStateProp
@@ -28,16 +28,16 @@ interface Props extends RouteComponentProps<{ state?: string }> {
 
 const useStyles = makeStyles(() => createStyles({
   root: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   wrapper: {
-    position: 'relative',
+    position: "relative",
   },
   buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
@@ -48,28 +48,28 @@ const useStyles = makeStyles(() => createStyles({
 
 export const signUpFields = [
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'outlined',
-    type: 'email',
+    name: "email",
+    label: "Email Address",
+    variant: "outlined",
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
   {
-    name: 'password',
-    label: 'Password',
-    variant: 'outlined',
-    type: 'password',
+    name: "password",
+    label: "Password",
+    variant: "outlined",
+    type: "password",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       minLength: {
-        value: '6',
-        message: 'password must be at least 6 characters',
+        value: "6",
+        message: "password must be at least 6 characters",
       },
     },
   },
@@ -79,13 +79,13 @@ const Signup: React.FC<Props> = () => {
   const classes = useStyles();
   const history = useHistory();
   const location: any = useLocation<any>();
-  const [userEmail, setUserEmail] = useState(location.state?.email || '');
-  const [pass, setPass] = useState(location.state?.password || '');
+  const [userEmail, setUserEmail] = useState(location.state?.email || "");
+  const [pass, setPass] = useState(location.state?.password || "");
   const { user, dispatch } = useContext(AuthContext);
   const { setSnackbar } = useSnackBar();
   const [isLoggingIn, setIsLogginIn] = useState(false);
 
-  const { mutate: mutateUser } = useFireMutation('online');
+  const { mutate: mutateUser } = useFireMutation("online");
 
   useEffect(() => {
     if (user?.UserRole) {
@@ -98,8 +98,8 @@ const Signup: React.FC<Props> = () => {
 
   useEffect(() => {
     if (history) {
-      setUserEmail(location.state?.email || '');
-      setPass(location.state?.password || '');
+      setUserEmail(location.state?.email || "");
+      setPass(location.state?.password || "");
     }
   }, []);
 
@@ -123,7 +123,7 @@ const Signup: React.FC<Props> = () => {
         if (res.user) {
           firebase
             .firestore()
-            .collection('users')
+            .collection("users")
             .doc(res.user.uid)
             .get()
             .then((res) => {
@@ -131,18 +131,18 @@ const Signup: React.FC<Props> = () => {
               setIsLogginIn(false);
               setSnackbar({
                 open: true,
-                type: 'success',
+                type: "success",
                 message: `Welcome ${data.email}!`,
               });
               firebase
                 .firestore()
-                .collection('users')
+                .collection("users")
                 .doc(user?.id)
                 .onSnapshot((res) => {
                   const userData: any = res.data();
                   const userRole: string[] = getUserRoles(userData.roles);
                   dispatch({
-                    type: 'SET_USER',
+                    type: "SET_USER",
                     payload: { ...user, UserRole: userRole },
                   });
 
@@ -150,7 +150,7 @@ const Signup: React.FC<Props> = () => {
                     isOnline: true,
                   });
 
-                  mutateUser('ADD', user?.id, {
+                  mutateUser("ADD", user?.id, {
                     isOnline: true,
                     id: user?.id,
                   });
@@ -159,7 +159,7 @@ const Signup: React.FC<Props> = () => {
             .catch((err) => {
               setSnackbar({
                 open: true,
-                type: 'error',
+                type: "error",
                 message: err.code,
               });
             });
@@ -169,7 +169,7 @@ const Signup: React.FC<Props> = () => {
         setIsLogginIn(false);
         setSnackbar({
           open: true,
-          type: 'error',
+          type: "error",
           message: err.code,
         });
       });
@@ -178,7 +178,7 @@ const Signup: React.FC<Props> = () => {
   return (
     <Container>
       <Helmet>
-        <title>Signup | A2P</title>
+        <title>Login | A2P</title>
       </Helmet>
 
       <Box
@@ -187,7 +187,7 @@ const Signup: React.FC<Props> = () => {
         justifyContent="center"
         minHeight="90vh"
       >
-        <Box maxWidth={450}>
+        <Box maxWidth={350}>
           <Typography>
             <Box fontWeight={900} fontSize="2.5rem" textAlign="center">
               Login A2P

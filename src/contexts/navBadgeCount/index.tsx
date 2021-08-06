@@ -1,7 +1,7 @@
 import React, {
   ReactNode, createContext, useContext, useReducer,
-} from 'react';
-import badgeReducer from './reducers';
+} from "react";
+import badgeReducer from "./reducers";
 
 type NavBarBadgeState = {
   dashboard: number;

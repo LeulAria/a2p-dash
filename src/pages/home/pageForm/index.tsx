@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 import {
   Box, Grid, Theme, Typography, makeStyles,
-} from '@material-ui/core';
+} from "@material-ui/core";
 import Particles from "react-tsparticles";
-import UserForm from './userForm';
+import UserForm from "./userForm";
 
 const useStyles = makeStyles((theme: Theme) => ({
   imageBox: {
-    position: 'relative',
-    marginTop: '1rem',
-    minHeight: '500px',
+    position: "relative",
+    marginTop: "1rem",
+    minHeight: "500px",
   },
   particlesBG: {
     position: "absolute",
@@ -20,83 +20,83 @@ const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 3,
   },
   imageHolder: {
-    position: 'absolute',
-    top: '200px',
+    position: "absolute",
+    top: "200px",
     right: 0,
-    width: '100%',
-    minHeight: '60rem',
-    [theme.breakpoints.down('md')]: {
-      display: 'none',
+    width: "100%",
+    minHeight: "60rem",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
     },
   },
   comp: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     zIndex: 10,
   },
   a2pTitle2: {
-    color: 'white',
-    fontWeight: 'bolder',
-    letterSpacing: '1px',
+    color: "white",
+    fontWeight: "bolder",
+    letterSpacing: "1px",
   },
   text2: {
-    color: 'white',
-    textAlign: 'start',
-    [theme.breakpoints.down('md')]: {
-      textAlign: 'center',
+    color: "white",
+    textAlign: "start",
+    [theme.breakpoints.down("md")]: {
+      textAlign: "center",
     },
   },
   parentBox: {
     // paddingTop: '8rem',
-    width: '100%',
-    marginTop: '6rem',
-    [theme.breakpoints.down('md')]: {
-      alignItems: 'center',
-      backgroundColor: 'white',
-      marginTop: '0rem',
+    width: "100%",
+    marginTop: "6rem",
+    [theme.breakpoints.down("md")]: {
+      alignItems: "center",
+      backgroundColor: "white",
+      marginTop: "0rem",
     },
   },
   parent: {
-    width: '100%',
+    width: "100%",
   },
   regBtn: {
-    [theme.breakpoints.up('md')]: {
-      width: '70%',
+    [theme.breakpoints.up("md")]: {
+      width: "70%",
     },
-    background: 'linear-gradient(45deg, #0088D6 30%, #00CDB8 90%)',
+    background: "linear-gradient(45deg, #0088D6 30%, #00CDB8 90%)",
   },
   checkBoxContainer: {
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '7rem',
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: "7rem",
     },
   },
   contactText: {
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
     },
   },
   subBox2: {
-    marginTop: '6rem',
-    [theme.breakpoints.down('md')]: {
-      display: 'none',
+    marginTop: "6rem",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
     },
   },
   subBox1: {
-    [theme.breakpoints.up('lg')]: {
-      display: 'none',
+    [theme.breakpoints.up("lg")]: {
+      display: "none",
     },
   },
   footerTitle: {
     fontWeight: 800,
-    color: 'white',
-    fontSize: '24px',
+    color: "white",
+    fontSize: "24px",
   },
   footerText: {
     fontWeight: 700,
-    color: 'white',
-    fontSize: '16px',
-    lineHeight: '2rem',
+    color: "white",
+    fontSize: "16px",
+    lineHeight: "2rem",
   },
 }));
 
@@ -224,7 +224,7 @@ export default function PageForm() {
                   display="flex"
                   flexDirection="column"
                   style={{
-                    marginLeft: '40%',
+                    marginLeft: "40%",
                   }}
                 >
                   <Typography
@@ -246,22 +246,22 @@ export default function PageForm() {
                   <Box textAlign="center">
                     <span
                       style={{
-                        color: 'white',
+                        color: "white",
                         fontWeight: 500,
-                        fontSize: '16px',
+                        fontSize: "16px",
                       }}
                     >
                       email: a2p@teklogix.et
                     </span>
-                    {' '}
+                    {" "}
                     <br />
                     <a
                       href="https://www.teklogixinc.com/"
                       style={{
-                        color: 'white',
-                        textDecoration: 'none',
+                        color: "white",
+                        textDecoration: "none",
                         fontWeight: 500,
-                        fontSize: '16px',
+                        fontSize: "16px",
                       }}
                     >
                       www.teklogix.et
@@ -305,22 +305,22 @@ export default function PageForm() {
                 <Box textAlign="center">
                   <span
                     style={{
-                      color: 'white',
+                      color: "white",
                       fontWeight: 500,
-                      fontSize: '16px',
+                      fontSize: "16px",
                     }}
                   >
                     email: a2p@teklogix.et
                   </span>
-                  {' '}
+                  {" "}
                   <br />
                   <a
                     href="https://www.teklogixinc.com/"
                     style={{
-                      color: 'white',
-                      textDecoration: 'none',
+                      color: "white",
+                      textDecoration: "none",
                       fontWeight: 500,
-                      fontSize: '16px',
+                      fontSize: "16px",
                     }}
                   >
                     www.teklogix.et

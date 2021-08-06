@@ -1,18 +1,18 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from "@material-ui/core/styles";
 
 export default createTheme({
   palette: {
-    type: 'light',
+    type: "light",
     primary: {
-      main: '#7367EF',
-      light: '#C5B235',
-      dark: '#F0F0F0',
+      main: "#7367EF",
+      light: "#C5B235",
+      dark: "#F0F0F0",
     },
     secondary: {
-      main: '#2F3A45',
+      main: "#2F3A45",
     },
   },
   typography: {
-    fontFamily: 'Inter, sans-serif',
+    fontFamily: "Inter, sans-serif",
   },
 });

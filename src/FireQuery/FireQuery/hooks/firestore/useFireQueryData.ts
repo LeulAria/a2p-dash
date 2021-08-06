@@ -1,15 +1,13 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from "firebase/app";
+import "firebase/firestore";
 
-import {
-  useCallback, useContext, useEffect, useRef, useState,
-} from 'react';
-import { FireQueryContext } from '../../../index';
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { FireQueryContext } from "../../../index";
 
 export const useFireQueryData = <T>(
   collectionNameArg: string,
   id?: string,
-  snapshotListener?: boolean,
+  snapshotListener?: boolean
 ) => {
   type CollectionName = {
     collectionName: string;
@@ -24,7 +22,7 @@ export const useFireQueryData = <T>(
   const {
     firequery: { firebase },
   } = useContext(FireQueryContext);
-  const [collectionName, setCollectionName] = useState('');
+  const [collectionName, setCollectionName] = useState("");
   const collectionNameRef = useRef<CollectionName>({ collectionName });
 
   const [querDataStates, setQuerDataStates] = useState<QueryDataStates>({
@@ -71,10 +69,10 @@ export const useFireQueryData = <T>(
         },
         (err) => {
           setQueryDataError(err);
-        },
+        }
       );
     } else {
-      setQueryDataError('Refecence not profided to query.');
+      setQueryDataError("Refecence not profided to query.");
     }
   };
 
@@ -100,10 +98,10 @@ export const useFireQueryData = <T>(
         },
         (err) => {
           setQueryDataError(err);
-        },
+        }
       );
     } else {
-      setQueryDataError('Refecence not profided to query snapshots.');
+      setQueryDataError("Refecence not profided to query snapshots.");
     }
   };
 
@@ -136,16 +134,16 @@ export const useFireQueryData = <T>(
                   error: err,
                 });
                 rej(err);
-              },
+              }
             );
           });
         }
-        setQueryDataError('Id not provided to query data.');
+        setQueryDataError("Id not provided to query data.");
       } else {
-        setQueryDataError('Firebase instance not found...');
+        setQueryDataError("Firebase instance not found...");
       }
     },
-    [collectionName],
+    [collectionName]
   );
 
   const refetch = useCallback(
@@ -162,10 +160,10 @@ export const useFireQueryData = <T>(
           fetchGet($ref);
         }
       } else {
-        setQueryDataError('Firebase instance not found...');
+        setQueryDataError("Firebase instance not found...");
       }
     },
-    [collectionName],
+    [collectionName]
   );
 
   useEffect(() => {
@@ -180,7 +178,7 @@ export const useFireQueryData = <T>(
         fetchGet($ref);
       }
     } else {
-      setQueryDataError('Firebase instance not found...');
+      setQueryDataError("Firebase instance not found...");
     }
   }, []);
 

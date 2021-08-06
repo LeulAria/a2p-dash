@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -10,180 +10,180 @@ import {
   Theme,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ChatPersonCard from '../../components/chat/ChatPersonCard';
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ChatPersonCard from "../../components/chat/ChatPersonCard";
 
-import { useFireQuery } from '../../FireQuery';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
-import ChatContent from './ChatContent';
-import NoChat from './NoChat';
-import firebase, { timestamp } from '../../firebase';
-import { useSnackBar } from '../../contexts/snackbar/SnackBarContext';
-import uuid from '../../utils/uuid';
+import { useFireQuery } from "../../FireQuery";
+import { AuthContext } from "../../contexts/auth/AuthProvider";
+import ChatContent from "./ChatContent";
+import NoChat from "./NoChat";
+import firebase, { timestamp } from "../../firebase";
+import { useSnackBar } from "../../contexts/snackbar/SnackBarContext";
+import uuid from "../../utils/uuid";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   chatPage: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    select: 'none',
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-evenly",
+    select: "none",
   },
   chatContainerTop: {
     flexBasis: 950,
-    minHeight: 'calc(100vh - 130px)',
-    maxHeight: 'calc(100vh - 130px)',
-    margin: 'auto',
-    position: 'relative',
+    minHeight: "calc(100vh - 130px)",
+    maxHeight: "calc(100vh - 130px)",
+    margin: "auto",
+    position: "relative",
     borderRadius: 15,
-    display: 'flex',
-    flexDirection: 'column',
-    border: theme.palette.type === 'dark' ? '1px solid #222' : '1px solid #ddd',
+    display: "flex",
+    flexDirection: "column",
+    border: theme.palette.type === "dark" ? "1px solid #222" : "1px solid #ddd",
     // boxShadow: "0 1px 15px rgba(0,0,0,0.2)"
   },
   chatBar: {
-    display: 'flex',
-    alignItems: 'center',
-    position: 'sticky',
+    display: "flex",
+    alignItems: "center",
+    position: "sticky",
     zIndex: 400,
     minHeight: 45,
     borderRadius: 0,
     borderBottom:
-        theme.palette.type === 'dark' ? '1px solid #343536' : '1px solid #ddd',
-    maxHeight: '50px',
+        theme.palette.type === "dark" ? "1px solid #343536" : "1px solid #ddd",
+    maxHeight: "50px",
   },
   chatBarLeft: {
     flex: 3,
-    width: '100%',
+    width: "100%",
   },
   chatContainer: {
-    display: 'flex',
+    display: "flex",
     paddingTop: 5,
     flexGrow: 1,
-    overflowY: 'auto',
+    overflowY: "auto",
   },
   chatContainerMob: {
-    display: 'block',
+    display: "block",
     paddingTop: 5,
     flexGrow: 1,
-    overflowY: 'auto',
+    overflowY: "auto",
   },
   chatMembers: {
     borderRight:
-        theme.palette.type === 'dark' ? '1px solid #343536' : '1px solid #ccc',
+        theme.palette.type === "dark" ? "1px solid #343536" : "1px solid #ccc",
     flex: 3,
-    width: '100%',
-    marginTop: '-5px',
-    overflowY: 'auto',
-    overflowX: 'hidden',
+    width: "100%",
+    marginTop: "-5px",
+    overflowY: "auto",
+    overflowX: "hidden",
   },
   chatMembersMobile: {
-    position: 'absolute',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    borderRight: '1px solid #e7e7e7',
+    position: "absolute",
+    overflowY: "auto",
+    overflowX: "hidden",
+    borderRight: "1px solid #e7e7e7",
     top: 50,
     left: 0,
     zIndex: 500,
-    width: '80%',
-    height: 'calc(100% - 110px)',
-    background: '#fff',
-    transform: 'translateX(0px)',
-    transition: 'all .5s',
+    width: "80%",
+    height: "calc(100% - 110px)",
+    background: "#fff",
+    transform: "translateX(0px)",
+    transition: "all .5s",
   },
   chatMemberMobileHidden: {
-    display: 'none',
-    transform: 'translateX(-1000px)',
-    transition: 'all .5s',
+    display: "none",
+    transform: "translateX(-1000px)",
+    transition: "all .5s",
   },
   chatContent: {
     flex: 6,
-    minHeight: '100%',
-    width: '100%',
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
+    minHeight: "100%",
+    width: "100%",
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
   },
   chatMessages: {
     flexGrow: 1,
     flex: 1,
-    padding: '0 5%',
-    maxHeight: 'calc(100% - 60px)',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-    width: '100%',
-    position: 'relative',
+    padding: "0 5%",
+    maxHeight: "calc(100% - 60px)",
+    overflowY: "auto",
+    overflowX: "hidden",
+    width: "100%",
+    position: "relative",
   },
   chatBarType: {
-    display: 'flex',
-    alignItems: 'center',
-    position: 'sticky',
-    height: '60px',
-    width: '100%',
+    display: "flex",
+    alignItems: "center",
+    position: "sticky",
+    height: "60px",
+    width: "100%",
     bottom: 0,
     zIndex: 400,
     borderRadius: 0,
   },
   sendChat: {
-    border: theme.palette.type === 'dark' ? '1px solid #222' : '1px solid #999',
+    border: theme.palette.type === "dark" ? "1px solid #222" : "1px solid #999",
     boxShadow:
-        theme.palette.type === 'dark'
-          ? '0 1px 10px rgba(0,0,0,0.1)'
-          : '0 1px 10px rgba(0,0,0,0.1)',
-    margin: '10px 7%',
+        theme.palette.type === "dark"
+          ? "0 1px 10px rgba(0,0,0,0.1)"
+          : "0 1px 10px rgba(0,0,0,0.1)",
+    margin: "10px 7%",
     borderRadius: 10,
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 1rem',
-    '&:hover': {
-      border: '1px solid #56B',
+    display: "flex",
+    alignItems: "center",
+    padding: "0 1rem",
+    "&:hover": {
+      border: "1px solid #56B",
     },
   },
   chatSearch: {
     borderRadius: 0,
     borderBottom:
-        theme.palette.type === 'dark' ? '1px solid #222' : '1px solid #ddd',
+        theme.palette.type === "dark" ? "1px solid #222" : "1px solid #ddd",
   },
   input: {
-    fontSize: '.9rem',
+    fontSize: ".9rem",
     fontWeight: 500,
     flex: 1,
   },
   chatSidebar: {
     flex: 4,
     flexBasis: 350,
-    marginLeft: '1rem',
+    marginLeft: "1rem",
   },
   chatSideBarContent: {
-    padding: '1rem',
-    border: theme.palette.type === 'dark' ? '1px solid #343536' : '1px solid #ddd',
+    padding: "1rem",
+    border: theme.palette.type === "dark" ? "1px solid #343536" : "1px solid #ddd",
   },
   chatSettings: {
-    margin: '.4rem .5rem',
+    margin: ".4rem .5rem",
   },
 }));
 
 const Chat = () => {
   const classes = useStyles();
   const [openChat, setOpenChat] = useState(false);
-  const [chatInput, setChatInput] = useState('');
-  const matches = useMediaQuery('(max-width:765px)');
+  const [chatInput, setChatInput] = useState("");
+  const matches = useMediaQuery("(max-width:765px)");
   const { user } = useContext(AuthContext);
-  const userQueryId = user.isStuff ? 'sid ==' : 'uid ==';
+  const userQueryId = user.isStuff ? "sid ==" : "uid ==";
   const [chats, setChats] = useState([]);
   const [filteredChats, setFilteredChats] = useState([]);
   const [currentChatUsers, setCurrentChatUsers] = useState<any>(null);
-  const [currentOpenedChat, setCurrentOpenedChat] = useState('');
+  const [currentOpenedChat, setCurrentOpenedChat] = useState("");
   const { setSnackbar } = useSnackBar();
   const [loadingOrder, setLoadingOrder] = useState(false);
   const [userOrder, setUserOrder] = useState<any>({});
 
-  const { data: onlines } = useFireQuery('online', {
+  const { data: onlines } = useFireQuery("online", {
     snapshotListener: true,
   });
 
-  const { data, loading } = useFireQuery('chats', {
+  const { data, loading } = useFireQuery("chats", {
     query: [[userQueryId, user?.uid]],
     snapshotListener: true,
   });
@@ -192,18 +192,20 @@ const Chat = () => {
     if (data) {
       if (user.isStuff) {
         Promise.all(
-          data.map((d: any) => new Promise((response, reject) => {
-            firebase
-              .firestore()
-              .doc(`/users/${d.uid}`)
-              .get()
-              .then((res) => {
-                response(res.data());
-              })
-              .catch((err) => {
-                reject(err);
-              });
-          })),
+          data.map(
+            (d: any) => new Promise((response, reject) => {
+              firebase
+                .firestore()
+                .doc(`/users/${d.uid}`)
+                .get()
+                .then((res) => {
+                  response(res.data());
+                })
+                .catch((err) => {
+                  reject(err);
+                });
+            }),
+          ),
         ).then((res: any) => {
           const usersWithOnline = data.map((d: any, i: number) => ({
             ...d,
@@ -214,18 +216,20 @@ const Chat = () => {
         });
       } else {
         Promise.all(
-          data.map((d: any) => new Promise((response, reject) => {
-            firebase
-              .firestore()
-              .doc(`/users/${d.sid}`)
-              .get()
-              .then((res) => {
-                response(res.data());
-              })
-              .catch((err) => {
-                reject(err);
-              });
-          })),
+          data.map(
+            (d: any) => new Promise((response, reject) => {
+              firebase
+                .firestore()
+                .doc(`/users/${d.sid}`)
+                .get()
+                .then((res) => {
+                  response(res.data());
+                })
+                .catch((err) => {
+                  reject(err);
+                });
+            }),
+          ),
         ).then((res: any) => {
           const usersWithOnline = data.map((d: any, i: number) => ({
             ...d,
@@ -255,8 +259,8 @@ const Chat = () => {
       setLoadingOrder(true);
       firebase
         .firestore()
-        .collection('orders')
-        .where('uid', '==', currentChatUsers.uid)
+        .collection("orders")
+        .where("uid", "==", currentChatUsers.uid)
         .get()
         .then((res) => {
           setUserOrder(res.docs[0].data());
@@ -289,20 +293,20 @@ const Chat = () => {
           .collection(`/chats/${currentOpenedChat}/messages/`)
           .add(message)
           .then(() => {
-            setChatInput('');
+            setChatInput("");
           })
           .catch((err) => {
             setSnackbar({
               open: true,
               message: err.code,
-              type: 'error',
+              type: "error",
             });
           });
       } else {
         setSnackbar({
           open: true,
-          message: 'Select chat to send message!',
-          type: 'error',
+          message: "Select chat to send message!",
+          type: "error",
         });
       }
     }
@@ -313,7 +317,7 @@ const Chat = () => {
   };
 
   const handleKeyPress = (e: any) => {
-    if (e.code === 'Enter') {
+    if (e.code === "Enter") {
       sendChat();
     }
   };
@@ -381,10 +385,10 @@ const Chat = () => {
                       Choose a chat
                     </Box>
                   )}
-                  <Box style={{ position: 'relative' }}>
+                  <Box style={{ position: "relative" }}>
                     <Box
                       style={{
-                        position: 'sticky',
+                        position: "sticky",
                         top: 0,
                         zIndex: 1000,
                       }}
@@ -457,7 +461,7 @@ const Chat = () => {
                           defaultValue=""
                           value={chatInput}
                           onChange={handleChatInputChange}
-                          inputProps={{ 'aria-label': 'naked' }}
+                          inputProps={{ "aria-label": "naked" }}
                           onKeyUp={handleKeyPress}
                         />
                       </Box>
@@ -489,7 +493,7 @@ const Chat = () => {
                 {currentChatUsers ? (
                   <Card className={classes.chatSideBarContent} elevation={0}>
                     <Box display="flex" justifyContent="center">
-                      <Avatar style={{ width: '100px', height: '100px' }} />
+                      <Avatar style={{ width: "100px", height: "100px" }} />
                     </Box>
                     <Box textAlign="center" fontWeight={700} mt={1} fontSize="1rem">
                       {currentChatUsers.userName}
@@ -524,7 +528,7 @@ const Chat = () => {
                             <Box className={classes.chatSettings}>
                               <Box fontWeight={400} fontSize=".9rem" mr={1}>
                                 Payment:&nbsp;&nbsp;
-                                {userOrder?.isPayed ? 'Payed' : 'Not Payed'}
+                                {userOrder?.isPayed ? "Payed" : "Not Payed"}
                               </Box>
                             </Box>
                           </Box>

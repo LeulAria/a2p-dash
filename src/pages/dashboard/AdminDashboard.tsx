@@ -1,16 +1,13 @@
-import React from 'react';
-import { Theme, makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { Theme, makeStyles } from "@material-ui/core/styles";
 import {
-  Box,
-  Card,
-  CircularProgress,
-  Divider,
-  Grid,
-} from '@material-ui/core';
-import { useFireQuery } from '../../FireQuery';
-import PiChartGraph from '../../components/dashboard/PiChartGraph';
-import LineChratOrders from '../../components/dashboard/LineChartOrders';
-import OrdersStat from '../../components/dashboard/OrdersStat';
+  Box, Card, CircularProgress, Divider, Grid,
+} from "@material-ui/core";
+import { useFireQuery } from "../../FireQuery";
+import PiChartGraph from "../../components/dashboard/PiChartGraph";
+import LineChratOrders from "../../components/dashboard/LineChartOrders";
+import OrdersStat from "../../components/dashboard/OrdersStat";
+import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -18,20 +15,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   dashboardTopCard: {
     borderRadius: 20,
-    boxShadow: '0 1px 10px rgba(0,0,0,0.063)',
+    boxShadow: "0 1px 10px rgba(0,0,0,0.063)",
   },
   dashboardTopCardData: {
-    fontSize: '2rem',
+    fontSize: "2rem",
     fontWeight: 900,
   },
   dashboardTopCardTitle: {
     fontWeight: 500,
-    fontSize: '1rem',
-    color: theme.palette.type === 'dark' ? '#777' : '#AAA',
+    fontSize: "1rem",
+    color: theme.palette.type === "dark" ? "#777" : "#AAA",
   },
   dashboardGraphCards: {
-    borderRadius: 20,
-    boxShadow: '0 1px 10px rgba(0,0,0,0.063)',
+    borderRadius: 10,
+    boxShadow: "0 1px 10px rgba(0,0,0,0.063)",
   },
 }));
 
@@ -41,31 +38,35 @@ export default function FullWidthTabs() {
   //   query: [['status ==', 'payed']],
   // });
   const { data: subscriptions, loading: loadingSubscriptions } = useFireQuery(
-    'orders',
+    "orders",
     {
-      query: [['status ==', 'subscribed']],
+      query: [["status ==", "subscribed"]],
     },
   );
   // const { data: pendingCount } = useFireQuery('orders', {
   //   query: [['status ==', 'pending']],
   // });
-  const { data: totalOrders, loading: totalOrderLoading } = useFireQuery('orders', {
+  const { data: totalOrders, loading: totalOrderLoading } = useFireQuery("orders", {
     snapshotListener: false,
   });
-  const { data: totalUsers, loading: totalUsersLoading } = useFireQuery('users', {
-    query: [['roles.isClient ==', true]],
+  const { data: totalUsers, loading: totalUsersLoading } = useFireQuery("users", {
+    query: [["roles.isClient ==", true]],
     snapshotListener: false,
   });
   const { data: totalEmployees, loading: totalEmployeesLoading } = useFireQuery(
-    'users',
+    "users",
     {
-      query: [['isStuff ==', true]],
+      query: [["isStuff ==", true]],
       snapshotListener: false,
     },
   );
 
   return (
     <Box>
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
+
       <Box fontWeight={800} fontSize="1.4rem" mb={2}>
         Dashboard
       </Box>
@@ -165,7 +166,7 @@ export default function FullWidthTabs() {
                     {subscriptions && subscriptions.length}
                   </Box>
                 )}
-                <Box className={classes.dashboardTopCardTitle}>Users</Box>
+                <Box className={classes.dashboardTopCardTitle}>Subscriptions</Box>
               </Box>
               <Box>
                 <svg
@@ -188,11 +189,11 @@ export default function FullWidthTabs() {
         <Grid item xs={12} lg={7}>
           <Card elevation={0} className={classes.dashboardGraphCards}>
             <Box minHeight="470px" minWidth={300}>
-              <Box height={300}>
-                <LineChratOrders />
-              </Box>
               <Box p={3}>
                 <Box fontWeight={700}>Weekly Orders Stat</Box>
+              </Box>
+              <Box height={300}>
+                <LineChratOrders />
               </Box>
             </Box>
           </Card>
@@ -210,7 +211,7 @@ export default function FullWidthTabs() {
       </Grid>
       <Box my={4}>
         <Card elevation={0} className={classes.dashboardGraphCards}>
-          <Box p={3} style={{ background: '#347', color: '#FFF' }}>
+          <Box p={3} style={{ background: "#347", color: "#FFF" }}>
             <Box fontWeight={700}>Monthly Orders Status.</Box>
           </Box>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   Box,
@@ -7,69 +7,69 @@ import {
   Paper,
   Theme,
   makeStyles,
-} from '@material-ui/core';
-import { useHistory } from 'react-router';
-import Alert from '@material-ui/lab/Alert';
-import { Controller, useForm } from 'react-hook-form';
-import Solutions from './solutionTypes';
-import firebase from '../../../firebase';
-import { useFireMutation } from '../../../FireQuery';
-import TextComponent from '../../../components/shared/TextComponent';
-import { useSnackBar } from '../../../contexts/snackbar/SnackBarContext';
-import Safe from '../../../assets/icons/registration/wekeepyourdatasafe.svg';
-import uuid from '../../../utils/uuid';
+} from "@material-ui/core";
+import { useHistory } from "react-router";
+import Alert from "@material-ui/lab/Alert";
+import { Controller, useForm } from "react-hook-form";
+import Solutions from "./solutionTypes";
+import firebase from "../../../firebase";
+import { useFireMutation } from "../../../FireQuery";
+import TextComponent from "../../../components/shared/TextComponent";
+import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
+import Safe from "../../../assets/icons/registration/wekeepyourdatasafe.svg";
+import uuid from "../../../utils/uuid";
 
 export const landingPageForm = [
   {
-    name: 'clientName',
-    label: 'Client Name',
-    variant: 'standard',
-    type: 'text',
+    name: "clientName",
+    label: "Client Name",
+    variant: "standard",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'companyName',
-    label: 'Company Name',
-    variant: 'standard',
-    type: 'text',
+    name: "companyName",
+    label: "Company Name",
+    variant: "standard",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'companyUrl',
-    label: 'Company Url',
-    variant: 'standard',
-    type: 'text',
+    name: "companyUrl",
+    label: "Company Url",
+    variant: "standard",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'standard',
-    type: 'email',
+    name: "email",
+    label: "Email Address",
+    variant: "standard",
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
   {
-    name: 'phoneNumber',
-    label: 'Tel',
-    variant: 'standard',
-    type: 'tel',
+    name: "phoneNumber",
+    label: "Tel",
+    variant: "standard",
+    type: "tel",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-        message: 'invalid format',
+        message: "invalid format",
       },
     },
   },
@@ -83,36 +83,36 @@ const useStyles = makeStyles((theme: Theme) => ({
     // },
   },
   parent: {
-    width: '100%',
-    borderRadius: '0',
+    width: "100%",
+    borderRadius: "0",
   },
   regBtn: {
-    [theme.breakpoints.up('md')]: {
-      width: '70%',
+    [theme.breakpoints.up("md")]: {
+      width: "70%",
     },
-    background: 'linear-gradient(45deg, #0088D6 30%, #00CDB8 90%)',
-    color: 'white',
-    fontSize: '14px',
-    textTransform: 'none',
-    letterSpacing: '1px',
+    background: "linear-gradient(45deg, #0088D6 30%, #00CDB8 90%)",
+    color: "white",
+    fontSize: "14px",
+    textTransform: "none",
+    letterSpacing: "1px",
   },
   wrapper: {
-    width: '100%',
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
+    width: "100%",
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
   },
   buttonProgress: {
-    color: 'yellow',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    color: "yellow",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
   checkBoxContainer: {
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '7rem',
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: "7rem",
     },
   },
   formControl: {
@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     // minWidth: 120,
   },
   icon: {
-    color: 'linear-gradient(45deg, #0088D6 30%, #00CDB8 90%)',
+    color: "linear-gradient(45deg, #0088D6 30%, #00CDB8 90%)",
   },
   selectEmpty: {
     // marginTop: theme.spacing(2),
@@ -140,25 +140,23 @@ export default function PageForm() {
   const history = useHistory();
   const [isAtuthing, setIsAtuthing] = useState(false);
   const { setSnackbar } = useSnackBar();
-  const {
-    loading, success, mutate,
-  } = useFireMutation('users');
+  const { loading, success, mutate } = useFireMutation("users");
   const {
     error: errorOrder,
     success: successOrder,
     mutate: mutateOrder,
-  } = useFireMutation('orders');
+  } = useFireMutation("orders");
 
   const createSolutionSubscription = async (
     uid: string,
     data: any,
     solutionType?: string,
   ) => mutateOrder(
-    'ADD',
+    "ADD",
     null,
     {
       ...data,
-      status: 'pending',
+      status: "pending",
       isPayed: false,
       reviewd: false,
       isStuff: false,
@@ -193,7 +191,7 @@ export default function PageForm() {
 
       if (userCred) {
         await mutate(
-          'ADD',
+          "ADD",
           userCred.user?.uid,
           {
             ...data,
@@ -213,19 +211,19 @@ export default function PageForm() {
           },
         );
 
-        if (data.solutions === 'Both') {
+        if (data.solutions === "Both") {
           await createSolutionSubscription(
-            userCred.user?.uid || '',
+            userCred.user?.uid || "",
             data,
-            'A2P API',
+            "A2P API",
           );
           await createSolutionSubscription(
-            userCred.user?.uid || '',
+            userCred.user?.uid || "",
             data,
-            'SMS Campaign',
+            "SMS Campaign",
           );
         } else {
-          await createSolutionSubscription(userCred.user?.uid || '', data);
+          await createSolutionSubscription(userCred.user?.uid || "", data);
         }
 
         const user = firebase.auth().currentUser;
@@ -233,7 +231,7 @@ export default function PageForm() {
         if (user) {
           const actionCodeSettings = {
             url:
-              window.location.hostname === 'localhost'
+              window.location.hostname === "localhost"
                 ? `http://localhost:3000/email-verification-confirmation/${user.email}`
                 : `https://customer-support-co-et.web.app/email-verification-confirmation/${user.email}`,
           };
@@ -242,9 +240,9 @@ export default function PageForm() {
           // Email sent.
           history.push(`/email-verification/${user.email}`);
           setSnackbar({
-            type: 'success',
+            type: "success",
             open: true,
-            message: 'Emali Verification Sent...',
+            message: "Emali Verification Sent...",
           });
           const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
@@ -253,9 +251,9 @@ export default function PageForm() {
             .collection(`/notifications/${user.uid}/notifications`)
             .add({
               msg: `Your ${
-                data.solutions === 'Both' ? 'A2P API & SMS Campaign' : data.solutions
+                data.solutions === "Both" ? "A2P API & SMS Campaign" : data.solutions
               } order has been created and is in pending mode.`,
-              type: 'success',
+              type: "success",
               redirect: null,
               seen: false,
               createdAt: timestamp(),
@@ -266,9 +264,9 @@ export default function PageForm() {
     } catch (err) {
       setIsAtuthing(false);
       setSnackbar({
-        type: 'error',
+        type: "error",
         open: true,
-        message: err.code || 'Error occurred please try again!',
+        message: err.code || "Error occurred please try again!",
       });
       return err;
     }
@@ -292,7 +290,7 @@ export default function PageForm() {
             </Box>
             {errorOrder && (
               <Alert security="error">
-                {typeof errorOrder === 'string' ? errorOrder : errorOrder.code}
+                {typeof errorOrder === "string" ? errorOrder : errorOrder.code}
               </Alert>
             )}
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -322,7 +320,7 @@ export default function PageForm() {
                   render={({ field }) => <Solutions field={field} errors={errors} />}
                   control={control}
                   rules={{
-                    required: 'this field is required',
+                    required: "this field is required",
                   }}
                 />
               </Box>

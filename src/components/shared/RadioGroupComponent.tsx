@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   FormControl,
   FormControlLabel,
@@ -6,21 +6,21 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
-} from '@material-ui/core';
-import uuid from '../../utils/uuid';
+} from "@material-ui/core";
+import uuid from "../../utils/uuid";
 
 export default function RadioGroupComponent({
   field,
   errors,
-  variant = 'outlined',
-  label = '',
+  variant = "outlined",
+  label = "",
   disabled = false,
   name,
   menus = [],
 }: any) {
   return (
     <div>
-      <FormControl component="fieldset" style={{ marginTop: '1rem' }}>
+      <FormControl component="fieldset" style={{ marginTop: "1rem" }}>
         <FormLabel component="legend">{label}</FormLabel>
         <RadioGroup
           aria-label="gender"
@@ -33,7 +33,7 @@ export default function RadioGroupComponent({
           disabled={disabled}
           helperText={errors[`${name}`] ? errors[`${name}`].message : null}
           error={errors[`${name}`]}
-          style={{ marginTop: 1, display: 'flex' }}
+          style={{ marginTop: 1, display: "flex" }}
           row
         >
           {menus.map((menu: any) => (
@@ -45,7 +45,7 @@ export default function RadioGroupComponent({
             />
           ))}
         </RadioGroup>
-        <FormHelperText style={{ color: 'red' }}>
+        <FormHelperText style={{ color: "red" }}>
           {errors.solutions ? errors.solutions.message : null}
         </FormHelperText>
       </FormControl>

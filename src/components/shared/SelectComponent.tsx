@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   FormControl,
   FormHelperText,
@@ -8,8 +8,8 @@ import {
   Theme,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import uuid from '../../utils/uuid';
+} from "@material-ui/core";
+import uuid from "../../utils/uuid";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   formControl: {
@@ -20,14 +20,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     marginTop: theme.spacing(2),
   },
   root: {
-    marginLeft: '-0.2rem',
+    marginLeft: "-0.2rem",
   },
 }));
 
 export default function SelectComponent({
   field,
   errors,
-  variant = 'outlined',
+  variant = "outlined",
   name,
   menus = [],
 }: any) {
@@ -61,7 +61,7 @@ export default function SelectComponent({
             </MenuItem>
           ))}
         </Select>
-        <FormHelperText style={{ color: 'red' }}>
+        <FormHelperText style={{ color: "red" }}>
           {errors.solutions ? errors.solutions.message : null}
         </FormHelperText>
       </FormControl>

@@ -1,13 +1,13 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { Box, Grid } from '@material-ui/core';
-import DisplayText from '../../../../components/shared/DisplayText';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { Box, Grid } from "@material-ui/core";
+import DisplayText from "../../../../components/shared/DisplayText";
 
 dayjs.extend(relativeTime);
 
@@ -43,7 +43,7 @@ const ShowDialog = ({
         </Box>
         <DialogContent dividers>
           <DialogContentText
-            style={{ minWidth: 300, outline: 'none' }}
+            style={{ minWidth: 300, outline: "none" }}
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
@@ -66,11 +66,11 @@ const ShowDialog = ({
                 />
                 <DisplayText
                   title="isPayApproved"
-                  value={viewDialogData?.isPayApproved ? 'Approved' : 'Not Approved'}
+                  value={viewDialogData?.isPayApproved ? "Approved" : "Not Approved"}
                 />
                 <DisplayText
                   title="Billing Started"
-                  value={viewDialogData?.billingStarted ? 'Started' : 'Not Started'}
+                  value={viewDialogData?.billingStarted ? "Started" : "Not Started"}
                 />
                 <DisplayText
                   title="Phone Number"
@@ -81,7 +81,7 @@ const ShowDialog = ({
                   value={
                     viewDialogData
                     && viewDialogData.updatedAt
-                    && dayjs(viewDialogData.updatedAt.toDate()).format('d-MMM-YYYY')
+                    && dayjs(viewDialogData.updatedAt.toDate()).format("d-MMM-YYYY")
                   }
                 />
               </Grid>

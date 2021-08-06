@@ -1,49 +1,49 @@
-import React from 'react';
-import { Box, Paper, Typography } from '@material-ui/core';
-import { Theme, makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { Box, Paper, Typography } from "@material-ui/core";
+import { Theme, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) => ({
   title2: {
-    color: '#040734',
-    fontSize: '16px',
+    color: "#040734",
+    fontSize: "16px",
     fontWeight: 600,
-    marginBottom: '10px',
+    marginBottom: "10px",
   },
   subTitle: {
-    fontSize: '16px',
+    fontSize: "16px",
     fontWeight: 600,
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
     },
   },
   card: {
-    borderRadius: '0.5rem',
-    margin: '1rem',
-    display: 'flex',
-    flexBasis: '300px',
-    alignItems: 'center',
-    minHeight: '8.5rem',
+    borderRadius: "0.5rem",
+    margin: "1rem",
+    display: "flex",
+    flexBasis: "300px",
+    alignItems: "center",
+    minHeight: "8.5rem",
   },
   cardContainer: {
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
     },
   },
   cardContainerIcon: {
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-      justifyContent: 'center',
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      justifyContent: "center",
     },
   },
   cardContainerTitle: {
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      marginTop: '1rem',
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      marginTop: "1rem",
     },
   },
 }));
@@ -83,9 +83,9 @@ export default function Api({
         <Box
           className={classes.cardContainerTitle}
           style={{
-            display: !hasDescription ? 'flex' : '',
-            justifyContent: !hasDescription ? 'flex-start' : 'center',
-            alignItems: 'center',
+            display: !hasDescription ? "flex" : "",
+            justifyContent: !hasDescription ? "flex-start" : "center",
+            alignItems: "center",
           }}
           pl={4}
         >

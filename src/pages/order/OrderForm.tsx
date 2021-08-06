@@ -1,29 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from "react";
+import OrderInput from "./OrderInput";
+import {useFireQueryData} from "../../FireQuery";
 import {
   Box,
+  Button,
   CircularProgress,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { useLocation } from 'react-router';
-import OrderInput from './OrderInput';
-import { useFireQueryData } from '../../FireQuery';
+  Theme,
+} from "@material-ui/core";
+import {useHistory, useLocation, useParams} from "react-router";
 
-const useStyles = makeStyles(() => createStyles({
-  orderFormContainer: {
-    position: 'relative',
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    orderFormContainer: {
+      position: "relative",
+    },
+  })
+);
 
 const OrderForm = () => {
   const classes = useStyles();
+  const {id} = useParams<{id: string}>();
   const location = useLocation<any>();
+  const history = useHistory();
   const [dataInput, setDataInput] = useState<any>(null);
 
   const {
     data: user,
     loading,
-  } = useFireQueryData('users', location?.state?.data.uid);
+    error,
+  } = useFireQueryData("users", location?.state?.data.uid);
 
   useEffect(() => {
     if (location?.state) {
@@ -33,9 +40,9 @@ const OrderForm = () => {
 
   return (
     <div className={classes.orderFormContainer}>
-      {!loading
-        && dataInput
-        && (user ? (
+      {!loading &&
+        dataInput &&
+        (user ? (
           <OrderInput
             view={location?.state?.view}
             dataInput={dataInput}

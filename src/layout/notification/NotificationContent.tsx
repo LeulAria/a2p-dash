@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import {
   Theme,
   createStyles,
   makeStyles,
   withStyles,
-} from '@material-ui/core/styles';
-import Menu, { MenuProps } from '@material-ui/core/Menu';
+} from "@material-ui/core/styles";
+import Menu, { MenuProps } from "@material-ui/core/Menu";
 import {
   Badge,
   Box,
@@ -13,65 +13,65 @@ import {
   Divider,
   IconButton,
   Tooltip,
-} from '@material-ui/core';
-import { useHistory } from 'react-router';
+} from "@material-ui/core";
+import { useHistory } from "react-router";
 
-import WarningIcon from '@material-ui/icons/Warning';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import WarningIcon from "@material-ui/icons/Warning";
+import ErrorIcon from "@material-ui/icons/Error";
+import InfoIcon from "@material-ui/icons/Info";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
-    position: 'fixed',
+    position: "fixed",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
   NotificationContainer: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   NotificationList: {
-    boxSizing: 'border-box',
-    padding: '.5rem .5rem .5rem .9rem',
-    margin: '4px 0',
-    transition: 'all .3s',
-    '&:hover': {
-      background: theme.palette.type === 'dark' ? '#4c4c4c' : '#f6f6f6',
+    boxSizing: "border-box",
+    padding: ".5rem .5rem .5rem .9rem",
+    margin: "4px 0",
+    transition: "all .3s",
+    "&:hover": {
+      background: theme.palette.type === "dark" ? "#4c4c4c" : "#f6f6f6",
     },
   },
   iconBtn: {
-    fontSize: '20px',
+    fontSize: "20px",
   },
 }));
 
 const StyledMenu = withStyles((theme: Theme) => ({
   paper: {
-    border: theme.palette.type === 'dark' ? '1px solid #444' : '1px solid #d3d4d5',
+    border: theme.palette.type === "dark" ? "1px solid #444" : "1px solid #d3d4d5",
     boxShadow:
-      theme.palette.type === 'dark'
-        ? '0 1px 10px rgba(0,0,0,0.2)'
-        : '0 1px 10px rgba(0,0,0,0.2)',
+      theme.palette.type === "dark"
+        ? "0 1px 10px rgba(0,0,0,0.2)"
+        : "0 1px 10px rgba(0,0,0,0.2)",
     borderRadius: 0,
-    minWidth: '280px',
-    width: '80%',
-    maxWidth: '320px',
+    minWidth: "280px",
+    width: "80%",
+    maxWidth: "320px",
   },
 }))((props: MenuProps) => (
   <Menu
     elevation={0}
     getContentAnchorEl={null}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'left',
+      vertical: "bottom",
+      horizontal: "left",
     }}
     transformOrigin={{
-      vertical: 'top',
-      horizontal: 'left',
+      vertical: "top",
+      horizontal: "left",
     }}
     {...props}
   />
@@ -81,7 +81,7 @@ const StyledBadge = withStyles(() => createStyles({
   badge: {
     right: -1,
     top: 4,
-    padding: '0 7px',
+    padding: "0 7px",
   },
 }))(Badge);
 
@@ -137,7 +137,7 @@ export default function UserProfile({
             <IconButton
               onClick={() => {
                 handleCloseDialogMenu();
-                history.push('/app/notifications');
+                history.push("/app/notifications");
               }}
             >
               <svg
@@ -165,17 +165,17 @@ export default function UserProfile({
                     className={classes.NotificationList}
                   >
                     <IconButton disabled>
-                      {notification.type === 'success' && (
-                        <CheckCircleIcon style={{ color: '#4A5' }} />
+                      {notification.type === "success" && (
+                        <CheckCircleIcon style={{ color: "#4A5" }} />
                       )}
-                      {notification.type === 'info' && (
-                        <InfoIcon style={{ color: '#45B' }} />
+                      {notification.type === "info" && (
+                        <InfoIcon style={{ color: "#45B" }} />
                       )}
-                      {notification.type === 'warning' && (
-                        <WarningIcon style={{ color: '#BD4' }} />
+                      {notification.type === "warning" && (
+                        <WarningIcon style={{ color: "#BD4" }} />
                       )}
-                      {notification.type === 'error' && (
-                        <ErrorIcon style={{ color: '#B64' }} />
+                      {notification.type === "error" && (
+                        <ErrorIcon style={{ color: "#B64" }} />
                       )}
                     </IconButton>
                     <Box mr={2}>

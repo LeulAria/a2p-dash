@@ -1,54 +1,54 @@
-import React from 'react';
+import React from "react";
 import {
   Box, Container, Grid, Typography,
-} from '@material-ui/core';
-import { Theme, makeStyles } from '@material-ui/core/styles';
-import SMSManager from '../../assets/images/smsmarketing.svg';
+} from "@material-ui/core";
+import { Theme, makeStyles } from "@material-ui/core/styles";
+import SMSManager from "../../assets/images/smsmarketing.svg";
 
 const useStyles = makeStyles((theme: Theme) => ({
   topography: {
-    color: '#0F0F1B',
+    color: "#0F0F1B",
     fontWeight: 800,
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
     },
   },
   topography2: {
     // color: '#28287D',
     fontWeight: 400,
-    fontSize: '1rem',
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
+    fontSize: "1rem",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
     },
   },
   listItem: {
     // display: 'inline'
   },
   cardTitle: {
-    color: '#101218',
+    color: "#101218",
     fontWeight: 900,
-    fontSize: '28px',
-    marginBottom: '1rem',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.5rem',
-      textAlign: 'center',
+    fontSize: "28px",
+    marginBottom: "1rem",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.5rem",
+      textAlign: "center",
       lineHeight: 1.334,
-      letterSpacing: '0em',
-      marginTop: '2rem',
+      letterSpacing: "0em",
+      marginTop: "2rem",
     },
   },
   cardSubTitle: {
-    [theme.breakpoints.down('sm')]: {
-      maxWidth: '250px',
-      margin: 'auto',
-      textAlign: 'center',
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "250px",
+      margin: "auto",
+      textAlign: "center",
     },
   },
   smsImg: {
-    [theme.breakpoints.down('sm')]: {
-      width: '60%',
-      maxWidth: '300px',
-      margin: 'auto',
+    [theme.breakpoints.down("sm")]: {
+      width: "60%",
+      maxWidth: "300px",
+      margin: "auto",
     },
   },
 }));
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function Sms() {
   const classes = useStyles();
   return (
-    <div style={{ height: '80vh', overflowX: 'hidden' }}>
+    <div style={{ height: "80vh", overflowX: "hidden" }}>
       <Container>
         <Grid
           container

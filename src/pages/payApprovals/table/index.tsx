@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   DataGrid,
   GridCellParams,
   GridColDef,
   GridToolbar,
-} from '@material-ui/data-grid';
+} from "@material-ui/data-grid";
 import {
   Box,
   Button,
@@ -13,18 +13,18 @@ import {
   Theme,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import { useSnackbar } from 'notistack';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import { useHistory } from 'react-router';
-import ShowDialog from './show';
-import EditDialog from './edit';
-import { useFireMutation } from '../../../FireQuery';
-import OrderForm from './orderForm';
-import firebase from '../../../firebase';
-import NoData from '../../util/NoData';
-import CustomLoadingOverlay from '../../util/CustomLoadingOverlay';
+} from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import { useSnackbar } from "notistack";
+import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
+import { useHistory } from "react-router";
+import ShowDialog from "./show";
+import EditDialog from "./edit";
+import { useFireMutation } from "../../../FireQuery";
+import OrderForm from "./orderForm";
+import firebase from "../../../firebase";
+import NoData from "../../util/NoData";
+import CustomLoadingOverlay from "../../util/CustomLoadingOverlay";
 
 interface IProps {
   loading: boolean;
@@ -34,29 +34,29 @@ interface IProps {
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     borderRadius: 3,
-    '& .MuiDataGrid-toolbarContainer': {
-      display: 'flex',
-      justifyContent: 'flex-end',
+    "& .MuiDataGrid-toolbarContainer": {
+      display: "flex",
+      justifyContent: "flex-end",
       borderBottom:
-          theme.palette.type === 'dark' ? '1px solid #555' : '1px solid #ddd',
+          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
-    '& .MuiDataGrid-toolbar': {
-      display: 'flex',
-      padding: '0 1rem',
+    "& .MuiDataGrid-toolbar": {
+      display: "flex",
+      padding: "0 1rem",
     },
-    '& .MuiButton-label': {
-      margin: '0 10px',
-      color: theme.palette.type === 'dark' ? '#999' : '#666',
+    "& .MuiButton-label": {
+      margin: "0 10px",
+      color: theme.palette.type === "dark" ? "#999" : "#666",
     },
-    '& .MuiButton-root': {
+    "& .MuiButton-root": {
       borderRadius: 0,
       borderLeft:
-          theme.palette.type === 'dark' ? '1px solid #555' : '1px solid #ddd',
+          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
-    '& .MuiSvgIcon-root': {
-      fontSize: '1.5rem',
+    "& .MuiSvgIcon-root": {
+      fontSize: "1.5rem",
     },
-    '& .MuiDataGridPanelFooter-root': {
+    "& .MuiDataGridPanelFooter-root": {
       borderRadius: 0,
     },
   },
@@ -68,7 +68,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
   const [viewDialogData, setViewDialogData] = useState<any>({});
   const [editDialog, setEditDialog] = useState(false);
   const [editDialogData] = useState<any>({});
-  const { mutate } = useFireMutation('orders');
+  const { mutate } = useFireMutation("orders");
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
 
@@ -88,39 +88,39 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
 
   const columns: GridColDef[] = [
     {
-      field: 'id',
+      field: "id",
       hide: true,
-      headerName: 'Id',
-      description: 'id of the order',
+      headerName: "Id",
+      description: "id of the order",
       width: 130,
     },
     {
-      field: 'email',
-      headerName: 'email',
-      description: 'email of the user who ordered',
+      field: "email",
+      headerName: "email",
+      description: "email of the user who ordered",
       width: 130,
     },
     {
-      field: 'clientName',
-      headerName: 'Client Name',
-      description: 'client name who ordered',
+      field: "clientName",
+      headerName: "Client Name",
+      description: "client name who ordered",
       width: 130,
     },
     {
-      field: 'companyName',
-      headerName: 'Company Name',
-      description: 'company name who ordered',
+      field: "companyName",
+      headerName: "Company Name",
+      description: "company name who ordered",
       width: 130,
     },
     {
-      field: 'solutions',
-      headerName: 'Solution',
-      description: 'the ordered solution type',
+      field: "solutions",
+      headerName: "Solution",
+      description: "the ordered solution type",
       width: 130,
     },
     {
-      field: 'approve',
-      headerName: 'Payment',
+      field: "approve",
+      headerName: "Payment",
       sortable: false,
       filterable: false,
       width: 180,
@@ -136,8 +136,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
             <Button
               disableElevation
               size="small"
-              variant="contained"
-              color="primary"
+              variant="outlined"
               disabled={data.isPayed || loading}
               style={{
                 borderRadius: 20,
@@ -146,12 +145,12 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
               onClick={() => {
                 setLoading(true);
                 mutate(
-                  'UPDATE',
+                  "UPDATE",
                   id,
                   {
                     isPayApproved: true,
-                    payApproval: 'done',
-                    status: 'payed',
+                    payApproval: "done",
+                    status: "payed",
                     isPayed: true,
                   },
                   {
@@ -159,16 +158,16 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
                   },
                 )
                   .then(() => {
-                    enqueueSnackbar('Payment approved', {
-                      variant: 'success',
+                    enqueueSnackbar("Payment approved", {
+                      variant: "success",
                     });
                     setLoading(false);
                   })
                   .catch((err: any) => {
                     enqueueSnackbar(
-                      err?.code || 'Error occurred please try again!!',
+                      err?.code || "Error occurred please try again!!",
                       {
-                        variant: 'error',
+                        variant: "error",
                       },
                     );
                   });
@@ -179,15 +178,15 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
                   .collection(`/notifications/${data.uid}/notifications`)
                   .add({
                     msg: `Your ${data.solutions} order payment has been approved.`,
-                    type: 'success',
+                    type: "success",
                     redirect: null,
                     seen: false,
                     createdAt: timestamp(),
                   });
               }}
             >
-              {data.isPayed ? 'Order Payed' : 'Approve Payment'}
-              {loading && <CircularProgress style={{ position: 'absolute' }} />}
+              {data.isPayed ? "Order Payed" : "Approve Payment"}
+              {loading && <CircularProgress style={{ position: "absolute" }} />}
             </Button>
           </Box>
         );
@@ -195,9 +194,9 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
       },
     },
     {
-      field: 'order_detail',
-      headerName: 'Order Form',
-      description: 'Add Order Information.',
+      field: "order_detail",
+      headerName: "Order Form",
+      description: "Add Order Information.",
       width: 130,
       sortable: false,
       filterable: false,
@@ -214,7 +213,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
             variant="outlined"
             color="primary"
             style={{
-              position: 'relative',
+              position: "relative",
               borderRadius: 20,
               fontWeight: 700,
             }}
@@ -234,8 +233,8 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
       },
     },
     {
-      field: 'view',
-      headerName: 'View',
+      field: "view",
+      headerName: "View",
       width: 100,
       sortable: false,
       filterable: false,
@@ -252,7 +251,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
               setViewDialogData(data);
             }}
           >
-            <VisibilityIcon style={{ color: '#666', fontSize: '1.3rem' }} />
+            <VisibilityIcon style={{ color: "#666", fontSize: "1.3rem" }} />
           </IconButton>
         );
         return button;
@@ -261,7 +260,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
   ];
 
   return (
-    <div style={{ height: 480, width: '100%' }}>
+    <div style={{ height: 480, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}

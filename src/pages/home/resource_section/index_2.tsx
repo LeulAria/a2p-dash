@@ -1,36 +1,36 @@
-import React from 'react';
-import { Box, Container, Grid } from '@material-ui/core';
-import { Theme, makeStyles } from '@material-ui/core/styles';
-import InfoCard from './informationCards';
-import Header from '../../../assets/backgrounds/background.png';
-import Transportandlogistics from '../../../assets/icons/research/transport.svg';
-import MarketingAgency from '../../../assets/icons/research/marketing.svg';
-import factorAuthentication from '../../../assets/icons/research/factor.svg';
-import FinancialServices_ from '../../../assets/icons/research/financial.svg';
-import TravelAgency from '../../../assets/icons/research/travel.svg';
-import Ecomerce from '../../../assets/icons/research/ecomerce.svg';
+import React from "react";
+import { Box, Container, Grid } from "@material-ui/core";
+import { Theme, makeStyles } from "@material-ui/core/styles";
+import InfoCard from "./informationCards";
+import Header from "../../../assets/backgrounds/background.png";
+import Transportandlogistics from "../../../assets/icons/research/transport.svg";
+import MarketingAgency from "../../../assets/icons/research/marketing.svg";
+import factorAuthentication from "../../../assets/icons/research/factor.svg";
+import FinancialServices_ from "../../../assets/icons/research/financial.svg";
+import TravelAgency from "../../../assets/icons/research/travel.svg";
+import Ecomerce from "../../../assets/icons/research/ecomerce.svg";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     background: `url(${Header}) no-repeat center center`,
-    backgroundSize: 'cover',
-    marginBottom: '10rem',
+    backgroundSize: "cover",
+    marginBottom: "10rem",
   },
   title: {
-    color: '#2BAF9C',
+    color: "#2BAF9C",
     fontWeight: 900,
-    fontSize: '28px',
-    marginBottom: '1rem',
+    fontSize: "28px",
+    marginBottom: "1rem",
   },
   cardTitle: {
-    color: '#1C4F7A',
+    color: "#1C4F7A",
     fontWeight: 900,
-    fontSize: '24px',
-    marginBottom: '3rem',
+    fontSize: "24px",
+    marginBottom: "3rem",
   },
   cardHolder: {
-    [theme.breakpoints.down('md')]: {
-      padding: '0',
+    [theme.breakpoints.down("md")]: {
+      padding: "0",
     },
   },
 }));
@@ -46,7 +46,7 @@ export default function Api() {
             justifyContent="center"
             alignContent="center"
             spacing={10}
-            style={{ padding: '0' }}
+            style={{ padding: "0" }}
           >
             <Grid item md={6} xs={10}>
               <Box width="100%" pr={5} className={classes.cardHolder}>

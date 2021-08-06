@@ -1,15 +1,15 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { Box, Grid } from '@material-ui/core';
-import DisplayText from '../../../../components/shared/DisplayText';
-
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import {Box, Grid} from "@material-ui/core";
+import DisplayText from "../../../../components/shared/DisplayText";
 dayjs.extend(relativeTime);
 
 const ShowDialog = ({
@@ -38,52 +38,28 @@ const ShowDialog = ({
         aria-describedby="scroll-dialog-description"
       >
         <Box fontWeight={700} p={2} id="scroll-dialog-title">
-          Order:
-          {' '}
-          {viewDialogData?.solutions}
+          Order: {viewDialogData?.solutions}
         </Box>
         <DialogContent dividers>
           <DialogContentText
-            style={{ minWidth: 300, outline: 'none' }}
+            style={{minWidth: 300, outline: "none"}}
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
           >
             {viewDialogData && (
               <Grid container spacing={2}>
-                <DisplayText
-                  title="Client Name"
-                  value={viewDialogData?.clientName}
-                />
+                <DisplayText title={"Client Name"} value={viewDialogData?.clientName} />
                 <DisplayText title="Email" value={viewDialogData?.email} />
                 <DisplayText title="Solutions" value={viewDialogData?.solutions} />
-                <DisplayText
-                  title="Company Name"
-                  value={viewDialogData?.companyName}
-                />
-                <DisplayText
-                  title="Company Url"
-                  value={viewDialogData?.companyUrl}
-                />
-                <DisplayText
-                  title="isPayApproved"
-                  value={viewDialogData?.isPayApproved ? 'Approved' : 'Not Approved'}
-                />
-                <DisplayText
-                  title="Billing Started"
-                  value={viewDialogData?.billingStarted ? 'Started' : 'Not Started'}
-                />
-                <DisplayText
-                  title="Phone Number"
-                  value={viewDialogData?.phoneNumber}
-                />
-                <DisplayText
-                  title="createdAt"
-                  value={
-                    viewDialogData
-                    && viewDialogData.updatedAt
-                    && dayjs(viewDialogData.updatedAt.toDate()).format('d-MMM-YYYY')
-                  }
+                <DisplayText title="Company Name" value={viewDialogData?.companyName} />
+                <DisplayText title="Company Url" value={viewDialogData?.companyUrl} />
+                <DisplayText title="isPayApproved" value={viewDialogData?.isPayApproved ? "Approved" : "Not Approved"} />
+                <DisplayText title="Billing Started" value={viewDialogData?.billingStarted ? "Started" : "Not Started"} />
+                <DisplayText title="Phone Number" value={viewDialogData?.phoneNumber} />
+                <DisplayText title="createdAt" value={viewDialogData &&
+                    viewDialogData.updatedAt &&
+                    dayjs(viewDialogData.updatedAt.toDate()).format("d-MMM-YYYY")}
                 />
               </Grid>
             )}

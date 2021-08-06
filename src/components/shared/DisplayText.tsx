@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import {
   Box, Grid, createStyles, makeStyles,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles(() => createStyles({
   displayFieldContainer: {},

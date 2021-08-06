@@ -1,65 +1,65 @@
-import React from 'react';
-import { Box, Grid, Typography } from '@material-ui/core';
-import { Theme, makeStyles } from '@material-ui/core/styles';
-import PaperCards from './paperCards';
-import ImageContainer from './imageHolder';
+import React from "react";
+import { Box, Grid, Typography } from "@material-ui/core";
+import { Theme, makeStyles } from "@material-ui/core/styles";
+import PaperCards from "./paperCards";
+import ImageContainer from "./imageHolder";
 // import CODE from "../../../assets/images/sampleCode.jpg";
-import ClientsSection from './ClientsSection';
-import CODE from '../../../assets/images/samplecode.jpg';
-import NoDelay from '../../../assets/icons/ease_use/nodelay.svg';
-import NoCable from '../../../assets/icons/ease_use/nocable.svg';
-import A2PAPI from '../../../assets/images/applicationtopeermessaging.png';
-import NoComplexity from '../../../assets/icons/ease_use/nocomplexity.svg';
-import uuid from '../../../utils/uuid';
+import ClientsSection from "./ClientsSection";
+import CODE from "../../../assets/images/samplecode.jpg";
+import NoDelay from "../../../assets/icons/ease_use/nodelay.svg";
+import NoCable from "../../../assets/icons/ease_use/nocable.svg";
+import A2PAPI from "../../../assets/images/applicationtopeermessaging.png";
+import NoComplexity from "../../../assets/icons/ease_use/nocomplexity.svg";
+import uuid from "../../../utils/uuid";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    margin: '5rem 0',
+    margin: "5rem 0",
   },
   contain: {
-    marginTop: '3%',
+    marginTop: "3%",
   },
   topography: {
-    color: '#072E5C',
+    color: "#072E5C",
   },
   imageBox: {
-    position: 'relative',
+    position: "relative",
   },
   imageHolder: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
-    margin: 'auto',
-    width: '80%',
-    height: '80%',
+    margin: "auto",
+    width: "80%",
+    height: "80%",
   },
   gridItems: {
-    padding: '1% 10%',
+    padding: "1% 10%",
     //   marginLeft: '3%'
   },
   cardTitle: {
-    color: '#13141A',
+    color: "#13141A",
     fontWeight: 900,
-    fontSize: '28px',
-    marginBottom: '3rem',
-    [theme.breakpoints.down('sm')]: {
-      padding: '0 2rem',
-      fontSize: '26px',
+    fontSize: "28px",
+    marginBottom: "3rem",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 2rem",
+      fontSize: "26px",
     },
   },
 }));
 
 const items = [
   {
-    title: 'No Cable',
+    title: "No Cable",
     icon: NoCable,
   },
   {
-    title: 'No Delay',
+    title: "No Delay",
     icon: NoDelay,
   },
   {
-    title: 'No Complexity',
+    title: "No Complexity",
     icon: NoComplexity,
   },
 ];

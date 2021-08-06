@@ -3,17 +3,17 @@ export const getUserRoles = (role: any) => {
 
   if (role) {
     if (role?.isAdmin) {
-      userRole.push('ADMIN');
-      userRole.push('LOGGED_IN');
+      userRole.push("ADMIN");
+      userRole.push("LOGGED_IN");
     } else if (role?.isSalesSupport) {
-      userRole.push('SALSE');
-      userRole.push('LOGGED_IN');
+      userRole.push("SALSE");
+      userRole.push("LOGGED_IN");
     } else if (role?.isTechSupport) {
-      userRole.push('TECH_SUPPORT');
-      userRole.push('LOGGED_IN');
+      userRole.push("TECH_SUPPORT");
+      userRole.push("LOGGED_IN");
     } else if (role?.isClient) {
-      userRole.push('CLIENT');
-      userRole.push('LOGGED_IN');
+      userRole.push("CLIENT");
+      userRole.push("LOGGED_IN");
     }
   }
 
@@ -21,27 +21,27 @@ export const getUserRoles = (role: any) => {
 };
 
 export const redirectUserHome = (role: any) => {
-  let uri = '';
+  let uri = "";
   if (role?.isAdmin) {
-    uri = '/app/dashboard-admin';
+    uri = "/app/dashboard-admin";
   } else if (role?.isClient) {
-    uri = '/app/user/orders';
+    uri = "/app/user/orders";
   } else if (role?.isSalesSupport) {
-    uri = '/app/orders';
+    uri = "/app/orders";
   } else if (role?.isTechSupport) {
-    uri = '/app/subscribers';
+    uri = "/app/subscribers";
   }
 
   return uri;
 };
 
 export const redirectUserLogin = (user: any) => {
-  let uri = '';
+  let uri = "";
 
   if (user?.roles?.isSruff) {
-    uri = '/admin';
+    uri = "/admin";
   } else if (user?.roles?.isClient) {
-    uri = '/user/login';
+    uri = "/user/login";
   }
 
   return uri;

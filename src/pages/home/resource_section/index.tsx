@@ -1,33 +1,33 @@
-import React from 'react';
-import { Box } from '@material-ui/core';
-import { Theme, makeStyles } from '@material-ui/core/styles';
-import InfoCard from './informationCards';
-import Header from '../../../assets/backgrounds/background.png';
-import Automatemarketing from '../../../assets/icons/research/automatemarketing.svg';
-import ViewDeliveryReport from '../../../assets/icons/research/viewdeliveryreport.svg';
-import Segment from '../../../assets/icons/research/segment.svg';
-import SendSms from '../../../assets/icons/research/sendsms.svg';
+import React from "react";
+import { Box } from "@material-ui/core";
+import { Theme, makeStyles } from "@material-ui/core/styles";
+import InfoCard from "./informationCards";
+import Header from "../../../assets/backgrounds/background.png";
+import Automatemarketing from "../../../assets/icons/research/automatemarketing.svg";
+import ViewDeliveryReport from "../../../assets/icons/research/viewdeliveryreport.svg";
+import Segment from "../../../assets/icons/research/segment.svg";
+import SendSms from "../../../assets/icons/research/sendsms.svg";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     background: `url(${Header}) no-repeat center center`,
-    backgroundSize: 'cover',
+    backgroundSize: "cover",
   },
   title: {
-    color: '#2BAF9C',
+    color: "#2BAF9C",
     fontWeight: 900,
-    fontSize: '28px',
-    marginBottom: '1rem',
+    fontSize: "28px",
+    marginBottom: "1rem",
   },
   cardTitle: {
-    color: '#1C4F7A',
+    color: "#1C4F7A",
     fontWeight: 900,
-    fontSize: '24px',
-    marginBottom: '3rem',
+    fontSize: "24px",
+    marginBottom: "3rem",
   },
   cardHolder: {
-    [theme.breakpoints.down('md')]: {
-      padding: '0',
+    [theme.breakpoints.down("md")]: {
+      padding: "0",
     },
   },
 }));

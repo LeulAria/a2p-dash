@@ -1,47 +1,47 @@
-import React from 'react';
-import { Box, Button, Typography } from '@material-ui/core';
-import { Theme, makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { Box, Button, Typography } from "@material-ui/core";
+import { Theme, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) => ({
   a2pTitle: {
-    color: 'white',
+    color: "white",
     fontWeight: 900,
-    fontSize: '30px',
-    letterSpacing: '1px',
-    [theme.breakpoints.down('sm')]: {
+    fontSize: "30px",
+    letterSpacing: "1px",
+    [theme.breakpoints.down("sm")]: {
       fontWeight: 700,
-      textAlign: 'center',
-      fontSize: '1.8rem',
+      textAlign: "center",
+      fontSize: "1.8rem",
       lineHeight: 1.334,
-      letterSpacing: '0em',
+      letterSpacing: "0em",
     },
   },
   text: {
-    color: 'white',
-    textAlign: 'start',
+    color: "white",
+    textAlign: "start",
     fontWeight: 400,
-    fontSize: '18px',
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
+    fontSize: "18px",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
       fontSize: 12,
     },
   },
   btn: {
-    background: 'white',
-    fontSize: '14px',
-    fontWeight: 'bolder',
-    paddingTop: '1rem',
-    paddingBottom: '1rem',
-    paddingLeft: '3rem',
-    marginTop: '1rem',
-    paddingRight: '3rem',
-    borderRadius: '0.4rem',
+    background: "white",
+    fontSize: "14px",
+    fontWeight: "bolder",
+    paddingTop: "1rem",
+    paddingBottom: "1rem",
+    paddingLeft: "3rem",
+    marginTop: "1rem",
+    paddingRight: "3rem",
+    borderRadius: "0.4rem",
   },
   parentBox: {
-    [theme.breakpoints.down('sm')]: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: '4rem',
+    [theme.breakpoints.down("sm")]: {
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: "4rem",
       fontSize: 16,
     },
   },
@@ -53,10 +53,10 @@ const SecondItem = () => {
   const handleClick = (event: any) => {
     const anchor = (
       (event.target as HTMLDivElement).ownerDocument || document
-    ).querySelector('#back-to-top-anchor');
+    ).querySelector("#back-to-top-anchor");
 
     if (anchor) {
-      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 

@@ -1,79 +1,79 @@
-import React, { useContext } from 'react';
-import firebase from 'firebase';
-import Alert from '@material-ui/lab/Alert';
-import { Controller, useForm } from 'react-hook-form';
+import React, { useContext } from "react";
+import firebase from "firebase";
+import Alert from "@material-ui/lab/Alert";
+import { Controller, useForm } from "react-hook-form";
 import {
   Box, Button, CircularProgress, Theme, makeStyles,
-} from '@material-ui/core';
-import { useFireMutation } from '../../FireQuery';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
-import TextComponent from '../../components/shared/TextComponent';
-import { useSnackBar } from '../../contexts/snackbar/SnackBarContext';
-import uuid from '../../utils/uuid';
+} from "@material-ui/core";
+import { useFireMutation } from "../../FireQuery";
+import { AuthContext } from "../../contexts/auth/AuthProvider";
+import TextComponent from "../../components/shared/TextComponent";
+import { useSnackBar } from "../../contexts/snackbar/SnackBarContext";
+import uuid from "../../utils/uuid";
 
 export const landingPageForm = [
   {
-    name: 'clientName',
-    label: 'Client Name',
-    variant: 'outlined',
-    type: 'text',
+    name: "clientName",
+    label: "Client Name",
+    variant: "outlined",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'companyName',
-    label: 'Company Name',
-    variant: 'outlined',
-    type: 'text',
+    name: "companyName",
+    label: "Company Name",
+    variant: "outlined",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'companyUrl',
-    label: 'Company Url',
-    variant: 'outlined',
-    type: 'text',
+    name: "companyUrl",
+    label: "Company Url",
+    variant: "outlined",
+    type: "text",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
     },
   },
   {
-    name: 'email',
-    label: 'Email Address',
-    variant: 'outlined',
-    type: 'email',
+    name: "email",
+    label: "Email Address",
+    variant: "outlined",
+    type: "email",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: 'invalid email address',
+        message: "invalid email address",
       },
     },
   },
   {
-    name: 'phoneNumber',
-    label: 'Tel',
-    variant: 'outlined',
-    type: 'tel',
+    name: "phoneNumber",
+    label: "Tel",
+    variant: "outlined",
+    type: "tel",
     rules: {
-      required: 'this field is required',
+      required: "this field is required",
       pattern: {
         value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-        message: 'invalid format',
+        message: "invalid format",
       },
     },
   },
   {
-    name: 'password',
-    label: 'Password',
-    variant: 'outlined',
-    type: 'password',
+    name: "password",
+    label: "Password",
+    variant: "outlined",
+    type: "password",
     rules: {
       minLength: {
-        value: '6',
-        message: 'password must be at least 6 characters',
+        value: "6",
+        message: "password must be at least 6 characters",
       },
     },
   },
@@ -81,31 +81,31 @@ export const landingPageForm = [
 
 const useStyles = makeStyles((theme: Theme) => ({
   parentBox: {
-    [theme.breakpoints.down('md')]: {
-      alignItems: 'center',
+    [theme.breakpoints.down("md")]: {
+      alignItems: "center",
     },
   },
   parent: {
-    width: '100%',
-    borderRadius: '0',
+    width: "100%",
+    borderRadius: "0",
   },
   wrapper: {
-    width: '100%',
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
+    width: "100%",
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
   },
   buttonProgress: {
-    color: 'yellow',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    color: "yellow",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: -12,
     marginLeft: -12,
   },
   checkBoxContainer: {
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: '7rem',
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: "7rem",
     },
   },
   formControl: {
@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(2),
   },
   root: {
-    marginLeft: '-0.2rem',
+    marginLeft: "-0.2rem",
   },
 }));
 
@@ -124,8 +124,8 @@ export default function UserForm({ handleClose }: any) {
   const classes = useStyles();
   const { user } = useContext(AuthContext);
   const { setSnackbar } = useSnackBar();
-  const { loading, mutate } = useFireMutation('users');
-  const { error: errorOrder, loading: loadingOrder } = useFireMutation('orders');
+  const { loading, mutate } = useFireMutation("users");
+  const { error: errorOrder, loading: loadingOrder } = useFireMutation("orders");
 
   const {
     control,
@@ -138,13 +138,13 @@ export default function UserForm({ handleClose }: any) {
       companyUrl: user.companyUrl,
       email: user.email,
       phoneNumber: user.phoneNumber,
-      password: user.password || '',
+      password: user.password || "",
     },
   });
 
   const onSubmit = (data: any) => {
     mutate(
-      'UPDATE',
+      "UPDATE",
       user?.uid,
       {
         clientName: data.clientName,
@@ -165,8 +165,8 @@ export default function UserForm({ handleClose }: any) {
         .then(() => {
           setSnackbar({
             open: true,
-            message: 'Profile updated successfully!',
-            type: 'success',
+            message: "Profile updated successfully!",
+            type: "success",
           });
           handleClose();
         })
@@ -174,7 +174,7 @@ export default function UserForm({ handleClose }: any) {
           setSnackbar({
             open: true,
             message: error.code,
-            type: 'error',
+            type: "error",
           });
         });
     }
@@ -193,7 +193,7 @@ export default function UserForm({ handleClose }: any) {
       >
         {errorOrder && (
           <Alert security="error">
-            {typeof errorOrder === 'string' ? errorOrder : errorOrder.code}
+            {typeof errorOrder === "string" ? errorOrder : errorOrder.code}
           </Alert>
         )}
         <form noValidate onSubmit={handleSubmit(onSubmit)}>

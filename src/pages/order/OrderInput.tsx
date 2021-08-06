@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
+import React, {useEffect, useRef, useState} from "react";
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItem from "@material-ui/core/ListItem";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import Slide from "@material-ui/core/Slide";
+import {TransitionProps} from "@material-ui/core/transitions";
 import {
   AppBar,
   Box,
@@ -13,62 +15,63 @@ import {
   Container,
   Grid,
   IconButton,
-} from '@material-ui/core';
-import { Controller, useForm } from 'react-hook-form';
-import { useHistory } from 'react-router';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { useReactToPrint } from 'react-to-print';
-import TextComponent from '../../components/shared/TextComponent';
-import SelectComponent from '../../components/shared/SelectComponent';
-import RadioGroupComponent from '../../components/shared/RadioGroupComponent';
-import { useFireMutation } from '../../FireQuery';
-import { useSnackBar } from '../../contexts/snackbar/SnackBarContext';
-import uuid from '../../utils/uuid';
+} from "@material-ui/core";
+import {Controller, useForm} from "react-hook-form";
+import TextComponent from "../../components/shared/TextComponent";
+import SelectComponent from "../../components/shared/SelectComponent";
+import RadioGroupComponent from "../../components/shared/RadioGroupComponent";
+import {useFireMutation} from "../../FireQuery";
+import {useSnackBar} from "../../contexts/snackbar/SnackBarContext";
+import {useHistory} from "react-router";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import {useReactToPrint} from "react-to-print";
 
 // import MiniChat from "./MiniChat";
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
-  },
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  wrapper: {
-    position: 'relative',
-  },
-  buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
-  formInput: {
-    fontWeight: 600,
-  },
-  hide: {
-    left: '-200vw',
-    transition: 'all .4s ease-in-out',
-  },
-  show: {
-    left: 0,
-    transition: 'all .4s ease-in-out',
-  },
-  legend: {
-    color: theme.palette.type === 'dark' ? '#999' : '#667',
-  },
-  legendPrimary: {
-    color: theme.palette.type === 'dark' ? '#bbb' : '#545454',
-  },
-  appBar: {
-    position: 'sticky',
-    height: 62,
-    boxShadow: 'none',
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    title: {
+      marginLeft: theme.spacing(2),
+      flex: 1,
+    },
+    root: {
+      display: "flex",
+      alignItems: "center",
+    },
+    wrapper: {
+      position: "relative",
+    },
+    buttonProgress: {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      marginTop: -12,
+      marginLeft: -12,
+    },
+    formInput: {
+      fontWeight: 600,
+    },
+    hide: {
+      left: "-200vw",
+      transition: "all .4s ease-in-out",
+    },
+    show: {
+      left: 0,
+      transition: "all .4s ease-in-out",
+    },
+    legend: {
+      color: theme.palette.type === "dark" ? "#999" : "#667",
+    },
+    legendPrimary: {
+      color: theme.palette.type === "dark" ? "#bbb" : "#545454",
+    },
+    appBar: {
+      position: "sticky",
+      height: 62,
+      boxShadow: "none",
+    },
+  })
+);
 
 export default function OrderInput({
   dataInput,
@@ -86,59 +89,60 @@ export default function OrderInput({
 
   const {
     control,
-    formState: { errors, isValid },
+    formState: {errors, isDirty, isValid},
+    getValues,
     setValue,
     watch,
     handleSubmit,
   } = useForm({
     defaultValues: {
-      adress_1: '',
-      adress_2: '',
-      billingCycle: 'Monthly',
-      city: '',
-      company_name: '',
-      conditionType: 'IPSec',
-      country: '',
-      creditLimit: '',
-      currency: 'ETB',
-      dueDate: '15 days',
-      emailBusinessManager: '',
-      emailCommercial: '',
-      emailFinanceBilling: '',
-      emailReportPortal: '',
-      emailTechnical: '',
-      fullNameBusinessManager: '',
-      fullNameCommercial: '',
-      fullNameFinanceBilling: '',
-      fullNameReportPortal: '',
-      fullNameTechnical: '',
-      isBusnessManager: 'yes',
-      isReportPortal: 'yes',
-      passwordBusinessManager: '',
-      passwordReportPortal: '',
-      phoneNumberBusinessManager: '',
-      phoneNumberCommercial: '',
-      phoneNumberFinanceBilling: '',
-      phoneNumberReportPortal: '',
-      phoneNumberTechnical: '',
-      protocol: 'SOAP',
-      senderIDAlphanumeric1: '',
-      senderIDAlphanumeric2: '',
-      senderIDAlphanumeric3: '',
-      senderIDAlphanumeric4: '',
-      senderIDAlphanumeric5: '',
-      senderIDNumeric1: '',
-      senderIDNumeric2: '',
-      senderIDNumeric3: '',
-      senderIDNumeric4: '',
-      senderIDNumeric5: '',
-      signalling: 'SMPP',
-      state: '',
-      terms: 'Prepaid',
-      tinNumber: '',
-      userNameBusinessManager: '',
-      userNameReportPortal: '',
-      vatNumber: '',
+      adress_1: "",
+      adress_2: "",
+      billingCycle: "Monthly",
+      city: "",
+      company_name: "",
+      conditionType: "IPSec",
+      country: "",
+      creditLimit: "",
+      currency: "ETB",
+      dueDate: "15 days",
+      emailBusinessManager: "",
+      emailCommercial: "",
+      emailFinanceBilling: "",
+      emailReportPortal: "",
+      emailTechnical: "",
+      fullNameBusinessManager: "",
+      fullNameCommercial: "",
+      fullNameFinanceBilling: "",
+      fullNameReportPortal: "",
+      fullNameTechnical: "",
+      isBusnessManager: "yes",
+      isReportPortal: "yes",
+      passwordBusinessManager: "",
+      passwordReportPortal: "",
+      phoneNumberBusinessManager: "",
+      phoneNumberCommercial: "",
+      phoneNumberFinanceBilling: "",
+      phoneNumberReportPortal: "",
+      phoneNumberTechnical: "",
+      protocol: "SOAP",
+      senderIDAlphanumeric1: "",
+      senderIDAlphanumeric2: "",
+      senderIDAlphanumeric3: "",
+      senderIDAlphanumeric4: "",
+      senderIDAlphanumeric5: "",
+      senderIDNumeric1: "",
+      senderIDNumeric2: "",
+      senderIDNumeric3: "",
+      senderIDNumeric4: "",
+      senderIDNumeric5: "",
+      signalling: "SMPP",
+      state: "",
+      terms: "Prepaid",
+      tinNumber: "",
+      userNameBusinessManager: "",
+      userNameReportPortal: "",
+      vatNumber: "",
       ...user.userInfo,
     },
   });
@@ -152,798 +156,802 @@ export default function OrderInput({
   }, [dataInput]);
 
   // Radio button terms watcher to set credit limit value ""
-  const watchTerms = watch('terms', 'Prepaid');
+  const watchTerms = watch("terms", "Prepaid");
   useEffect(() => {
-    if (watchTerms === 'Prepaid') {
-      setValue('creditLimit', '', { shouldValidate: false });
+    if (watchTerms === "Prepaid") {
+      setValue("creditLimit", "", {shouldValidate: false});
     }
   }, [watchTerms]);
 
   const signUpFields = [
     {
-      input: 'legend primary',
-      name: 'Order',
+      input: "legend primary",
+      name: "Order",
     },
     {
-      input: 'legend',
-      name: 'Account Address',
+      input: "legend",
+      name: "Account Address",
     },
     {
-      input: 'text',
-      name: 'company_name',
-      label: 'Company Name',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "company_name",
+      label: "Company Name",
+      variant: "outlined",
+      type: "text",
       autofocus: true,
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '3',
-          message: 'company name should not be lessthan 3 characters',
+          value: "3",
+          message: "company name should not be lessthan 3 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'adress_1',
-      label: 'Adress 1',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "adress_1",
+      label: "Adress 1",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '2',
-          message: 'adress name should not be lessthan 2 characters',
+          value: "2",
+          message: "adress name should not be lessthan 2 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'adress_2',
-      label: 'Address 2',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "adress_2",
+      label: "Address 2",
+      variant: "outlined",
+      type: "text",
       rules: {
         minLength: {
-          value: '2',
-          message: 'adress name should not be lessthan 2 characters',
+          value: "2",
+          message: "adress name should not be lessthan 2 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'city',
-      label: 'City',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "city",
+      label: "City",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '2',
-          message: 'city should not be lessthan 2 characters',
+          value: "2",
+          message: "city should not be lessthan 2 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'state',
-      label: 'State',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "state",
+      label: "State",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '2',
-          message: 'State should not be lessthan 2 characters',
+          value: "2",
+          message: "State should not be lessthan 2 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'country',
-      label: 'Country',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "country",
+      label: "Country",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '2',
-          message: 'Country name should not be lessthan 2 characters',
+          value: "2",
+          message: "Country name should not be lessthan 2 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'city',
-      label: 'Post Code',
-      variant: 'outlined',
-      type: 'number',
+      input: "text",
+      name: "city",
+      label: "Post Code",
+      variant: "outlined",
+      type: "number",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '4',
-          message: 'post code should not be lessthan 4 characters',
+          value: "4",
+          message: "post code should not be lessthan 4 characters",
         },
       },
     },
 
     {
-      input: 'legend',
-      name: 'Billing',
+      input: "legend",
+      name: "Billing",
     },
     {
-      input: 'select',
-      name: 'billingCycle',
-      label: 'Billing Cycle',
-      variant: 'outlined',
+      input: "select",
+      name: "billingCycle",
+      label: "Billing Cycle",
+      variant: "outlined",
       menus: [
         {
-          name: 'Monthly',
-          value: 'Monthly',
+          name: "Monthly",
+          value: "Monthly",
         },
         {
-          name: 'Yearly',
-          value: 'Yearly',
+          name: "Yearly",
+          value: "Yearly",
         },
       ],
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
       },
     },
     {
-      input: 'select',
-      name: 'currency',
-      label: 'Currency',
-      variant: 'outlined',
+      input: "select",
+      name: "currency",
+      label: "Currency",
+      variant: "outlined",
       menus: [
         {
-          name: 'Ehtiopian Birr',
-          value: 'ETB',
+          name: "Ehtiopian Birr",
+          value: "ETB",
         },
         {
-          name: 'United States Dollar',
-          value: 'USD',
+          name: "United States Dollar",
+          value: "USD",
         },
       ],
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
       },
     },
     {
-      input: 'text',
-      name: 'vatNumber',
-      label: 'Vat Number',
-      variant: 'outlined',
-      type: 'number',
+      input: "text",
+      name: "vatNumber",
+      label: "Vat Number",
+      variant: "outlined",
+      type: "number",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '4',
-          message: 'vat number should not be lessthan 4 characters',
+          value: "4",
+          message: "vat number should not be lessthan 4 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'tinNumber',
-      label: 'TIN Number',
-      variant: 'outlined',
-      type: 'number',
+      input: "text",
+      name: "tinNumber",
+      label: "TIN Number",
+      variant: "outlined",
+      type: "number",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '4',
-          message: 'tin number should not be lessthan 4 characters',
+          value: "4",
+          message: "tin number should not be lessthan 4 characters",
         },
       },
     },
     {
-      input: 'radio',
-      name: 'dueDate',
-      label: 'Due Date',
-      variant: 'outlined',
+      input: "radio",
+      name: "dueDate",
+      label: "Due Date",
+      variant: "outlined",
       menus: [
         {
-          label: '15 days',
-          value: '15 days',
+          label: "15 days",
+          value: "15 days",
         },
         {
-          label: '30 days',
-          value: '30 days',
+          label: "30 days",
+          value: "30 days",
         },
       ],
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
       },
     },
     {
-      input: 'radio',
-      name: 'terms',
-      label: 'Terms',
-      variant: 'outlined',
+      input: "radio",
+      name: "terms",
+      label: "Terms",
+      variant: "outlined",
       menus: [
         {
-          label: 'Postpaid',
-          value: 'Postpaid',
+          label: "Postpaid",
+          value: "Postpaid",
         },
         {
-          label: 'Prepaid',
-          value: 'Prepaid',
+          label: "Prepaid",
+          value: "Prepaid",
         },
       ],
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
       },
     },
     {
-      input: 'text',
-      name: 'creditLimit',
-      label: 'Credit Limit',
-      variant: 'outlined',
-      type: 'number',
-      disabled: watchTerms === 'Prepaid',
+      input: "text",
+      name: "creditLimit",
+      label: "Credit Limit",
+      variant: "outlined",
+      type: "number",
+      disabled: watchTerms === "Prepaid",
     },
 
     {
-      input: 'legend primary',
-      name: 'Account Contact',
+      input: "legend primary",
+      name: "Account Contact",
     },
     {
-      input: 'legend',
-      name: 'Commercial',
+      input: "legend",
+      name: "Commercial",
     },
     {
-      input: 'text',
-      name: 'fullNameCommercial',
-      label: 'Full Name',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "fullNameCommercial",
+      label: "Full Name",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '4',
-          message: 'Full name should not be lessthan 4 characters',
+          value: "4",
+          message: "Full name should not be lessthan 4 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'emailCommercial',
-      label: 'Email Address',
-      variant: 'outlined',
-      type: 'email',
+      input: "text",
+      name: "emailCommercial",
+      label: "Email Address",
+      variant: "outlined",
+      type: "email",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         pattern: {
           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-          message: 'invalid email address',
+          message: "invalid email address",
         },
       },
     },
     {
-      input: 'text',
-      name: 'phoneNumberCommercial',
-      label: 'Phone Number',
-      variant: 'outlined',
-      type: 'tel',
+      input: "text",
+      name: "phoneNumberCommercial",
+      label: "Phone Number",
+      variant: "outlined",
+      type: "tel",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         pattern: {
           value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-          message: 'invalid format',
-        },
-      },
-    },
-
-    {
-      input: 'legend',
-      name: 'Finance Billing',
-    },
-    {
-      input: 'text',
-      name: 'fullNameFinanceBilling',
-      label: 'Full Name',
-      variant: 'outlined',
-      type: 'text',
-      rules: {
-        required: 'this field is required',
-        minLength: {
-          value: '4',
-          message: 'FullName name should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'emailFinanceBilling',
-      label: 'Email Address',
-      variant: 'outlined',
-      type: 'email',
-      rules: {
-        required: 'this field is required',
-        pattern: {
-          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-          message: 'invalid email address',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'phoneNumberFinanceBilling',
-      label: 'Phone Number',
-      variant: 'outlined',
-      type: 'tel',
-      rules: {
-        required: 'this field is required',
-        pattern: {
-          value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-          message: 'invalid format',
+          message: "invalid format",
         },
       },
     },
 
     {
-      input: 'legend',
-      name: 'Technical',
+      input: "legend",
+      name: "Finance Billing",
     },
     {
-      input: 'text',
-      name: 'fullNameTechnical',
-      label: 'Full Name',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "fullNameFinanceBilling",
+      label: "Full Name",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '4',
-          message: 'FullName name should not be lessthan 4 characters',
+          value: "4",
+          message: "FullName name should not be lessthan 4 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'emailTechnical',
-      label: 'Email Address',
-      variant: 'outlined',
-      type: 'email',
+      input: "text",
+      name: "emailFinanceBilling",
+      label: "Email Address",
+      variant: "outlined",
+      type: "email",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         pattern: {
           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-          message: 'invalid email address',
+          message: "invalid email address",
         },
       },
     },
     {
-      input: 'text',
-      name: 'phoneNumberTechnical',
-      label: 'Phone Number',
-      variant: 'outlined',
-      type: 'tel',
+      input: "text",
+      name: "phoneNumberFinanceBilling",
+      label: "Phone Number",
+      variant: "outlined",
+      type: "tel",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         pattern: {
           value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-          message: 'invalid format',
+          message: "invalid format",
         },
       },
     },
 
     {
-      input: 'legend',
-      name: 'Connection',
+      input: "legend",
+      name: "Technical",
     },
     {
-      input: 'radio',
-      name: 'conditionType',
-      label: 'Connection Type',
-      variant: 'outlined',
-      menus: [
-        {
-          label: 'Public IP',
-          value: 'Public IP',
-        },
-        {
-          label: 'IPSec',
-          value: 'IPSec',
-        },
-      ],
+      input: "text",
+      name: "fullNameTechnical",
+      label: "Full Name",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
-      },
-    },
-    {
-      input: 'radio',
-      name: 'signalling',
-      label: 'Signalling',
-      variant: 'outlined',
-      menus: [
-        {
-          label: 'SMPP',
-          value: 'SMPP',
-        },
-        {
-          label: 'HTTP',
-          value: 'HTTP',
-        },
-      ],
-      rules: {
-        required: 'this field is required',
-      },
-    },
-    {
-      input: 'radio',
-      name: 'protocol',
-      label: 'Protocol',
-      variant: 'outlined',
-      menus: [
-        {
-          label: 'SOAP',
-          value: 'SOAP',
-        },
-        {
-          label: 'REST',
-          value: 'REST',
-        },
-      ],
-      rules: {
-        required: 'this field is required',
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDAlphanumeric1',
-      label: 'Sender ID Alphanumeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'text',
-      rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
+          value: "4",
+          message: "FullName name should not be lessthan 4 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'senderIDAlphanumeric2',
-      label: 'Sender ID Alphanumeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "emailTechnical",
+      label: "Email Address",
+      variant: "outlined",
+      type: "email",
       rules: {
-        minLength: {
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDAlphanumeric3',
-      label: 'Sender ID Alphanumeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'text',
-      rules: {
-        minLength: {
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDAlphanumeric4',
-      label: 'Sender ID Alphanumeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'text',
-      rules: {
-        minLength: {
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDAlphanumeric5',
-      label: 'Sender ID Alphanumeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'text',
-      rules: {
-        minLength: {
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDNumeric1',
-      label: 'Sender ID Numeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'number',
-      rules: {
-        required: 'this field is required.',
-        minLength: {
-          required: 'this field is required',
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDNumeric2',
-      label: 'Sender ID Numeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'number',
-      rules: {
-        minLength: {
-          required: 'this field is required',
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDNumeric3',
-      label: 'Sender ID Numeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'number',
-      rules: {
-        minLength: {
-          required: 'this field is required',
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDNumeric4',
-      label: 'Sender ID Numeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'number',
-      rules: {
-        minLength: {
-          required: 'this field is required',
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'senderIDNumeric5',
-      label: 'Sender ID Numeric',
-      size: 'small',
-      variant: 'outlined',
-      type: 'number',
-      rules: {
-        minLength: {
-          required: 'this field is required',
-          value: '4',
-          message: 'Senders Id should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'legend primary',
-      name: 'Report Portal',
-    },
-    {
-      input: 'radio',
-      name: 'isReportPortal',
-      label: 'Report Portal',
-      variant: 'outlined',
-      menus: [
-        {
-          label: 'Yes',
-          value: 'yes',
-        },
-        {
-          label: 'No',
-          value: 'no',
-        },
-      ],
-      rules: {
-        required: 'this field is required',
-      },
-    },
-    {
-      input: 'legend',
-      name: 'User 1',
-    },
-    {
-      input: 'text',
-      name: 'fullNameReportPortal',
-      label: 'Full Name',
-      variant: 'outlined',
-      type: 'text',
-      rules: {
-        required: 'this field is required',
-        minLength: {
-          value: '4',
-          message: 'FullName name should not be lessthan 4 characters',
-        },
-      },
-    },
-    {
-      input: 'text',
-      name: 'emailReportPortal',
-      label: 'Email Address',
-      variant: 'outlined',
-      type: 'email',
-      rules: {
-        required: 'this field is required',
+        required: "this field is required",
         pattern: {
           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-          message: 'invalid email address',
+          message: "invalid email address",
         },
       },
     },
     {
-      input: 'text',
-      name: 'phoneNumberReportPortal',
-      label: 'Phone Number',
-      variant: 'outlined',
-      type: 'tel',
+      input: "text",
+      name: "phoneNumberTechnical",
+      label: "Phone Number",
+      variant: "outlined",
+      type: "tel",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         pattern: {
           value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-          message: 'invalid format',
+          message: "invalid format",
         },
       },
     },
+
     {
-      input: 'text',
-      name: 'userNameReportPortal',
-      label: 'Username',
-      variant: 'outlined',
-      type: 'text',
-      rules: {
-        required: 'this field is required',
-        minLength: {
-          value: '4',
-          message: 'username should not be lessthan 4 characters',
-        },
-      },
+      input: "legend",
+      name: "Connection",
     },
     {
-      input: 'text',
-      name: 'passwordReportPortal',
-      label: 'Password',
-      variant: 'outlined',
-      type: 'password',
-      rules: {
-        required: 'this field is required',
-        minLength: {
-          value: '6',
-          message: 'Password sould not be lessthan 6 characters',
-        },
-      },
-    },
-    {
-      input: 'legend primary',
-      name: 'Business Manager',
-    },
-    {
-      input: 'radio',
-      name: 'isBusnessManager',
-      label: 'Busness Manager',
-      variant: 'outlined',
+      input: "radio",
+      name: "conditionType",
+      label: "Connection Type",
+      variant: "outlined",
       menus: [
         {
-          label: 'Yes',
-          value: 'yes',
+          label: "Public IP",
+          value: "Public IP",
         },
         {
-          label: 'No',
-          value: 'no',
+          label: "IPSec",
+          value: "IPSec",
         },
       ],
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
       },
     },
     {
-      input: 'legend',
-      name: 'User 1',
+      input: "radio",
+      name: "signalling",
+      label: "Signalling",
+      variant: "outlined",
+      menus: [
+        {
+          label: "SMPP",
+          value: "SMPP",
+        },
+        {
+          label: "HTTP",
+          value: "HTTP",
+        },
+      ],
+      rules: {
+        required: "this field is required",
+      },
     },
     {
-      input: 'text',
-      name: 'fullNameBusinessManager',
-      label: 'Full Name',
-      variant: 'outlined',
-      type: 'text',
+      input: "radio",
+      name: "protocol",
+      label: "Protocol",
+      variant: "outlined",
+      menus: [
+        {
+          label: "SOAP",
+          value: "SOAP",
+        },
+        {
+          label: "REST",
+          value: "REST",
+        },
+      ],
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDAlphanumeric1",
+      label: "Sender ID Alphanumeric",
+      size: "small",
+      variant: "outlined",
+      type: "text",
+      rules: {
+        required: "this field is required",
         minLength: {
-          value: '4',
-          message: 'FullName name should not be lessthan 4 characters',
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'emailBusinessManager',
-      label: 'Email Address',
-      variant: 'outlined',
-      type: 'email',
+      input: "text",
+      name: "senderIDAlphanumeric2",
+      label: "Sender ID Alphanumeric",
+      size: "small",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
+        minLength: {
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDAlphanumeric3",
+      label: "Sender ID Alphanumeric",
+      size: "small",
+      variant: "outlined",
+      type: "text",
+      rules: {
+        minLength: {
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDAlphanumeric4",
+      label: "Sender ID Alphanumeric",
+      size: "small",
+      variant: "outlined",
+      type: "text",
+      rules: {
+        minLength: {
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDAlphanumeric5",
+      label: "Sender ID Alphanumeric",
+      size: "small",
+      variant: "outlined",
+      type: "text",
+      rules: {
+        minLength: {
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDNumeric1",
+      label: "Sender ID Numeric",
+      size: "small",
+      variant: "outlined",
+      type: "number",
+      rules: {
+        required: "this field is required.",
+        minLength: {
+          required: "this field is required",
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDNumeric2",
+      label: "Sender ID Numeric",
+      size: "small",
+      variant: "outlined",
+      type: "number",
+      rules: {
+        minLength: {
+          required: "this field is required",
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDNumeric3",
+      label: "Sender ID Numeric",
+      size: "small",
+      variant: "outlined",
+      type: "number",
+      rules: {
+        minLength: {
+          required: "this field is required",
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDNumeric4",
+      label: "Sender ID Numeric",
+      size: "small",
+      variant: "outlined",
+      type: "number",
+      rules: {
+        minLength: {
+          required: "this field is required",
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "senderIDNumeric5",
+      label: "Sender ID Numeric",
+      size: "small",
+      variant: "outlined",
+      type: "number",
+      rules: {
+        minLength: {
+          required: "this field is required",
+          value: "4",
+          message: "Senders Id should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "legend primary",
+      name: "Report Portal",
+    },
+    {
+      input: "radio",
+      name: "isReportPortal",
+      label: "Report Portal",
+      variant: "outlined",
+      menus: [
+        {
+          label: "Yes",
+          value: "yes",
+        },
+        {
+          label: "No",
+          value: "no",
+        },
+      ],
+      rules: {
+        required: "this field is required",
+      },
+    },
+    {
+      input: "legend",
+      name: "User 1",
+    },
+    {
+      input: "text",
+      name: "fullNameReportPortal",
+      label: "Full Name",
+      variant: "outlined",
+      type: "text",
+      rules: {
+        required: "this field is required",
+        minLength: {
+          value: "4",
+          message: "FullName name should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "emailReportPortal",
+      label: "Email Address",
+      variant: "outlined",
+      type: "email",
+      rules: {
+        required: "this field is required",
         pattern: {
           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-          message: 'invalid email address',
+          message: "invalid email address",
         },
       },
     },
     {
-      input: 'text',
-      name: 'phoneNumberBusinessManager',
-      label: 'Phone Number',
-      variant: 'outlined',
-      type: 'tel',
+      input: "text",
+      name: "phoneNumberReportPortal",
+      label: "Phone Number",
+      variant: "outlined",
+      type: "tel",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         pattern: {
           value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-          message: 'invalid format',
+          message: "invalid format",
         },
       },
     },
     {
-      input: 'text',
-      name: 'userNameBusinessManager',
-      label: 'Username',
-      variant: 'outlined',
-      type: 'text',
+      input: "text",
+      name: "userNameReportPortal",
+      label: "Username",
+      variant: "outlined",
+      type: "text",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '4',
-          message: 'username should not be lessthan 4 characters',
+          value: "4",
+          message: "username should not be lessthan 4 characters",
         },
       },
     },
     {
-      input: 'text',
-      name: 'passwordBusinessManager',
-      label: 'Password',
-      variant: 'outlined',
-      type: 'password',
+      input: "text",
+      name: "passwordReportPortal",
+      label: "Password",
+      variant: "outlined",
+      type: "password",
       rules: {
-        required: 'this field is required',
+        required: "this field is required",
         minLength: {
-          value: '6',
-          message: 'Password sould not be lessthan 6 characters',
+          value: "6",
+          message: "Password sould not be lessthan 6 characters",
+        },
+      },
+    },
+    {
+      input: "legend primary",
+      name: "Business Manager",
+    },
+    {
+      input: "radio",
+      name: "isBusnessManager",
+      label: "Busness Manager",
+      variant: "outlined",
+      menus: [
+        {
+          label: "Yes",
+          value: "yes",
+        },
+        {
+          label: "No",
+          value: "no",
+        },
+      ],
+      rules: {
+        required: "this field is required",
+      },
+    },
+    {
+      input: "legend",
+      name: "User 1",
+    },
+    {
+      input: "text",
+      name: "fullNameBusinessManager",
+      label: "Full Name",
+      variant: "outlined",
+      type: "text",
+      rules: {
+        required: "this field is required",
+        minLength: {
+          value: "4",
+          message: "FullName name should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "emailBusinessManager",
+      label: "Email Address",
+      variant: "outlined",
+      type: "email",
+      rules: {
+        required: "this field is required",
+        pattern: {
+          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+          message: "invalid email address",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "phoneNumberBusinessManager",
+      label: "Phone Number",
+      variant: "outlined",
+      type: "tel",
+      rules: {
+        required: "this field is required",
+        pattern: {
+          value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
+          message: "invalid format",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "userNameBusinessManager",
+      label: "Username",
+      variant: "outlined",
+      type: "text",
+      rules: {
+        required: "this field is required",
+        minLength: {
+          value: "4",
+          message: "username should not be lessthan 4 characters",
+        },
+      },
+    },
+    {
+      input: "text",
+      name: "passwordBusinessManager",
+      label: "Password",
+      variant: "outlined",
+      type: "password",
+      rules: {
+        required: "this field is required",
+        minLength: {
+          value: "6",
+          message: "Password sould not be lessthan 6 characters",
         },
       },
     },
   ];
 
-  const { setSnackbar } = useSnackBar();
+  const {setSnackbar} = useSnackBar();
 
   const {
+    error: errorUser,
     loading: loadingUser,
+    success: successUser,
     mutate: mutateUser,
-  } = useFireMutation('users');
+  } = useFireMutation("users");
 
   const {
+    error: errorOrder,
     loading: loadingOrder,
+    success: successOrder,
     mutate: mutateOrder,
-  } = useFireMutation('orders');
+  } = useFireMutation("orders");
 
   const orderInputRef = useRef<any>(null);
   const handlePrint = useReactToPrint({
@@ -951,40 +959,40 @@ export default function OrderInput({
   });
 
   const onSubmit = (formData: any) => {
-    console.log('HAS TO RUN: ', formData);
-    mutateUser('UPDATE', data.uid, {
+    console.log("HAS TO RUN: ", formData);
+    mutateUser("UPDATE", data.uid, {
       userInfo: {
         ...formData,
       },
       isDetailFilled: true,
     })
       .then(() => {
-        console.log('ORDER ID: ', data?.id);
-        mutateOrder('UPDATE', data?.id, {
+        console.log("ORDER ID: ", data?.id);
+        mutateOrder("UPDATE", data?.id, {
           isDetailFilled: true,
         })
           .then(() => {
             setSnackbar({
               open: true,
-              message: 'Order detail updated successfully!',
-              type: 'success',
+              message: "Order detail updated successfully!",
+              type: "success",
             });
             history.goBack();
           })
           .catch((err) => {
-            console.log('ERROR HERE: ', err);
+            console.log("ERROR HERE: ", err);
             if (err) {
-              if (typeof err !== 'string') {
+              if (typeof err !== "string") {
                 setSnackbar({
                   open: true,
                   message: err.code,
-                  type: 'error',
+                  type: "error",
                 });
               } else {
                 setSnackbar({
                   open: true,
                   message: err,
-                  type: 'error',
+                  type: "error",
                 });
               }
             }
@@ -992,17 +1000,17 @@ export default function OrderInput({
       })
       .catch((err) => {
         if (err) {
-          if (typeof err !== 'string') {
+          if (typeof err !== "string") {
             setSnackbar({
               open: true,
               message: err.code,
-              type: 'error',
+              type: "error",
             });
           } else {
             setSnackbar({
               open: true,
               message: err,
-              type: 'error',
+              type: "error",
             });
           }
         }
@@ -1020,7 +1028,7 @@ export default function OrderInput({
           alignItems="center"
         >
           <IconButton onClick={() => history.goBack()}>
-            <ArrowBackIosIcon style={{ width: 17, height: 17 }} />
+            <ArrowBackIosIcon style={{width: 17, height: 17}} />
           </IconButton>
 
           <Button variant="outlined" onClick={handlePrint}>
@@ -1038,7 +1046,7 @@ export default function OrderInput({
           </Button>
         </Box>
       </AppBar>
-      <Box mt={5} />
+      <Box mt={5}></Box>
       <Container>
         <Grid ref={orderInputRef} container spacing={5}>
           <Grid item xs={12}>
@@ -1107,14 +1115,11 @@ export default function OrderInput({
             <Card variant="outlined">
               <Box p={5} py={0}>
                 <form noValidate onSubmit={handleSubmit(onSubmit)}>
-                  {signUpFields.map((value: any) => {
+                  {signUpFields.map((value: any, index: number) => {
                     switch (value.input) {
-                      case 'legend primary':
+                      case "legend primary":
                         return (
-                          <Box
-                            mt={5}
-                            key={uuid()}
-                          >
+                          <Box mt={5}>
                             <Box
                               mb={1}
                               ml={-2}
@@ -1126,10 +1131,9 @@ export default function OrderInput({
                             </Box>
                           </Box>
                         );
-                      case 'legend':
+                      case "legend":
                         return (
                           <Box
-                            key={uuid()}
                             mt={5}
                             mb={1}
                             ml={2}
@@ -1140,12 +1144,11 @@ export default function OrderInput({
                             {value.name}
                           </Box>
                         );
-                      case 'radio':
+                      case "radio":
                         return (
                           <Controller
-                            key={uuid()}
                             name={value.name}
-                            render={({ field }) => (
+                            render={({field}) => (
                               <RadioGroupComponent
                                 field={field}
                                 errors={errors}
@@ -1157,16 +1160,13 @@ export default function OrderInput({
                             rules={value.rules}
                           />
                         );
-                      case 'select':
+                      case "select":
                         return (
                           <>
-                            <Box
-                              mt={2}
-                              key={uuid()}
-                            />
+                            <Box mt={2}></Box>
                             <Controller
                               name={value.name}
-                              render={({ field }) => (
+                              render={({field}) => (
                                 <SelectComponent
                                   field={field}
                                   errors={errors}
@@ -1179,12 +1179,12 @@ export default function OrderInput({
                             />
                           </>
                         );
-                      case 'text':
+                      case "text":
                         return (
                           <Controller
-                            key={uuid()}
+                            key={index}
                             name={value.name}
-                            render={({ field }) => (
+                            render={({field}) => (
                               <TextComponent
                                 label={value?.label}
                                 field={field}
@@ -1204,15 +1204,11 @@ export default function OrderInput({
                           />
                         );
                       default:
-                        return <></>;
+                        return;
                     }
                   })}
                   {!view && (
-                    <Box
-                      key={uuid()}
-                      my={3}
-                      mx={1}
-                    >
+                    <Box my={3} mx={1}>
                       <div className={classes.wrapper}>
                         <Button
                           type="submit"
@@ -1227,8 +1223,8 @@ export default function OrderInput({
                               setSnackbar({
                                 open: true,
                                 message:
-                                  'Please fill the specified errors in the form.',
-                                type: 'error',
+                                  "Please fill the specified errors in the form.",
+                                type: "error",
                               });
                             }
                           }}
@@ -1244,14 +1240,14 @@ export default function OrderInput({
                       </div>
                     </Box>
                   )}
-                  <Box my={20} />
+                  <Box my={20}></Box>
                 </form>
               </Box>
             </Card>
           </Grid>
         </Grid>
       </Container>
-      <Box mb={20} />
+      <Box mb={20}></Box>
     </Box>
   );
 }

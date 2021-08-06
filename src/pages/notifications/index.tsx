@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -13,42 +13,42 @@ import {
   Tooltip,
   createStyles,
   makeStyles,
-} from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import RefreshIcon from '@material-ui/icons/Refresh';
+} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from "@material-ui/icons/Search";
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import { AuthContext } from '../../contexts/auth/AuthProvider';
-import { useFireQuery } from '../../FireQuery';
-import InspectionsPointsDisplay from './table';
-import useSearch from '../../hooks/useSearch';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { AuthContext } from "../../contexts/auth/AuthProvider";
+import { useFireQuery } from "../../FireQuery";
+import InspectionsPointsDisplay from "./table";
+import useSearch from "../../hooks/useSearch";
 
 dayjs.extend(relativeTime);
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
     maxWidth: 2024,
-    margin: 'auto',
-    overflow: 'hidden',
+    margin: "auto",
+    overflow: "hidden",
   },
   searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
   },
   searchInput: {
     fontSize: theme.typography.fontSize,
   },
   block: {
-    display: 'block',
+    display: "block",
   },
   addInspection: {
     marginRight: theme.spacing(1),
     borderRadius: 10,
   },
   contentWrapper: {
-    margin: '20px 16px',
+    margin: "20px 16px",
   },
 }));
 
@@ -57,21 +57,13 @@ const InspectionDetail = () => {
   const history = useHistory();
   const [notifications, setNotifications] = useState<any[]>([]);
   const { user } = useContext(AuthContext);
-  const [filterSearchKey, setFilterSearchKey] = useState('');
-  const {
-    filtered,
-    reFilter,
-  } = useSearch(notifications, filterSearchKey);
+  const [filterSearchKey, setFilterSearchKey] = useState("");
+  const { filtered, reFilter } = useSearch(notifications, filterSearchKey);
 
-  const {
-    data, loading,
-  } = useFireQuery(
-    `notifications/${user.uid}/notifications`,
-    {
-      orderBy: ['createdAt desc'],
-      snapshotListener: true,
-    },
-  );
+  const { data, loading } = useFireQuery(`notifications/${user.uid}/notifications`, {
+    orderBy: ["createdAt desc"],
+    snapshotListener: true,
+  });
 
   useEffect(() => {
     if (data) {
