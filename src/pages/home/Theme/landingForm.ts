@@ -38,8 +38,8 @@ const theme = createTheme({
     text: {
       primary: "#000",
       secondary: "#000",
-      disabled: "rgba(0, 0, 0, 0.87)",
-      hint: "rgba(0, 0, 0, 0.87)",
+      // disabled: "rgba(0, 0, 0, 0.87)",
+      // hint: "rgba(0, 0, 0, 0.87)",
     },
 
     divider: "rgba(0, 0, 0, 0.2)",
@@ -53,9 +53,6 @@ const theme = createTheme({
     h1: {
       fontFamily: "'Inter', sans-serif",
       fontWeight: 300,
-      fontSize: "6remrem",
-      lineHeight: 1.167,
-      letterSpacing: "-0.01562em",
     },
     h2: {
       fontFamily: "'Inter', sans-serif",
@@ -143,11 +140,10 @@ theme.overrides = {
   MuiSelect: {},
   MuiInputLabel: {
     root: {
-      fontSize: "12.5px",
+      fontSize: ".9rem",
+      fontWeight: 500,
       letterSpacing: "1px",
-      fontWeight: "bold",
-      color: "black",
-      margin: "0px",
+      color: "#222",
       marginLeft: "10px",
       "&$focused": {
         marginLeft: "10px",
@@ -161,6 +157,7 @@ theme.overrides = {
   },
   MuiInput: {
     root: {
+      borderRadius: "6px",
       padding: "2px 4px",
     },
     underline: {

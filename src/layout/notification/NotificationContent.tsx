@@ -54,8 +54,8 @@ const StyledMenu = withStyles((theme: Theme) => ({
     border: theme.palette.type === "dark" ? "1px solid #444" : "1px solid #d3d4d5",
     boxShadow:
       theme.palette.type === "dark"
-        ? "0 1px 10px rgba(0,0,0,0.2)"
-        : "0 1px 10px rgba(0,0,0,0.2)",
+        ? "0 1px 10px rgba(0,0,0,0.1)"
+        : "0 1px 10px rgba(0,0,0,0.1)",
     borderRadius: 0,
     minWidth: "280px",
     width: "80%",
@@ -130,7 +130,7 @@ export default function UserProfile({
         onClose={handleCloseDialogMenu}
       >
         <Box mb={1} display="flex" width="100%" alignItems="center">
-          <Box fontWeight={700} ml={2}>
+          <Box fontWeight={900} fontSize="1rem" ml={2}>
             Notifications
           </Box>
           <Box ml="auto" mr={2}>

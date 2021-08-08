@@ -21,7 +21,9 @@ import { useFireQuery } from "../../FireQuery";
 import { AuthContext } from "../../contexts/auth/AuthProvider";
 
 import OrderStatus from "../../components/dashboard/orderStatus";
-import ChooseSolution from "./chooseSolution";
+import ChooseSolution from "../../pages/dashboard/chooseSolution";
+
+import noDataIMG from '../../assets/no_data.svg';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   liElement: {
@@ -38,8 +40,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     flexDirection: "column",
     justifySelf: "space-between",
     height: "230px",
-    borderRadius: "15px",
-    boxShadow: "0 1px 12px rgba(0,0,0,0.3)",
+    borderRadius: "5px",
+    boxShadow: "0 1px 12px rgba(0,0,0,0.1)",
     background: "linear-gradient(90deg, #78466B 0%, #5E3FFB 100%)",
   },
   orderCardTitle: {
@@ -104,7 +106,7 @@ const UserOrders = () => {
         <AppBar position="static" color="transparent" elevation={0}>
           <Toolbar>
             <Box display="flex" flexWrap="wrap" width="100%">
-              <Box fontSize="1.4rem" fontWeight={800}>
+              <Box fontSize="1.4rem" fontWeight={900}>
                 Current Orders
               </Box>
               <Box ml="auto">
@@ -116,125 +118,133 @@ const UserOrders = () => {
                 >
                   <AddCircleOutlineIcon />
                   {' '}
-&nbsp; New Order
+                  &nbsp; New Order
                 </Button>
                 <ChooseSolution open={open} onClose={() => setOpen(false)} />
               </Box>
             </Box>
           </Toolbar>
         </AppBar>
-        <Divider style={{ marginTop: "1.3rem", marginBottom: "2.3rem" }} />
+        <Divider style={{ marginTop: "1rem", marginBottom: "2.3rem" }} />
         <Container>
           <Box style={{ paddingTop: 3 }}>
             <Grid container spacing={8}>
-              {!loading && datas ? (
-                datas.map((data: any) => (data.solutions === "Both" ? (
-                  <>
+              {!loading && datas
+                ? datas.length > 0 ? (
+                  datas.map((data: any) => (data.solutions === "Both" ? (
+                    <>
+                      <Grid item key={Math.random()} lg={4} md={6} xs={12}>
+                        <OrderStatus
+                          apiName="A2P"
+                          data={data}
+                          icon={<ExtensionIcon />}
+                        />
+                      </Grid>
+                      <Grid item key={Math.random()} lg={4} md={6} xs={12}>
+                        <OrderStatus
+                          apiName="SMS Campaign"
+                          data={data}
+                          icon={<ExtensionIcon />}
+                        />
+                      </Grid>
+                    </>
+                  ) : (
                     <Grid item key={Math.random()} lg={4} md={6} xs={12}>
-                      <OrderStatus
-                        apiName="A2P"
-                        data={data}
-                        icon={<ExtensionIcon />}
-                      />
+                      <Box position="relative" maxWidth={350}>
+                        <Card elevation={0} className={classes.orderCardContainer}>
+                          <Box mt={2} px={3} display="flex" alignItems="center">
+                            <Box mr={1}>
+                              <Avatar style={{ width: 70, height: 70 }}>
+                                <ExtensionIcon />
+                              </Avatar>
+                            </Box>
+                            <Box>
+                              <Box className={classes.orderCardTitle}>
+                                {data.solutions.toUpperCase()}
+                              </Box>
+                              <Box className={classes.orderCardStatus}>
+                                {data.status.charAt(0).toUpperCase()
+                                    + data.status.slice(1)}
+                              </Box>
+                            </Box>
+                          </Box>
+                          <Box
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            flexWrap="wrap"
+                            className={classes.orderCardBottomAction}
+                          >
+                            <Box fontWeight={500} className={classes.chip}>
+                              <Box fontWeight={600} fontSize=".9rem">
+                                Payment
+                              </Box>
+                              <Box fontWeight={300} fontSize=".8rem">
+                                {data.isPayed ? "Payed" : "Not Payed"}
+                              </Box>
+                            </Box>
+                            <Box fontWeight={500} className={classes.chip}>
+                              <Box fontWeight={600} fontSize=".9rem">
+                                Subscription
+                              </Box>
+                              <Box fontWeight={300} fontSize=".8rem">
+                                {data.status === "subscribed"
+                                  ? "subscribed"
+                                  : "Not Started"}
+                              </Box>
+                            </Box>
+                          </Box>
+                        </Card>
+                      </Box>
                     </Grid>
-                    <Grid item key={Math.random()} lg={4} md={6} xs={12}>
-                      <OrderStatus
-                        apiName="SMS Campaign"
-                        data={data}
-                        icon={<ExtensionIcon />}
-                      />
+                  )))
+                )
+                  : (
+                    <Box margin="auto" width="40%" mt={10} display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+                      <img src={noDataIMG} alt="no data" width="60%" style={{ margin: "auto", maxWidth: "400px", minWidth: "200px" }} />
+                      <Box fontWeight={800} fontSize="1rem" mt={2}>No Order Yet!</Box>
+                    </Box>
+                  )
+                : (
+                  <Grid container spacing={8}>
+                    <Grid
+                      item
+                      key={Math.random()}
+                      lg={4}
+                      md={6}
+                      xs={12}
+                      style={{ marginTop: "-1rem" }}
+                    >
+                      <Box position="relative" maxWidth={350}>
+                        <Skeleton height={340} />
+                      </Box>
                     </Grid>
-                  </>
-                ) : (
-                  <Grid item key={Math.random()} lg={4} md={6} xs={12}>
-                    <Box position="relative" maxWidth={350}>
-                      <Card elevation={0} className={classes.orderCardContainer}>
-                        <Box mt={2} px={3} display="flex" alignItems="center">
-                          <Box mr={1}>
-                            <Avatar style={{ width: 70, height: 70 }}>
-                              <ExtensionIcon />
-                            </Avatar>
-                          </Box>
-                          <Box>
-                            <Box className={classes.orderCardTitle}>
-                              {data.solutions.toUpperCase()}
-                            </Box>
-                            <Box className={classes.orderCardStatus}>
-                              {data.status.charAt(0).toUpperCase()
-                                  + data.status.slice(1)}
-                            </Box>
-                          </Box>
-                        </Box>
-                        <Box
-                          display="flex"
-                          justifyContent="center"
-                          alignItems="center"
-                          flexWrap="wrap"
-                          className={classes.orderCardBottomAction}
-                        >
-                          <Box fontWeight={500} className={classes.chip}>
-                            <Box fontWeight={600} fontSize=".9rem">
-                              Payment
-                            </Box>
-                            <Box fontWeight={300} fontSize=".8rem">
-                              {data.isPayed ? "Payed" : "Not Payed"}
-                            </Box>
-                          </Box>
-                          <Box fontWeight={500} className={classes.chip}>
-                            <Box fontWeight={600} fontSize=".9rem">
-                              Subscription
-                            </Box>
-                            <Box fontWeight={300} fontSize=".8rem">
-                              {data.status === "subscribed"
-                                ? "subscribed"
-                                : "Not Started"}
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Card>
-                    </Box>
+                    <Grid
+                      item
+                      key={Math.random()}
+                      lg={4}
+                      md={6}
+                      xs={12}
+                      style={{ marginTop: "-1rem" }}
+                    >
+                      <Box position="relative" maxWidth={350}>
+                        <Skeleton height={340} />
+                      </Box>
+                    </Grid>
+                    <Grid
+                      item
+                      key={Math.random()}
+                      lg={4}
+                      md={6}
+                      xs={12}
+                      style={{ marginTop: "-1rem" }}
+                    >
+                      <Box position="relative" maxWidth={350}>
+                        <Skeleton height={340} />
+                      </Box>
+                    </Grid>
                   </Grid>
-                )))
-              ) : (
-                <Grid container spacing={8}>
-                  <Grid
-                    item
-                    key={Math.random()}
-                    lg={4}
-                    md={6}
-                    xs={12}
-                    style={{ marginTop: "-1rem" }}
-                  >
-                    <Box position="relative" maxWidth={350}>
-                      <Skeleton height={340} />
-                    </Box>
-                  </Grid>
-                  <Grid
-                    item
-                    key={Math.random()}
-                    lg={4}
-                    md={6}
-                    xs={12}
-                    style={{ marginTop: "-1rem" }}
-                  >
-                    <Box position="relative" maxWidth={350}>
-                      <Skeleton height={340} />
-                    </Box>
-                  </Grid>
-                  <Grid
-                    item
-                    key={Math.random()}
-                    lg={4}
-                    md={6}
-                    xs={12}
-                    style={{ marginTop: "-1rem" }}
-                  >
-                    <Box position="relative" maxWidth={350}>
-                      <Skeleton height={340} />
-                    </Box>
-                  </Grid>
-                </Grid>
-              )}
+                )}
             </Grid>
           </Box>
         </Container>

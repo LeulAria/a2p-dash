@@ -1,17 +1,15 @@
 import React, { useContext, useState } from "react";
-import ReactRoleAccessRouter from "react-rolebased-router";
-import SnackBar from "./components/shared/SnackBar";
 import routes from "./config/routes";
-import { AuthContext } from "./contexts/auth/AuthProvider";
-import Error from "./pages/util/Error";
 import firebase from "./firebase";
+import Error from "./pages/util/Error";
+import SnackBar from "./components/shared/SnackBar";
 import Blocked from "./pages/util/Blocked";
-import { redirectUserHome, redirectUserLogin } from "./utils/userRoleUtils";
-import ChangePasswords from "./pages/auth/user/ChangePassword";
-import OverlayLoading from "./components/shared/OverlayLoading";
-import { useLoadingOverlay } from "./contexts/loading";
-import CheckEmail from "./pages/auth/CheckEmail";
 import BackToTop from "./components/shared/BackToTop";
+import { useLoadingOverlay } from "./contexts/loading";
+import ReactRoleAccessRouter from "react-rolebased-router";
+import { AuthContext } from "./contexts/auth/AuthProvider";
+import OverlayLoading from "./components/shared/OverlayLoading";
+import { redirectUserHome, redirectUserLogin } from "./utils/userRoleUtils";
 
 const Router: React.FC = () => {
   const [isBlocked, setIsBlocked] = useState(false);
@@ -20,12 +18,9 @@ const Router: React.FC = () => {
   const [isEmailVerified, setIsEmailVerified] = useState(true);
   const { user } = useContext(AuthContext);
   const { loading } = useLoadingOverlay();
-  let emailVerified = false;
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      emailVerified = user?.emailVerified;
-
       firebase
         .firestore()
         .collection("users")
@@ -38,8 +33,6 @@ const Router: React.FC = () => {
               if (data?.accountStatus === "pending") {
                 setApproved(false);
               }
-            } else {
-              setIsEmailVerified(emailVerified);
             }
             if (data?.isBlocked) {
               setIsBlocked(true);
@@ -97,13 +90,9 @@ const Router: React.FC = () => {
         isUserAuthenticated={!!user}
         blocked={{
           isBlocked:
-            !isApproved || isBlocked || !isUserPassChanged || !isEmailVerified,
+            !isApproved || isBlocked || !isUserPassChanged,
           component: isBlocked ? (
             <Blocked />
-          ) : !isEmailVerified ? (
-            <CheckEmail />
-          ) : !isUserPassChanged ? (
-            <ChangePasswords />
           ) : !isApproved ? (
             <Error />
           ) : null,

@@ -22,12 +22,14 @@
         "no-unused-vars-rest"
     ],
     "rules": {
+        "comma-dangle": "off",
         "no-use-before-define": "off",
         "import/no-extraneous-dependencies": "off",
         "import/no-unresolved": "off",
         "import/extensions": "off",
         "no-unused-vars": "off",
         "quotes": "off",
+        "no-trailing-spaces": "off",
         "camelcase": "off",
         "no-undef": "off",
         "no-console": "off",

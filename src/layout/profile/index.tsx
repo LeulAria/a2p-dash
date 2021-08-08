@@ -146,8 +146,8 @@ export default function UserProfile() {
             Signed in as:
             {" "}
           </Box>
-          <Box fontWeight={600}>
-            {user.userName || user.clientName}
+          <Box fontWeight={800} fontSize="1rem">
+            {user.userName || user.clientName || user.companyName}
             , &nbsp;&nbsp;&nbsp;
             {user.email}
           </Box>

@@ -1,14 +1,15 @@
 import React from "react";
-import { Carousel } from "react-responsive-carousel";
-import { Box, Grid, Paper } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+} from "@material-ui/core";
 import { Theme, makeStyles } from "@material-ui/core/styles";
 import Particles from "react-tsparticles";
-import FirstItem from "./firstItem";
-import SecondItem from "./secondItem";
-import ImageHolder from "../image_container/imageHolder";
-import A2PAPI from "../../../assets/images/a2papi.png";
-import SMSMarketing from "../../../assets/images/smsmarketing.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import smsMarketingIMG from "../../../assets/images/smsmarketing.png";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -28,31 +29,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   btn: {
-    color: "black",
+    color: "#222",
+    fontWeight: 800,
     background: "white",
+    borderRadius: "40px",
+    padding: "1rem 3rem",
+    marginTop: "1.3rem",
   },
   parent: {
     width: "100%",
-    marginTop: "60px",
-    minHeight: "90vh",
+    minHeight: "100vh",
     position: "relative",
     background: "#0068BF",
-  },
-  carousel: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    minHeight: "100vh",
-    zIndex: 200,
-    overflow: "hidden",
-    [theme.breakpoints.up("md")]: {
-      marginTop: "60px",
-    },
-  },
-  parentBox: {
-    [theme.breakpoints.down("sm")]: {
-      alignItems: "center",
-    },
   },
   imageBox: {
     position: "relative",
@@ -67,10 +55,43 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "80%",
     height: "100%",
   },
+  navBarContainer: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    zIndex: 100,
+  },
+  navBarButtons: {
+    fontWeight: 600,
+    fontSize: "13.3px",
+    borderRadius: "20px",
+    background: "#FFF",
+    padding: "5px 2rem",
+    margin: "10px",
+  },
+  navBarButtonLogin: {
+    background: "transparent",
+    color: "#FFF",
+    "&:hover": {
+      background: "rgba(0,0,0,0.2)"
+    }
+  },
 }));
 
-const Gallery = () => {
+const Hero = () => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleClick = (event: any) => {
+    const anchor = (
+      (event.target as HTMLDivElement).ownerDocument || document
+    ).querySelector("#back-to-top-anchor");
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <Paper className={classes.parent}>
       <Particles
@@ -137,39 +158,51 @@ const Gallery = () => {
           },
         }}
       />
-      <Carousel
-        autoPlay
-        showThumbs={false}
-        showStatus={false}
-        infiniteLoop
-        swipeable
-        // transitionTime={2}
-        className={classes.carousel}
-      >
-        <Grid container justifyContent="center">
-          <Grid item xs={12} md={4}>
-            <FirstItem />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box className={classes.imageBox} py={10}>
-              <ImageHolder Image={A2PAPI} className={classes.imageHolder} />
+      <Box className={classes.navBarContainer}>
+        <Button
+          className={classes.navBarButtons}
+          onClick={(e: any) => {
+            handleClick(e);
+          }}
+        >
+          Register
+        </Button>
+        <Button
+          className={`${classes.navBarButtons} ${classes.navBarButtonLogin}`}
+          onClick={() => history.push("/user/login")}
+        >
+          Login
+        </Button>
+      </Box>
+      <Box display="flex" alignItems="center" width="100%" height="100%" style={{ position: 'absolute', top: 0 }}>
+        <Container>
+          <Box mx="10%" display="flex" alignItems="center" justifyContent="space-between">
+            <Box flex={2}>
+              <Box color="#FFF" fontWeight={900} fontSize="2.8rem">
+                Easy to Use SMS
+                <br />
+                Marketing Platform
+              </Box>
+              <Box color="#FFF" fontWeight={500} fontSize="1.3rem">
+                Empower your business with easy to use SMS customer engagement platform
+              </Box>
+              <Button
+                className={classes.btn}
+                onClick={(e: any) => {
+                  handleClick(e);
+                }}
+              >
+                Get Started
+              </Button>
             </Box>
-          </Grid>
-        </Grid>
-
-        <Grid container justifyContent="center">
-          <Grid item xs={12} md={4}>
-            <SecondItem />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Box className={classes.imageBox} py={10}>
-              <ImageHolder Image={SMSMarketing} className={classes.imageHolder} />
+            <Box flex={1}>
+              <img style={{ maxWidth: 350 }} src={smsMarketingIMG} alt="sms marketing png" />
             </Box>
-          </Grid>
-        </Grid>
-      </Carousel>
+          </Box>
+        </Container>
+      </Box>
     </Paper>
   );
 };
 
-export default Gallery;
+export default Hero;

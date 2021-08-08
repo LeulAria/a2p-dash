@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function Sms() {
   const classes = useStyles();
   return (
-    <div style={{ height: "80vh", overflowX: "hidden" }}>
+    <div style={{ height: "70vh", paddingTop: "20vh", overflowX: "hidden" }}>
       <Container>
         <Grid
           container
@@ -86,7 +86,7 @@ export default function Sms() {
           </Grid>
           <Grid item xs={12} sm={5}>
             <Box display="flex" alignItems="center">
-              <img src={SMSManager} alt="SMS Marketing" />
+              <img src={SMSManager} alt="SMS Marketing" style={{ maxWidth: "400px" }} />
             </Box>
           </Grid>
         </Grid>

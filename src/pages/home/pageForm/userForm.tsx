@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   Box,
   Button,
@@ -8,41 +7,19 @@ import {
   Theme,
   makeStyles,
 } from "@material-ui/core";
-import { useHistory } from "react-router";
-import Alert from "@material-ui/lab/Alert";
-import { Controller, useForm } from "react-hook-form";
-import Solutions from "./solutionTypes";
-import firebase from "../../../firebase";
-import { useFireMutation } from "../../../FireQuery";
-import TextComponent from "../../../components/shared/TextComponent";
-import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
-import Safe from "../../../assets/icons/registration/wekeepyourdatasafe.svg";
 import uuid from "../../../utils/uuid";
+import firebase from '../../../firebase';
+import { Controller, useForm } from "react-hook-form";
+import TextComponent from "../../../components/shared/TextComponent";
+import Safe from "../../../assets/icons/registration/wekeepyourdatasafe.svg";
+import EmailConfirmationPopup from "../../../components/home/Hero/EmailConfirmationPopup";
 
 export const landingPageForm = [
-  {
-    name: "clientName",
-    label: "Client Name",
-    variant: "standard",
-    type: "text",
-    rules: {
-      required: "this field is required",
-    },
-  },
   {
     name: "companyName",
     label: "Company Name",
     variant: "standard",
-    type: "text",
-    rules: {
-      required: "this field is required",
-    },
-  },
-  {
-    name: "companyUrl",
-    label: "Company Url",
-    variant: "standard",
-    type: "text",
+    size: "small",
     rules: {
       required: "this field is required",
     },
@@ -51,6 +28,7 @@ export const landingPageForm = [
     name: "email",
     label: "Email Address",
     variant: "standard",
+    size: "small",
     type: "email",
     rules: {
       required: "this field is required",
@@ -64,6 +42,7 @@ export const landingPageForm = [
     name: "phoneNumber",
     label: "Tel",
     variant: "standard",
+    size: "small",
     type: "tel",
     rules: {
       required: "this field is required",
@@ -84,12 +63,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   parent: {
     width: "100%",
-    borderRadius: "0",
+    borderRadius: "8px",
+    boxShadow: "0 2px 14px rgba(0,0,0,0.2)",
   },
   regBtn: {
     [theme.breakpoints.up("md")]: {
-      width: "70%",
+      width: "95%",
     },
+    borderRadius: "5px",
     background: "linear-gradient(45deg, #0088D6 30%, #00CDB8 90%)",
     color: "white",
     fontSize: "14px",
@@ -136,144 +117,35 @@ export default function PageForm() {
     control,
     formState: { errors },
     handleSubmit,
+    getValues
   } = useForm();
-  const history = useHistory();
-  const [isAtuthing, setIsAtuthing] = useState(false);
-  const { setSnackbar } = useSnackBar();
-  const { loading, success, mutate } = useFireMutation("users");
-  const {
-    error: errorOrder,
-    success: successOrder,
-    mutate: mutateOrder,
-  } = useFireMutation("orders");
+  const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
-  const createSolutionSubscription = async (
-    uid: string,
-    data: any,
-    solutionType?: string,
-  ) => mutateOrder(
-    "ADD",
-    null,
-    {
-      ...data,
-      status: "pending",
-      isPayed: false,
-      reviewd: false,
-      isStuff: false,
-      isDetailFilled: false,
-      hasSalesReviewer: false,
-      hasTechReviewer: false,
-      isPayApproved: false,
-      approedByAdmin: false,
-      billingStarted: false,
-      uid,
-      currentTechReviewer: null,
-      currentSalesReviewer: null,
-      currentTechReviewerRef: null,
-      currentSalesReviewerRef: null,
-      solutions: solutionType || data.solutions,
-    },
-    {
-      createdAt: true,
-      updatedAt: true,
-    },
-  );
-
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: { companyName: string, email: string, phoneNumber: string }) => {
     try {
-      setIsAtuthing(true);
-      const temporaryPass = Math.floor(Math.random() * 10000000000000000).toString(
-        34,
-      );
-      const userCred = await firebase
+      setLoading(true);
+      await firebase
         .auth()
-        .createUserWithEmailAndPassword(data.email, temporaryPass);
-
-      if (userCred) {
-        await mutate(
-          "ADD",
-          userCred.user?.uid,
-          {
-            ...data,
-            temporaryPass,
-            isPassChanged: false,
-            id: userCred.user?.uid,
-            email: userCred.user?.email,
-            isOnline: true,
-            roles: {
-              isClient: true,
-            },
-            isEmailVerified: userCred.user?.emailVerified,
-          },
-          {
-            createdAt: true,
-            updatedAt: true,
-          },
-        );
-
-        if (data.solutions === "Both") {
-          await createSolutionSubscription(
-            userCred.user?.uid || "",
-            data,
-            "A2P API",
-          );
-          await createSolutionSubscription(
-            userCred.user?.uid || "",
-            data,
-            "SMS Campaign",
-          );
-        } else {
-          await createSolutionSubscription(userCred.user?.uid || "", data);
-        }
-
-        const user = firebase.auth().currentUser;
-
-        if (user) {
-          const actionCodeSettings = {
-            url:
-              window.location.hostname === "localhost"
-                ? `http://localhost:3000/email-verification-confirmation/${user.email}`
-                : `https://customer-support-co-et.web.app/email-verification-confirmation/${user.email}`,
-          };
-
-          await user.sendEmailVerification(actionCodeSettings);
-          // Email sent.
-          history.push(`/email-verification/${user.email}`);
-          setSnackbar({
-            type: "success",
-            open: true,
-            message: "Emali Verification Sent...",
-          });
-          const timestamp = firebase.firestore.FieldValue.serverTimestamp;
-
-          await firebase
-            .firestore()
-            .collection(`/notifications/${user.uid}/notifications`)
-            .add({
-              msg: `Your ${
-                data.solutions === "Both" ? "A2P API & SMS Campaign" : data.solutions
-              } order has been created and is in pending mode.`,
-              type: "success",
-              redirect: null,
-              seen: false,
-              createdAt: timestamp(),
-            });
-        }
-      }
-      return success;
-    } catch (err) {
-      setIsAtuthing(false);
-      setSnackbar({
-        type: "error",
-        open: true,
-        message: err.code || "Error occurred please try again!",
-      });
-      return err;
+        .sendSignInLinkToEmail(data.email, {
+          url: `http://localhost:3000/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`,
+          handleCodeInApp: true,
+        })
+        .then(() => {
+          setEmailSent(true);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log("Error: ", error);
     }
   };
 
   return (
     <div>
+      <EmailConfirmationPopup email={getValues('email')} open={emailSent} />
       <Box
         display="flex"
         flexDirection="column"
@@ -284,16 +156,11 @@ export default function PageForm() {
         <Paper className={classes.parent} elevation={3}>
           <Box display="flex" flexDirection="column" justifyContent="center">
             <Box mt={4} display="flex" justifyContent="center">
-              <Box fontWeight={700} fontSize="1.2rem">
+              <Box fontWeight={900} fontSize="1.6rem">
                 Registration
               </Box>
             </Box>
-            {errorOrder && (
-              <Alert security="error">
-                {typeof errorOrder === "string" ? errorOrder : errorOrder.code}
-              </Alert>
-            )}
-            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
               {landingPageForm.map((value: any) => (
                 <Box px="10%" py={1} key={uuid()}>
                   <Controller
@@ -305,6 +172,7 @@ export default function PageForm() {
                         errors={errors}
                         name={value.name}
                         type={value.type}
+                        size={value.size}
                         variant={value.variant}
                       />
                     )}
@@ -313,17 +181,6 @@ export default function PageForm() {
                   />
                 </Box>
               ))}
-
-              <Box px="10%" py={1}>
-                <Controller
-                  name="solutions"
-                  render={({ field }) => <Solutions field={field} errors={errors} />}
-                  control={control}
-                  rules={{
-                    required: "this field is required",
-                  }}
-                />
-              </Box>
 
               <Box
                 display="flex"
@@ -338,11 +195,11 @@ export default function PageForm() {
                     fullWidth
                     size="large"
                     type="submit"
-                    disabled={loading || isAtuthing || successOrder}
+                    disabled={loading}
                   >
                     Register
                   </Button>
-                  {(loading || isAtuthing || successOrder) && (
+                  {(loading) && (
                     <CircularProgress size={30} className={classes.buttonProgress} />
                   )}
                 </div>

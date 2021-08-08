@@ -11,6 +11,7 @@ import ExtensionIcon from "@material-ui/icons/Extension";
 import { useSnackbar } from "notistack";
 import { useFireMutation, useFireQuery } from "../../FireQuery";
 import { AuthContext } from "../../contexts/auth/AuthProvider";
+import firebase, { timestamp } from '../../firebase';
 
 const useStyles = makeStyles({
   avatar: {
@@ -83,6 +84,16 @@ function ChooseSolution(props: SimpleDialogProps) {
           enqueueSnackbar(`${order} Order created successfully!`, {
             variant: "success",
           });
+          firebase
+            .firestore()
+            .collection(`/notifications/${user.uid}/notifications`)
+            .add({
+              msg: `Your ${order} Order has been created successfully!`,
+              type: "success",
+              redirect: null,
+              seen: false,
+              createdAt: timestamp(),
+            });
         })
         .catch((err: any) => {
           enqueueSnackbar(err?.code || "Error occurred please try again.", {

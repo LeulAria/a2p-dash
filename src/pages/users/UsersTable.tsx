@@ -20,7 +20,7 @@ const columns: GridColDef[] = [
     headerName: "ID",
     width: 70,
   },
-  { field: "full_name", headerName: "Full name", width: 180 },
+  { field: "companyName", headerName: "Company Name", width: 180 },
   { field: "user_email", headerName: "Email", width: 170 },
   { field: "user_role", headerName: "User Role", width: 170 },
   {

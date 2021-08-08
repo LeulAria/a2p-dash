@@ -73,7 +73,7 @@ const InspectionDetail = () => {
           id: data.id,
           block: { data: { ...data }, id: data.id },
           accept: { data: { ...data }, id: data.id },
-          userName: data.userName || data.clientName,
+          companyName: data.userName || data.clientName || data.companyName,
           email: data.email,
           UserRole: data.role,
           isEmailVerified: data.isEmailVerified ? "Verified" : "Not Verified",

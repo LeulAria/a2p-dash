@@ -33,6 +33,13 @@ const routes: RouterConfig[] = [
         permissions: ["ADMIN"],
       },
       {
+        path: "/app/cms",
+        exact: false,
+        component: lazy(() => import("../pages/cms")),
+        fallback: <TopLoader />,
+        permissions: ["ADMIN"],
+      },
+      {
         path: "/app/user/orders",
         exact: false,
         component: lazy(() => import("../pages/dashboard/UserOrders")),
@@ -147,14 +154,6 @@ const routes: RouterConfig[] = [
     ],
   },
   {
-    path: "/user/change-password",
-    exact: false,
-    component: lazy(() => import("../pages/util/Logout")),
-    fallback: <TopLoader />,
-    private: false,
-    permissions: ["LOGGED_IN"],
-  },
-  {
     path: "/user/login",
     exact: false,
     component: lazy(() => import("../pages/auth/user/Login")),
@@ -174,7 +173,7 @@ const routes: RouterConfig[] = [
     fallback: <TopLoader />,
   },
   {
-    path: "/email-verification-confirmation/:email",
+    path: "/confirm",
     exact: false,
     component: lazy(() => import("../pages/auth/ConfirmEmail")),
     fallback: <TopLoader />,

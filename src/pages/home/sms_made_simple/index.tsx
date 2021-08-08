@@ -1,7 +1,7 @@
 import React from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
-import ImageList from "@material-ui/core/ImageList";
-import ImageListItem from "@material-ui/core/ImageListItem";
+// import ImageList from "@material-ui/core/ImageList";
+// import ImageListItem from "@material-ui/core/ImageListItem";
 import SMSManager from "../../../assets/images/madeeasy.png";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     justifyContent: "space-around",
     overflow: "hidden",
     height: "100%",
+    paddingTop: "90px",
     [theme.breakpoints.down("sm")]: {
       marginTop: "20px",
     },
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   gridList: {
     width: "100%",
     height: "100%",
+    padding: "3rem 0",
   },
 }));
 
@@ -26,11 +28,7 @@ export default function ImageGridList() {
 
   return (
     <div className={classes.root}>
-      <ImageList rowHeight="auto" className={classes.gridList} cols={1}>
-        <ImageListItem cols={1}>
-          <img src={SMSManager} alt="title" width="100%" height="100%" />
-        </ImageListItem>
-      </ImageList>
+      <img src={SMSManager} alt="title" width="100%" />
     </div>
   );
 }
