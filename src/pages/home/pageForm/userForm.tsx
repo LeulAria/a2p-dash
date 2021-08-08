@@ -128,7 +128,10 @@ export default function PageForm() {
       await firebase
         .auth()
         .sendSignInLinkToEmail(data.email, {
-          url: `http://localhost:3000/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`,
+          url: 
+          window.location.hostname === "localhost"
+            ? `http://localhost:3000/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`
+            : `https://a2p-teklogix.web.app/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`,
           handleCodeInApp: true,
         })
         .then(() => {
