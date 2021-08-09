@@ -2,8 +2,8 @@ import React from "react";
 import {
   Box, Grid, Theme, Typography, makeStyles,
 } from "@material-ui/core";
-import Particles from "react-tsparticles";
 import UserForm from "./userForm";
+import Particles from "react-tsparticles";
 
 const useStyles = makeStyles((theme: Theme) => ({
   imageBox: {
@@ -100,8 +100,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function PageForm() {
+export default function PageForm({ data }: any) {
   const classes = useStyles();
+
   return (
     <div id="back-to-top-anchor">
       <Box className={classes.imageBox}>
@@ -206,8 +207,7 @@ export default function PageForm() {
                 </Box>
                 <Typography variant="h6">
                   <Box my={1} maxWidth={300} mx="auto">
-                    Register now and use our ready made SMS campaign platform or use
-                    our API to send SMS from your system.
+                    {data && data?.app_footer_registration_message}
                   </Box>
                 </Typography>
               </Box>
@@ -232,16 +232,10 @@ export default function PageForm() {
                     align="center"
                     className={classes.footerTitle}
                   >
-                    Africa Regional Office
+                    {data && data?.app_footer_title}
                   </Typography>
-                  <Box textAlign="center" fontWeight={600} mt={2}>
-                    Meskel flower,
-                  </Box>
-                  <Box textAlign="center" fontWeight={600}>
-                    Central Bldg, 5th floor
-                  </Box>
-                  <Box textAlign="center" fontWeight={600} mb={1}>
-                    Addis Ababa, Ethiopia
+                  <Box textAlign="center" maxWidth={150} mx="auto" fontWeight={600} mt={2}>
+                    {data && data?.app_address}
                   </Box>
                   <Box textAlign="center">
                     <span
@@ -251,7 +245,8 @@ export default function PageForm() {
                         fontSize: "16px",
                       }}
                     >
-                      email: a2p@teklogix.et
+                      email:&b
+                      {data && data?.app_footer_email}
                     </span>
                     {" "}
                     <br />
@@ -264,7 +259,7 @@ export default function PageForm() {
                         fontSize: "16px",
                       }}
                     >
-                      www.teklogix.et
+                      {data && data?.app_website}
                     </a>
                   </Box>
                 </Box>

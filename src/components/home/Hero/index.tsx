@@ -10,7 +10,6 @@ import { useHistory } from "react-router";
 import { Theme, makeStyles } from "@material-ui/core/styles";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import smsMarketingIMG from "../../../assets/images/smsmarketing.png";
-import { useFireQuery } from "../../../FireQuery";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -79,10 +78,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const Hero = () => {
+const Hero = ({ data }: any) => {
   const classes = useStyles();
   const history = useHistory();
-  const { data } = useFireQuery("cms");
 
   const handleClick = (event: any) => {
     const anchor = (
@@ -181,10 +179,10 @@ const Hero = () => {
           <Box mx="10%" display="flex" alignItems="center" justifyContent="space-between">
             <Box flex={2}>
               <Box width="70%" color="#FFF" fontWeight={900} fontSize="2.8rem">
-                { data && data[0]?.app_hero_title }
+                { data && data?.app_hero_title }
               </Box>
               <Box color="#FFF" fontWeight={500} fontSize="1.3rem">
-                { data && data[0]?.app_hero_body }
+                { data && data?.app_hero_body }
               </Box>
               <Button
                 className={classes.btn}
