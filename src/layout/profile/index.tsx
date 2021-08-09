@@ -45,6 +45,7 @@ const StyledMenuItem = withStyles((theme) => ({
   root: {
     borderRadius: 0,
     minWidth: 250,
+    maxWidth: "300px",
     "&:focus": {
       backgroundColor: theme.palette.primary.main,
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
@@ -148,7 +149,7 @@ export default function UserProfile() {
           </Box>
           <Box fontWeight={800} fontSize="1rem">
             {user.userName || user.clientName || user.companyName}
-            , &nbsp;&nbsp;&nbsp;
+            <br />
             {user.email}
           </Box>
         </Box>

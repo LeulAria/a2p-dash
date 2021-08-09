@@ -237,7 +237,7 @@ export default function PageForm({ data }: any) {
                   <Box textAlign="center" maxWidth={150} mx="auto" fontWeight={600} mt={2}>
                     {data && data?.app_address}
                   </Box>
-                  <Box textAlign="center">
+                  <Box mt={1} textAlign="center">
                     <span
                       style={{
                         color: "white",
@@ -245,8 +245,17 @@ export default function PageForm({ data }: any) {
                         fontSize: "16px",
                       }}
                     >
-                      email:&b
-                      {data && data?.app_footer_email}
+                      { data && `phone: ${data?.app_footer_phone}` }
+                    </span>
+                    <br />
+                    <span
+                      style={{
+                        color: "white",
+                        fontWeight: 500,
+                        fontSize: "16px",
+                      }}
+                    >
+                      { data && `email: ${data?.app_footer_email}` }
                     </span>
                     {" "}
                     <br />

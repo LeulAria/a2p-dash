@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -7,52 +7,15 @@ import {
   Theme,
   makeStyles,
 } from "@material-ui/core";
-import uuid from "../../../utils/uuid";
 import firebase from '../../../firebase';
-import { Controller, useForm } from "react-hook-form";
-import TextComponent from "../../../components/shared/TextComponent";
 import Safe from "../../../assets/icons/registration/wekeepyourdatasafe.svg";
+import {
+  Zion,
+  ZionForm,
+  ZionValidation,
+  useZion
+} from "../../../zion";
 import EmailConfirmationPopup from "../../../components/home/Hero/EmailConfirmationPopup";
-
-export const landingPageForm = [
-  {
-    name: "companyName",
-    label: "Company Name",
-    variant: "standard",
-    size: "small",
-    rules: {
-      required: "this field is required",
-    },
-  },
-  {
-    name: "email",
-    label: "Email Address",
-    variant: "standard",
-    size: "small",
-    type: "email",
-    rules: {
-      required: "this field is required",
-      pattern: {
-        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: "invalid email address",
-      },
-    },
-  },
-  {
-    name: "phoneNumber",
-    label: "Tel",
-    variant: "standard",
-    size: "small",
-    type: "tel",
-    rules: {
-      required: "this field is required",
-      pattern: {
-        value: /(^(\+251)+|^0)[9][0-9]{8}\b/,
-        message: "invalid format",
-      },
-    },
-  },
-];
 
 const useStyles = makeStyles((theme: Theme) => ({
   parentBox: {
@@ -113,14 +76,55 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function PageForm() {
   const classes = useStyles();
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    getValues
-  } = useForm();
+  const [form, setForm] = useState<ZionForm>();
+  const [submitElement, setSubmitElement] = useState<any>();
+
+  const zionForm = useZion({});
+ 
   const [loading, setLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+
+  useMemo(() => {
+    setForm({
+      skeleton: "grid",
+      stepperSuccess: "All Done.",
+      gridContainer: { spacing: 2, justify: "space-around" },
+      formSchemas: [
+        {
+          title: "Company details",
+          grid: { xs: 12 },
+          gridContainer: { spacing: 2, justify: "center" },
+          schema: [
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "companyName",
+              variant: "outlined",
+              label: "Company Name.",
+              rules: new ZionValidation(zionForm).required("Required Field.").min(2, "Value should be greater than 2 characters.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "email",
+              type: "email",
+              variant: "outlined",
+              label: "Email Address",
+              rules: new ZionValidation(zionForm).required("Required Field.").email("Invalid email address.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "phoneNumber",
+              variant: "outlined",
+              label: "Tel",
+              rules: new ZionValidation(zionForm).required("Required Field.").matches(/(^(\+251)+|^0)[9][0-9]{8}\b/, "Invalid Phone number").rules
+            },
+          ],
+        }
+      ]
+    });
+  }, []);
 
   const onSubmit = async (data: { companyName: string, email: string, phoneNumber: string }) => {
     try {
@@ -129,9 +133,9 @@ export default function PageForm() {
         .auth()
         .sendSignInLinkToEmail(data.email, {
           url: 
-          window.location.hostname === "localhost"
-            ? `http://localhost:3000/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`
-            : `https://a2p-teklogix.firebase.app/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`,
+            window.location.hostname === "localhost"
+              ? `http://localhost:3000/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`
+              : `https://a2p-teklogix.web.app/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`,
           handleCodeInApp: true,
         })
         .then(() => {
@@ -148,7 +152,7 @@ export default function PageForm() {
 
   return (
     <div>
-      <EmailConfirmationPopup email={getValues('email')} open={emailSent} />
+      <EmailConfirmationPopup email={zionForm?.getValues('email')} open={emailSent} />
       <Box
         display="flex"
         flexDirection="column"
@@ -163,65 +167,54 @@ export default function PageForm() {
                 Registration
               </Box>
             </Box>
-            <form autoComplete="off" noValidate onSubmit={handleSubmit(onSubmit)}>
-              {landingPageForm.map((value: any) => (
-                <Box px="10%" py={1} key={uuid()}>
-                  <Controller
-                    name={value.name}
-                    render={({ field }) => (
-                      <TextComponent
-                        label={value.label}
-                        field={field}
-                        errors={errors}
-                        name={value.name}
-                        type={value.type}
-                        size={value.size}
-                        variant={value.variant}
-                      />
-                    )}
-                    control={control}
-                    rules={value.rules}
-                  />
-                </Box>
-              ))}
-
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="center"
-                mt={2}
-                px={5}
-              >
-                <div className={classes.wrapper}>
-                  <Button
-                    className={classes.regBtn}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    disabled={loading}
-                  >
-                    Register
-                  </Button>
+            <Box mx={6} mt={2}>
+              <Zion
+                designSystem="mui"
+                form={form}
+                noSubmitButton
+                zionForm={zionForm}
+                submitElement={(element: any) => setSubmitElement(element)}
+                onSubmit={(formData: any) => onSubmit(formData)}
+              />
+            </Box>
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
+              mt={2}
+              px={5}
+            >
+              <div className={classes.wrapper}>
+                <Button
+                  className={classes.regBtn}
+                  fullWidth
+                  size="large"
+                  disabled={loading}
+                  onClick={() => submitElement?.click()}
+                >
+                  Register
                   {(loading) && (
                     <CircularProgress size={30} className={classes.buttonProgress} />
                   )}
-                </div>
+                </Button>
+              </div>
+            </Box>
+
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
+              my={2}
+              px={10}
+            >
+              <Box mx={1}>
+                <img src={Safe} alt="We keep your data safe. " />
               </Box>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="center"
-                my={2}
-                px={10}
-              >
-                <Box mx={1}>
-                  <img src={Safe} alt="We keep your data safe. " />
-                </Box>
-                <Box fontWeight={700} fontSize="13px">
-                  We Keep Your Data Safe
-                </Box>
+              <Box fontWeight={700} fontSize="13px">
+                We Keep Your Data Safe
               </Box>
-            </form>
+            </Box>  
+            <Box mb={2} />
           </Box>
         </Paper>
       </Box>

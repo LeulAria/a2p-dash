@@ -157,7 +157,7 @@ theme.overrides = {
   },
   MuiInput: {
     root: {
-      borderRadius: "6px",
+      borderRadius: "10px",
       padding: "2px 4px",
     },
     underline: {
