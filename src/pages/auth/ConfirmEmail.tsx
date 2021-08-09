@@ -1,23 +1,26 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Helmet } from "react-helmet";
 import {
   Box,
   Button,
-  // CircularProgress,
+  CircularProgress,
   Container,
   Typography,
   createStyles,
   makeStyles,
 } from "@material-ui/core";
-import uuid from "../../utils/uuid";
 import firebase, { timestamp } from "../../firebase";
 import useQuery from "../../hooks/useQuery";
 import { useFireMutation } from "../../FireQuery";
 import { useHistory, useLocation } from "react-router";
-import { Controller, useForm } from "react-hook-form";
-import TextComponent from "../../components/shared/TextComponent";
 import { redirectUserHome } from "../../utils/userRoleUtils";
+import {
+  Zion,
+  ZionForm,
+  ZionValidation,
+  useZion
+} from "../../zion";
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -40,76 +43,72 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 const ChangePasswords: React.FC = () => {
+  const query = useQuery();
   const classes = useStyles();
   const history = useHistory();
-  const query = useQuery();
   const location: any = useLocation<any>();
-  const [locading, setLocading] = useState(false);
-  // const { mutate: mutateUser } = useFireMutation("online");
+  const [form, setForm] = useState<ZionForm>();
+  const [submitElement, setSubmitElement] = useState<any>();
+ 
+  const zionForm = useZion({
+    defaultValues: useMemo(() => ({
+      email: query.get("email"),
+      password: ""
+    }), [query])
+  });
+
+  const [loading, setLoading] = useState(false);
   const {
-    // loading,
     mutate
   } = useFireMutation("users");
   const { mutate: mutateUser } = useFireMutation("online");
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    getValues,
-  } = useForm({
-    defaultValues: {
-      email: query.get("email"),
-      password: ""
-    },
-  });
-
-  const changePassword = [
-    {
-      name: "email",
-      label: "Email Address",
-      variant: "outlined",
-      type: "email",
-      rules: {
-        required: "this field is required",
-        pattern: {
-          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-          message: "invalid email address",
-        },
-      },
-    },
-    {
-      name: "password",
-      label: "New Password",
-      variant: "outlined",
-      type: "password",
-      rules: {
-        required: "this field is required",
-        minLength: {
-          value: "6",
-          message: "password must be at least 6 characters",
-        },
-      },
-    },
-    {
-      name: "confirmPassword",
-      label: "Confirm New Password",
-      variant: "outlined",
-      type: "password",
-      rules: {
-        required: "this field is required",
-        minLength: {
-          value: "6",
-          message: "password must be at least 6 characters",
-        },
-        validate: (value: string) => (value !== getValues("password")
-          ? "Confirm password must me same as password"
-          : true),
-      },
-    },
-  ];
+  useMemo(() => {
+    setForm({
+      skeleton: "grid",
+      stepperSuccess: "All Done.",
+      gridContainer: { spacing: 2, justify: "space-around" },
+      formSchemas: [
+        {
+          title: "Company details",
+          grid: { xs: 12 },
+          gridContainer: { spacing: 2, justify: "center" },
+          schema: [
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "email",
+              type: "email",
+              variant: "outlined",
+              label: "Email Address",
+              rules: new ZionValidation(zionForm).required("Required Field.").email("Invalid email address.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "password",
+              type: "password",
+              variant: "outlined",
+              label: "Password",
+              rules: new ZionValidation(zionForm).required("Required Field.").min(6, "Value should be greater than 6 characters.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "confirmPassword",
+              type: "password",
+              variant: "outlined",
+              label: "Confirm New Password",
+              rules: new ZionValidation(zionForm).required("Required Field.").equals("password", "Confirm password must me same as password").rules
+            },
+          ],
+        }
+      ]
+    });
+  }, []);
 
   const onSubmit = async (data: any) => {
+    setLoading(true);
     try {
       await firebase
         .auth()
@@ -157,6 +156,7 @@ const ChangePasswords: React.FC = () => {
                   .then(() => firebase.firestore().collection("users").doc(user.uid).get())
                   .then((userData: any) => {
                     const userRoles = userData.data();
+                    setLoading(true);
                     history.push(redirectUserHome(userRoles?.roles));
                   })
                   .catch((err) => {
@@ -189,46 +189,33 @@ const ChangePasswords: React.FC = () => {
             </Box>
           </Typography>
 
-          <form noValidate onSubmit={handleSubmit(onSubmit)}>
-            {changePassword.map((value: any) => (
-              <Controller
-                key={uuid()}
-                name={value.name}
-                render={({ field }) => (
-                  <TextComponent
-                    label={value.label}
-                    field={field}
-                    errors={errors}
-                    name={value.name}
-                    type={value.type}
-                    value={field.value}
-                    variant={value.variant}
-                  />
-                )}
-                control={control}
-                rules={value.rules}
-              />
-            ))}
+          <Zion
+            designSystem="mui"
+            form={form}
+            noSubmitButton
+            zionForm={zionForm}
+            submitElement={(element: any) => setSubmitElement(element)}
+            onSubmit={(formData: any) => onSubmit(formData)}
+          />
 
-            <Box my={3}>
-              <div className={classes.wrapper}>
-                <Button
-                  type="submit"
-                  disableElevation
-                  color="primary"
-                  fullWidth
-                  // disabled={sendingMsg}
-                  size="large"
-                  variant="contained"
-                >
-                  Continue
-                </Button>
-                {/* {sendingMsg && (
+          <Box my={3}>
+            <div className={classes.wrapper}>
+              <Button
+                disableElevation
+                color="primary"
+                fullWidth
+                disabled={loading}
+                size="large"
+                variant="contained"
+                onClick={() => submitElement.click()}
+              >
+                Continue
+                {loading && (
                   <CircularProgress size={30} className={classes.buttonProgress} />
-                )} */}
-              </div>
-            </Box>
-          </form>
+                )}
+              </Button>
+            </div>
+          </Box>
         </Box>
       </Box>
     </Container>
