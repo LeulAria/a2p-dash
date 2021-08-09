@@ -131,7 +131,7 @@ export default function PageForm() {
           url: 
           window.location.hostname === "localhost"
             ? `http://localhost:3000/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`
-            : `https://a2p-teklogix.web.app/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`,
+            : `https://a2p-teklogix.firebase.app/confirm?email=${data.email}&companyName=${data.companyName}&phoneNumber=${data.phoneNumber}`,
           handleCodeInApp: true,
         })
         .then(() => {
