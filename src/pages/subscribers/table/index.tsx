@@ -164,7 +164,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
                     user: {
                       uid: data.uid,
                       email: data.email,
-                      userName: data.clientName,
+                      userName: data.companyName,
                       isTyping: false,
                     },
                     stuff: {
