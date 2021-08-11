@@ -65,6 +65,7 @@ const InspectionDetail = () => {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       setOrders(
         data.map((order: any) => ({
           id: order.id,

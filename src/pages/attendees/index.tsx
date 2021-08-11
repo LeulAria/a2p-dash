@@ -89,7 +89,7 @@ const InspectionDetail = () => {
           payed: {id: order.id, data: {...order}},
           // restore: { id: order.id, data: { ...order } },
           order_form: {id: order.id, data: {...order}},
-          clientName: order.clientName,
+          companyName: order.companyName,
           solutions: order.solutions,
           view: {id: order.id, data: {...order}},
         }))

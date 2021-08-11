@@ -152,8 +152,8 @@ const DataGridDisplay: React.FC<IProps> = ({loading, rows, approve}) => {
     //   },
     // },
     {
-      field: "clientName",
-      headerName: "Client Name",
+      field: "companyName",
+      headerName: "Company Name",
       description: "client name who ordered",
       width: 180,
     },
