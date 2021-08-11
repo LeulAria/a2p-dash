@@ -2,7 +2,7 @@ import React from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 // import ImageList from "@material-ui/core/ImageList";
 // import ImageListItem from "@material-ui/core/ImageListItem";
-import SMSManager from "../../../assets/images/madeeasy.png";
+import SMSManager from "../../../assets/images/sms_made_easy_img.png";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     justifyContent: "space-around",
     overflow: "hidden",
     height: "100%",
-    paddingTop: "90px",
     [theme.breakpoints.down("sm")]: {
       marginTop: "20px",
     },

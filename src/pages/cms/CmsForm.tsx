@@ -24,15 +24,22 @@ const CmsForm = ({ data }: { data: any }) => {
 
   useMemo(() => {
     setForm({
-      skeleton: "grid",
+      skeleton: "step-form-vertical",
       stepperSuccess: "All Done.",
       gridContainer: { spacing: 2, justify: "space-around" },
       formSchemas: [
         {
-          title: "Company details",
+          title: "App Home Page Hero Content",
           grid: { xs: 12, md: 5 },
-          gridContainer: { spacing: 4, justify: "center" },
+          gridContainer: { spacing: 2, justify: "center" },
           schema: [
+            {
+              grid: { xs: 12 },
+              widget: "custom",
+              name: "app_footer_registration_message",
+              label: "App Footer Registration Message.",
+              component: (zionForm, designSystem) => <Box mt={2} />
+            },
             {
               grid: { xs: 12 },
               widget: "text",
@@ -54,59 +61,70 @@ const CmsForm = ({ data }: { data: any }) => {
               minRows: 3,
               label: "App Hero Description.",
               rules: new ZionValidation(zionForm).required("Required Field.").max(35, "Value should be less than 75 characters long.").rules
+            }
+          ],
+        },
+        {
+          title: "App Email Confirm Popup Content.",
+          grid: { xs: 12, md: 5 },
+          gridContainer: { spacing: 2, justify: "center" },
+          schema: [
+            {
+              grid: { xs: 12 },
+              widget: "custom",
+              name: "app_footer_registration_message",
+              label: "App Footer Registration Message.",
+              component: (zionForm, designSystem) => <Box mt={2} />
             },
             {
               grid: { xs: 12 },
+              widget: "text",
+              name: "confirmation_popup_message_description",
+              variant: "outlined",
+              label: "App Confirm Popup Title.",
+              multiline: true,
+              maxRows: 6,
+              minRows: 2,
+              rules: new ZionValidation(zionForm).required("Required Field.").max(35, "Value should be less than 35 characters long.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "confirmation_popup_message_description",
+              variant: "outlined",
+              multiline: true,
+              maxRows: 7,
+              minRows: 4,
+              label: "App Confirm Popup Description",
+              rules: new ZionValidation(zionForm).required("Required Field.").max(100, "Value should be less than 75 characters long.").rules
+            }
+          ],
+        },
+        {
+          title: "App Footer Content",
+          grid: { xs: 12 },
+          gridContainer: { spacing: 2, justify: "space-evenly" },
+          schema: [
+            {
+              grid: { xs: 12 },
+              widget: "custom",
+              name: "app_footer_registration_message",
+              label: "App Footer Registration Message.",
+              component: (zionForm, designSystem) => <Box mt={3} />
+            },
+            {
+              grid: { xs: 12, md: 5 },
               widget: "text",
               name: "app_footer_registration_message",
               variant: "outlined",
               multiline: true,
               maxRows: 7,
-              minRows: 4,
+              minRows: 5,
               label: "App Footer Registration Message.",
               rules: new ZionValidation(zionForm).required("Required Field.").max(35, "Value should be less than 75 characters long.").rules
             },
             {
-              grid: { xs: 12 },
-              widget: "text",
-              name: "app_footer_phone",
-              variant: "outlined",
-              label: "Footer Phone Number",
-              rules: new ZionValidation(zionForm).required("Required Field.").rules
-            },
-          ],
-        },
-        {
-          title: "Price percentage cut",
-          grid: { xs: 12, md: 5 },
-          gridContainer: { spacing: 4, justify: "center" },
-          schema: [
-            {
-              grid: { xs: 12 },
-              widget: "text",
-              name: "app_footer_email",
-              variant: "outlined",
-              label: "Footer App Website",
-              rules: new ZionValidation(zionForm).required("Required Field.").rules
-            },
-            {
-              grid: { xs: 12 },
-              widget: "text",
-              name: "app_website",
-              variant: "outlined",
-              label: "Footer App Email",
-              rules: new ZionValidation(zionForm).required("Required Field.").rules
-            },
-            {
-              grid: { xs: 12 },
-              widget: "text",
-              name: "app_footer_title",
-              variant: "outlined",
-              label: "Footer App Title",
-              rules: new ZionValidation(zionForm).required("Required Field.").rules
-            },
-            {
-              grid: { xs: 12 },
+              grid: { xs: 12, md: 5 },
               widget: "text",
               name: "app_address",
               variant: "outlined",
@@ -115,6 +133,38 @@ const CmsForm = ({ data }: { data: any }) => {
               minRows: 5,
               label: "App Address.",
               rules: new ZionValidation(zionForm).required("Required Field.").max(35, "Value should be less than 75 characters long.").rules
+            },
+            {
+              grid: { xs: 12, md: 5 },
+              widget: "text",
+              name: "app_footer_phone",
+              variant: "outlined",
+              label: "Footer Phone Number",
+              rules: new ZionValidation(zionForm).required("Required Field.").rules
+            },
+            {
+              grid: { xs: 12, md: 5 },
+              widget: "text",
+              name: "app_footer_email",
+              variant: "outlined",
+              label: "Footer App Website",
+              rules: new ZionValidation(zionForm).required("Required Field.").rules
+            },
+            {
+              grid: { xs: 12, md: 5 },
+              widget: "text",
+              name: "app_website",
+              variant: "outlined",
+              label: "Footer App Email",
+              rules: new ZionValidation(zionForm).required("Required Field.").rules
+            },
+            {
+              grid: { xs: 12, md: 5 },
+              widget: "text",
+              name: "app_footer_title",
+              variant: "outlined",
+              label: "Footer App Title",
+              rules: new ZionValidation(zionForm).required("Required Field.").rules
             },
           ],
         },

@@ -1,21 +1,18 @@
 import React from "react";
 import {
-  Box, Grid, Theme, Typography, makeStyles,
+  Box, Grid, Theme, makeStyles,
 } from "@material-ui/core";
 import UserForm from "./userForm";
-import Particles from "react-tsparticles";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  imageBox: {
-    position: "relative",
-    marginTop: "1rem",
+  footerRegisterFormContainer: {
+    marginTop: "5rem",
     minHeight: "500px",
   },
   particlesBG: {
     position: "absolute",
     top: 0,
     left: 0,
-    width: "100%",
     height: "100%",
     zIndex: 3,
   },
@@ -23,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: "absolute",
     top: "200px",
     right: 0,
-    width: "100%",
     minHeight: "60rem",
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -53,7 +49,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: "6rem",
     [theme.breakpoints.down("md")]: {
       alignItems: "center",
-      backgroundColor: "white",
       marginTop: "0rem",
     },
   },
@@ -76,28 +71,43 @@ const useStyles = makeStyles((theme: Theme) => ({
       width: "100%",
     },
   },
-  subBox2: {
-    marginTop: "6rem",
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
-  },
-  subBox1: {
-    [theme.breakpoints.up("lg")]: {
-      display: "none",
-    },
+  subBox: {
+    marginTop: "6rem"
   },
   footerTitle: {
     fontWeight: 800,
-    color: "white",
     fontSize: "24px",
   },
   footerText: {
     fontWeight: 700,
-    color: "white",
     fontSize: "16px",
     lineHeight: "2rem",
   },
+  registerDescription: {
+    [theme.breakpoints.down("md")]: {
+      fontSize: ".8rem",
+      fontWeight: 500
+    },
+  },
+  cardTitle: {
+    color: "#13141A",
+    fontWeight: 900,
+    fontSize: "28px",
+    marginBottom: "1rem",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 2rem",
+      fontSize: "26px",
+    },
+  },
+  cardDescription: {
+    color: "#13141A",
+    fontWeight: 400,
+    fontSize: "18px",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0 2rem",
+      fontSize: "18px",
+    },
+  }
 }));
 
 export default function PageForm({ data }: any) {
@@ -105,237 +115,55 @@ export default function PageForm({ data }: any) {
 
   return (
     <div id="back-to-top-anchor">
-      <Box className={classes.imageBox}>
-        <Particles
-          className={classes.particlesBG}
-          id="tsparticlesFooter"
-          // init={}
-          // loaded={this.particlesLoaded}
-          options={{
-            // background: {
-            // colo/r: {
-            // value: "#0068BF00",
-            // },
-            // },
-            fpsLimit: 60,
-            interactivity: {
-              detectsOn: "canvas",
-              events: {
-                onClick: {
-                  enable: true,
-                  mode: "push",
-                },
-                onHover: {
-                  enable: true,
-                  mode: "repulse",
-                },
-                resize: true,
-              },
-              modes: {
-                bubble: {
-                  distance: 200,
-                  duration: 10,
-                  opacity: 0.8,
-                  size: 40,
-                },
-                push: {
-                  quantity: 14,
-                },
-                repulse: {
-                  distance: 200,
-                  duration: 0.6,
-                },
-              },
-            },
-            particles: {
-              color: {
-                value: "#AAB7FF",
-              },
-              links: {
-                color: "#3E7CC4AD",
-                distance: 150,
-                enable: true,
-                opacity: 0.5,
-                width: 1,
-              },
-              collisions: {
-                enable: true,
-              },
-              move: {
-                direction: "none",
-                enable: true,
-                outMode: "bounce",
-                random: false,
-                speed: 2,
-                straight: false,
-              },
-              number: {
-                density: {
-                  enable: true,
-                  value_area: 1000,
-                },
-                value: 30,
-              },
-              opacity: {
-                value: 0.6,
-              },
-            },
-          }}
-        />
-        <svg viewBox="0 0 520 298">
-          <path
-            fill="#0068BF"
-            d="M0,170L1450,-212L1440,9920L-10,320Z"
-            className={classes.imageHolder}
-          />
-        </svg>
-
-        <Grid container className={classes.comp} justifyContent="center">
-          <Grid item md={5} xs={10}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="flex-start"
-              justifyContent="flex-start"
-              width="100%"
-              height="100%"
-              className={classes.parentBox}
-            >
-              <Box textAlign="center" mb={4}>
-                <Box fontWeight={900}>
-                  <Typography variant="h4">Register Now</Typography>
-                </Box>
-                <Typography variant="h6">
-                  <Box my={1} maxWidth={300} mx="auto">
-                    {data && data?.app_footer_registration_message}
+      <Box className={classes.footerRegisterFormContainer}>
+        <Grid container justifyContent="center">
+          <Grid item xs={10} md={10} lg={5}>
+            <Box padding={{ xs: 3, md: 12 }}>
+              <Grid container spacing={3} justifyContent="center" alignItems="center">
+                <Grid item xs={10} md={10}>
+                  <Box mt="2rem">
+                    <Box className={classes.cardTitle}>Register Now</Box>
+                    <Box className={classes.cardDescription}>{data && data?.app_footer_registration_message}</Box>
                   </Box>
-                </Typography>
-              </Box>
-
-              <Box
-                width="100%"
-                height="100%"
-                className={classes.subBox2}
-                display="flex"
-                alignItems="center"
-                justifyContent="flex-start"
-              >
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  style={{
-                    marginLeft: "40%",
-                  }}
-                >
-                  <Typography
-                    variant="h5"
-                    align="center"
-                    className={classes.footerTitle}
-                  >
-                    {data && data?.app_footer_title}
-                  </Typography>
-                  <Box textAlign="center" maxWidth={150} mx="auto" fontWeight={600} mt={2}>
-                    {data && data?.app_address}
-                  </Box>
-                  <Box mt={1} textAlign="center">
-                    <span
-                      style={{
-                        color: "white",
-                        fontWeight: 500,
-                        fontSize: "16px",
-                      }}
-                    >
-                      { data && `phone: ${data?.app_footer_phone}` }
-                    </span>
-                    <br />
-                    <span
-                      style={{
-                        color: "white",
-                        fontWeight: 500,
-                        fontSize: "16px",
-                      }}
-                    >
-                      { data && `email: ${data?.app_footer_email}` }
-                    </span>
-                    {" "}
-                    <br />
-                    <a
-                      href="https://www.teklogixinc.com/"
-                      style={{
-                        color: "white",
-                        textDecoration: "none",
-                        fontWeight: 500,
-                        fontSize: "16px",
-                      }}
-                    >
-                      {data && data?.app_website}
-                    </a>
-                  </Box>
-                </Box>
-              </Box>
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
 
           <Grid item xs={12} md={12} lg={6}>
-            <Box mx="10%">
-              <UserForm />
-            </Box>
-            <Box
-              display="flex"
-              alignItems="flex-start"
-              justifyContent="center"
-              width="100%"
-              bgcolor="#0068BF"
-              py={6}
-              className={classes.subBox1}
-            >
-              <Box>
-                <Typography
-                  variant="h5"
-                  align="center"
-                  className={classes.footerTitle}
-                >
-                  Africa Regional Office
-                </Typography>
-                <Box textAlign="center" fontWeight={600} mt={2}>
-                  Meskel flower,
-                </Box>
-                <Box textAlign="center" fontWeight={600}>
-                  Central Bldg, 5th floor
-                </Box>
-                <Box textAlign="center" fontWeight={600} mb={1}>
-                  Addis Ababa, Ethiopia
-                </Box>
-                <Box textAlign="center">
-                  <span
-                    style={{
-                      color: "white",
-                      fontWeight: 500,
-                      fontSize: "16px",
-                    }}
-                  >
-                    email: a2p@teklogix.et
-                  </span>
-                  {" "}
-                  <br />
-                  <a
-                    href="https://www.teklogixinc.com/"
-                    style={{
-                      color: "white",
-                      textDecoration: "none",
-                      fontWeight: 500,
-                      fontSize: "16px",
-                    }}
-                  >
-                    www.teklogix.et
-                  </a>
-                </Box>
-              </Box>
+            <Box mx="auto" maxWidth={500} mt={8} mb={10}>
+              <UserForm data={data} />
             </Box>
           </Grid>
         </Grid>
       </Box>
-      {/* </ThemeProvider> */}
+
+      <Box
+        style={{
+          background: "#DDD",
+          color: "#444",
+        }}
+        px={5}
+        py={3}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        width="100%"
+      >
+        <Box mt={2} fontWeight={800} fontSize="1.5rem" textAlign={{ xs: "center", lg: "left" }}>{data && data?.app_footer_title}</Box>
+        <Box maxWidth={600} display="flex" mt={1} justifyContent="space-between">
+          <Box flex={1} maxWidth={200} textAlign="center" mr={2} fontSize="1rem" color="#555">{data && data?.app_address}</Box>
+          <Box flex={1} ml={3}>
+            <Box fontSize="1rem" color="#555">{data && `phone: ${data?.app_footer_phone}` }</Box>
+            <Box fontSize="1rem" color="#555">{data && `email: ${data?.app_footer_email}` }</Box>
+            <Box fontSize="1rem" color="#555">{data && data?.app_website}</Box>
+          </Box>
+        </Box>
+        <Box mt={3} fontWeight={500}>
+          &copy; teklogix &nbsp;
+          { new Date().getFullYear() }
+        </Box>
+      </Box>
     </div>
   );
 }

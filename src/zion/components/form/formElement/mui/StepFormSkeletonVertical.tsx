@@ -105,6 +105,7 @@ const StepFormSkeletonVertical: React.FC<Props> = ({ form, zionForm, designSyste
                     Back
                   </Button>
                   <Button
+                    disableElevation
                     variant="contained"
                     color="primary"
                     onClick={handleNext}

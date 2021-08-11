@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => createStyles({
   }
 }));
 
-const EmailConfirmationPopup = ({ open, email }: {open: boolean, email: string}) => {
+const EmailConfirmationPopup = ({ open, data }: {open: boolean, data: any}) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -48,6 +48,8 @@ const EmailConfirmationPopup = ({ open, email }: {open: boolean, email: string})
       setOpenDialog(true);
     }
   }, [open]);
+
+  console.log("DATA: ", data);
 
   return (
     <AnimatePresence initial={false}>
@@ -67,11 +69,9 @@ const EmailConfirmationPopup = ({ open, email }: {open: boolean, email: string})
             }}
             exit={{ opacity: 0, scale: 1, transition: { duration: 0.2 } }}
           >
-            <Box fontWeight={900} fontSize="1.5rem" mb={1}>Check your email.</Box>
+            <Box fontWeight={900} fontSize="1.5rem" mb={1}>{ data && data?.confirmation_popup_message_title }</Box>
             <Box fontWeight={500} fontSize="1rem">
-              We have sent an email to
-              <b style={{ margin: "0 5px" }}>{email}</b>
-              verify to proceed.
+              { data && data?.confirmation_popup_message_description }
             </Box>
             <IconButton
               onClick={() => setOpenDialog(false)}

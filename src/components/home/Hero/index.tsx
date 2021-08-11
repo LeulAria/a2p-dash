@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Container,
+  Hidden,
   Paper,
 } from "@material-ui/core";
 import Particles from "react-tsparticles";
@@ -10,11 +11,39 @@ import { useHistory } from "react-router";
 import { Theme, makeStyles } from "@material-ui/core/styles";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import smsMarketingIMG from "../../../assets/images/smsmarketing.png";
+import { motion } from "framer-motion";
+
+import ethiotelecomLogo from '../../../assets/logos/ethiotelecom.svg';
+import teclogixLogo from '../../../assets/logos/teclogix.png';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     background: "#0068BF",
     // backgroundSize: 'cover',
+  },
+  appHeroTitle: {
+    width: "70%",
+    color: "#FFF",
+    fontWeight: 900,
+    fontSize: "2.8rem",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      fontSize: "1.8rem",
+      textAlign: "center",
+      marginTop: "4rem"
+    },
+  },
+  appHeroDescription: {
+    width: "70%",
+    color: "#FFF",
+    fontWeight: 400,
+    fontSize: "1rem",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      fontSize: "1rem",
+      textAlign: "center",
+      marginTop: "1rem"
+    },
   },
   a2pTitle: {
     color: "white",
@@ -35,6 +64,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderRadius: "40px",
     padding: "1rem 3rem",
     marginTop: "1.3rem",
+    [theme.breakpoints.down("sm")]: {
+      margin: "1.3rem auto auto 10%"
+    },
   },
   parent: {
     width: "100%",
@@ -55,11 +87,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "80%",
     height: "100%",
   },
+  logosContainer: {
+    position: "absolute",
+    padding: "10px",
+    borderRadius: 15,
+    top: 10,
+    left: 10,
+    zIndex: 100,
+  },
   navBarContainer: {
     position: "absolute",
     top: 10,
     right: 10,
     zIndex: 100,
+    [theme.breakpoints.down("sm")]: {
+      top: 80,
+      left: "10%"
+    },
   },
   navBarButtons: {
     fontWeight: 600,
@@ -158,6 +202,18 @@ const Hero = ({ data }: any) => {
           },
         }}
       />
+      <Box className={classes.logosContainer} display="flex" alignItems="center">
+        <Box>
+          <a href="https://www.ethiotelecom.et/" target="_blank" rel="noreferrer">
+            <img width="120px" src={ethiotelecomLogo} alt="ethio-telecom" />
+          </a>
+        </Box>
+        <Box ml={2}>
+          <a href="https://www.teklogixinc.com/" target="_blank" rel="noreferrer">
+            <img width="90px" src={teclogixLogo} alt="teclogix" />
+          </a>
+        </Box>
+      </Box>
       <Box className={classes.navBarContainer}>
         <Button
           className={classes.navBarButtons}
@@ -178,24 +234,89 @@ const Hero = ({ data }: any) => {
         <Container>
           <Box mx="10%" display="flex" alignItems="center" justifyContent="space-between">
             <Box flex={2}>
-              <Box width="70%" color="#FFF" fontWeight={900} fontSize="2.8rem">
-                { data && data?.app_hero_title }
-              </Box>
-              <Box color="#FFF" fontWeight={500} fontSize="1.3rem">
-                { data && data?.app_hero_body }
-              </Box>
-              <Button
-                className={classes.btn}
-                onClick={(e: any) => {
-                  handleClick(e);
+              <motion.div
+                initial={{
+                  y: 100,
+                  opacity: 0
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0
+                }}
+                transition={{
+                  duration: 1,
+                  delay: 1,
+                  type: "spring"
                 }}
               >
-                Get Started
-              </Button>
+                <Box className={classes.appHeroTitle}>
+                  { data && data?.app_hero_title }
+                </Box>
+              </motion.div>
+              <motion.div
+                initial={{
+                  y: 50,
+                  opacity: 0
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0
+                }}
+                transition={{
+                  duration: 1,
+                  delay: 1.5,
+                  type: "spring"
+                }}
+              >
+                <Box className={classes.appHeroDescription}>
+                  { data && data?.app_hero_body }
+                </Box>
+              </motion.div>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                  x: 0
+                }}
+                transition={{
+                  duration: 1.2,
+                  delay: 1.8,
+                  type: "spring"
+                }}
+              >
+                <Button
+                  className={classes.btn}
+                  onClick={(e: any) => {
+                    handleClick(e);
+                  }}
+                >
+                  Get Started
+                </Button>
+              </motion.div>
             </Box>
-            <Box flex={1}>
-              <img style={{ maxWidth: 350 }} src={smsMarketingIMG} alt="sms marketing png" />
-            </Box>
+            <Hidden mdDown>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  scale: 0.6
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1
+                }}
+                transition={{
+                  duration: 1.2,
+                  delay: 1.8,
+                  type: "spring"
+                }}
+              >
+                <Box flex={1}>
+                  <img style={{ maxWidth: 350 }} src={smsMarketingIMG} alt="sms marketing png" />
+                </Box>
+              </motion.div>
+            </Hidden>
           </Box>
         </Container>
       </Box>

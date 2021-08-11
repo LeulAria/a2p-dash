@@ -1,6 +1,6 @@
 import React from "react";
 // import { makeStyles } from '@material-ui/core/styles';
-import Sms from "./sms";
+// import Sms from "./sms";
 import Ease from "./ease_use";
 import Form from "./pageForm";
 import Res from "./resource_section";
@@ -22,7 +22,6 @@ const Home = () => {
 
       <ThemeProvider theme={theme}>
         <Hero data={data && data[0]} />
-        <Sms />
         <SMSMADE />
         <Res />
         <Ease />

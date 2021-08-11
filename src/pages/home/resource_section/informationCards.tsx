@@ -5,13 +5,13 @@ import { Theme, makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) => ({
   title2: {
     color: "#040734",
-    fontSize: "16px",
+    fontSize: "1rem",
     fontWeight: 600,
     marginBottom: "10px",
   },
   subTitle: {
     fontSize: "16px",
-    fontWeight: 600,
+    fontWeight: 800,
     [theme.breakpoints.down("sm")]: {
       textAlign: "center",
     },
@@ -61,9 +61,9 @@ export default function Api({
     <Paper className={classes.card} elevation={0}>
       <Box
         display="flex"
-        flexDirection="row"
-        px={2}
-        py={3}
+        flexDirection="column"
+        // px={2}
+        // py={3}
         className={classes.cardContainer}
         height="100%"
         alignItems="center"
@@ -92,7 +92,6 @@ export default function Api({
           <Typography
             variant="h4"
             className={classes.title2}
-            // style={{fontSize: hasDescription ? "20px": "17px"}}
           >
             {title}
           </Typography>

@@ -31,6 +31,7 @@
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.12.2",
+    "react-intersection-observer": "^8.32.0",
     "react-responsive-carousel": "^3.2.18",
     "react-rolebased-router": "^2.0.2",
     "react-router-dom": "^5.2.0",

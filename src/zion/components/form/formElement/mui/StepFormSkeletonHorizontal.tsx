@@ -108,10 +108,11 @@ const StepFormSkeletonHorizontal: React.FC<Props> = ({ form, zionForm, designSys
           <div>
             {getStepContent(activeStep, form, zionForm, designSystem)}
             <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+              <Button disableElevation disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back
               </Button>
               <Button
+                disableElevation
                 variant="contained"
                 color="primary"
                 onClick={handleNext}

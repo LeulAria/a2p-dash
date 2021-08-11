@@ -17,10 +17,10 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-if (window.location.hostname === "localhost") {
-  firebase.firestore().useEmulator("localhost", 8080);
-  firebase.auth().useEmulator("http://localhost:9099");
-}
+// if (window.location.hostname === "localhost") {
+//   firebase.firestore().useEmulator("localhost", 8080);
+//   firebase.auth().useEmulator("http://localhost:9099");
+// }
 
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 

@@ -1,4 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 
 import { Helmet } from "react-helmet";
 import {
@@ -12,16 +17,19 @@ import {
 } from "@material-ui/core";
 import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import TextComponent from "../../../components/shared/TextComponent";
-import firebase from "../../../firebase";
 import { useFireMutation } from "../../../FireQuery";
 import { AuthContext } from "../../../contexts/auth/AuthProvider";
 import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
 import { redirectUserHome } from "../../../utils/userRoleUtils";
 import Navbar from "../../../components/home/Navigationbar/Navbar";
-import uuid from "../../../utils/uuid";
+import firebase from '../../../firebase';
+import {
+  Zion,
+  ZionForm,
+  ZionValidation,
+  useZion
+} from "../../../zion";
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -43,50 +51,20 @@ const useStyles = makeStyles(() => createStyles({
   },
 }));
 
-export const signUpFields = [
-  {
-    name: "email",
-    label: "Email Address",
-    variant: "outlined",
-    type: "email",
-    rules: {
-      required: "this field is required",
-      pattern: {
-        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-        message: "invalid email address",
-      },
-    },
-  },
-  {
-    name: "password",
-    label: "Password",
-    variant: "outlined",
-    type: "password",
-    rules: {
-      required: "this field is required",
-      minLength: {
-        value: "6",
-        message: "password must be at least 6 characters",
-      },
-    },
-  },
-];
-
 const Signup = () => {
   const classes = useStyles();
   const history = useHistory();
   const location: any = useLocation();
-  const [userEmail, setUserEmail] = useState(location?.state?.email || "");
-  const [pass, setPass] = useState(location?.state?.password || "");
   const [loadingCred, setLoadingCred] = useState(false);
-  const { mutate } = useFireMutation(
-    `/notifications/${location.state ? location.state.uid : ""}/notifications`,
-  );
   const { enqueueSnackbar } = useSnackbar();
+  
+  const [form, setForm] = useState<ZionForm>();
+  const [submitElement, setSubmitElement] = useState<any>();
+ 
+  const zionForm = useZion({});
 
   const { mutate: mutateUser } = useFireMutation("online");
-
-  const [loggingIn, setLogginIn] = useState(false);
+  const [loggingIn, setLoggedIn] = useState(false);
   const { user } = useContext(AuthContext);
   const { setSnackbar } = useSnackBar();
 
@@ -99,63 +77,48 @@ const Signup = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (location.state) {
-      const {
-        isFirstTimeLogin, user, email, password,
-      } = location.state;
-
-      if (isFirstTimeLogin) {
-        setLoadingCred(true);
-        if (isFirstTimeLogin) {
-          if (user) {
-            setUserEmail(email);
-            setPass(password);
-            mutate(
-              "ADD",
-              null,
-              {
-                msg: "Change your current temporary password!",
-                type: "warning",
-                redirect: "/app/change-password",
-                seen: false,
-              },
-              {
-                createdAt: true,
-              },
-            );
-          }
-        } else {
-          setSnackbar({
-            open: true,
-            type: "error",
-            message: "Your account was not found try registering again!",
-          });
-          history.push("/");
+  useMemo(() => {
+    setForm({
+      stepperSuccess: "All Done.",
+      gridContainer: { spacing: 2, justify: "space-around" },
+      formSchemas: [
+        {
+          title: "Company details",
+          grid: { xs: 12 },
+          gridContainer: { spacing: 2, justify: "center" },
+          schema: [
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "email",
+              type: "email",
+              variant: "outlined",
+              label: "Email Address",
+              rules: new ZionValidation(zionForm).required("Required Field.").email("Invalid email address.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "password",
+              type: "password",
+              variant: "outlined",
+              label: "Password",
+              rules: new ZionValidation(zionForm).required("Required Field.").minLength(6, "Value should be greater than 6 characters.").rules
+            }
+          ],
         }
-      }
-    }
+      ]
+    });
   }, []);
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    defaultValues: {
-      email: userEmail,
-      password: pass,
-    },
-  });
-
   const onSubmit = (data: { email: string; password: string }) => {
-    setLogginIn(true);
+    setLoggedIn(true);
     firebase
       .auth()
       .signInWithEmailAndPassword(data.email, data.password)
       .then((res) => {
         if (res.user) {
-          setLogginIn(false);
+          setLoggedIn(false);
           firebase.firestore().doc(`/users/${res.user.uid}`).update({
             isOnline: true,
           });
@@ -174,7 +137,7 @@ const Signup = () => {
       })
       .catch((err) => {
         console.error(err);
-        setLogginIn(false);
+        setLoggedIn(false);
         enqueueSnackbar(err.code, {
           variant: "error",
         });
@@ -202,46 +165,34 @@ const Signup = () => {
             </Box>
           </Typography>
 
-          <form noValidate onSubmit={handleSubmit(onSubmit)}>
-            {signUpFields.map((value: any) => (
-              <Controller
-                key={uuid()}
-                name={value.name}
-                render={({ field }) => (
-                  <TextComponent
-                    label={value.label}
-                    field={field}
-                    errors={errors}
-                    name={value.name}
-                    type={value.type}
-                    value={field.value}
-                    variant={value.variant}
-                  />
-                )}
-                control={control}
-                rules={value.rules}
-              />
-            ))}
+          <Zion
+            designSystem="mui"
+            form={form}
+            noSubmitButton
+            zionForm={zionForm}
+            submitElement={(element: any) => setSubmitElement(element)}
+            onSubmit={(formData: any) => onSubmit(formData)}
+          />
 
-            <Box my={3}>
-              <div className={classes.wrapper}>
-                <Button
-                  type="submit"
-                  disableElevation
-                  color="primary"
-                  fullWidth
-                  disabled={loggingIn}
-                  size="large"
-                  variant="contained"
-                >
-                  Login
-                </Button>
-                {(loggingIn || loadingCred) && (
-                  <CircularProgress size={30} className={classes.buttonProgress} />
-                )}
-              </div>
-            </Box>
-          </form>
+          <Box my={3}>
+            <div className={classes.wrapper}>
+              <Button
+                disableElevation
+                color="primary"
+                fullWidth
+                disabled={loggingIn}
+                size="large"
+                variant="contained"
+                onClick={() => submitElement.click()}
+              >
+                Login
+              </Button>
+              {(loggingIn || loadingCred) && (
+                <CircularProgress size={30} className={classes.buttonProgress} />
+              )}
+            </div>
+          </Box>
+
           <Box textAlign="right" mr={1}>
             <Link to="/forgot-password">Forgot Password ?</Link>
           </Box>

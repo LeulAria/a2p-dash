@@ -18,16 +18,9 @@ import {
 import EmailConfirmationPopup from "../../../components/home/Hero/EmailConfirmationPopup";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  parentBox: {
-    // width: "100%",
-    // [theme.breakpoints.down("md")]: {
-    //   alignItems: "center",
-    // },
-  },
   parent: {
     width: "100%",
     borderRadius: "8px",
-    boxShadow: "0 2px 14px rgba(0,0,0,0.2)",
   },
   regBtn: {
     [theme.breakpoints.up("md")]: {
@@ -74,7 +67,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function PageForm() {
+export default function PageForm({ data }: any) {
   const classes = useStyles();
   const [form, setForm] = useState<ZionForm>();
   const [submitElement, setSubmitElement] = useState<any>();
@@ -152,13 +145,15 @@ export default function PageForm() {
 
   return (
     <div>
-      <EmailConfirmationPopup email={zionForm?.getValues('email')} open={emailSent} />
+      <EmailConfirmationPopup
+        data={data}
+        open={emailSent}
+      />
       <Box
         display="flex"
         flexDirection="column"
         alignItems="flex-start"
         justifyContent="center"
-        className={classes.parentBox}
       >
         <Paper className={classes.parent} elevation={3}>
           <Box display="flex" flexDirection="column" justifyContent="center">
