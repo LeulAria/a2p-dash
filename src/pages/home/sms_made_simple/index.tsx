@@ -2,7 +2,7 @@ import React from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 // import ImageList from "@material-ui/core/ImageList";
 // import ImageListItem from "@material-ui/core/ImageListItem";
-import SMSManager from "../../../assets/images/sms_made_easy_img.png";
+import SMSManager from "../../../assets/images/sms_made_easy_img2.png";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {

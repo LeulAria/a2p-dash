@@ -7,6 +7,7 @@ import Automatemarketing from "../../../assets/icons/research/automatemarketing.
 import ViewDeliveryReport from "../../../assets/icons/research/viewdeliveryreport.svg";
 import Segment from "../../../assets/icons/research/segment.svg";
 import SendSms from "../../../assets/icons/research/sendsms.svg";
+import manageDigital from '../../../assets/icons/research/manage_digital.svg';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -44,7 +45,7 @@ export default function Api() {
       title: "Send Targeted Message"
     },
     {
-      svg: SendSms,
+      svg: manageDigital,
       title: "Manage your own sms campaign"
     }
   ];

@@ -6,8 +6,9 @@ import UserForm from "./userForm";
 
 const useStyles = makeStyles((theme: Theme) => ({
   footerRegisterFormContainer: {
-    marginTop: "5rem",
+    padding: "5rem",
     minHeight: "500px",
+    boxShadow: "inset 0 1px 15px rgba(0,0,0,0.1)"
   },
   particlesBG: {
     position: "absolute",

@@ -14,7 +14,8 @@ import AppToPeer from '../../../assets/images/application_to_peer.png';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    margin: "3rem 0",
+    background: "#FFF",
+    padding: "3rem 0",
   },
   contain: {
     marginTop: "3%",
