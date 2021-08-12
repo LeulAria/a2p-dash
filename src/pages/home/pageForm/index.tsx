@@ -118,9 +118,6 @@ export default function PageForm({ data }: any) {
   return (
     <div id="back-to-top-anchor">
       <Box className={classes.footerRegisterFormContainer}>
-        <svg width="500px" style={{ position: "absolute", zIndex: 1 }} viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <path fill="#0F62FE11" d="M40.8,-54.8C47.2,-43.3,42.8,-25,46.9,-7.4C51,10.2,63.6,27.1,61.1,38.8C58.5,50.4,40.8,56.8,23.7,61.4C6.6,66.1,-9.8,68.9,-23.2,64C-36.6,59,-47.1,46.1,-59,31.3C-70.9,16.5,-84.1,-0.4,-83,-16C-81.9,-31.7,-66.4,-46.2,-50.2,-55.9C-33.9,-65.7,-17,-70.7,0.1,-70.8C17.2,-71,34.4,-66.3,40.8,-54.8Z" transform="translate(100 100)" />
-        </svg>
         <Grid container justifyContent="center" style={{ zIndex: 5, position: "relative" }}>
           <Grid item xs={10} md={10} lg={5}>
             <Box padding={{ xs: 3, md: 12 }}>
@@ -145,7 +142,7 @@ export default function PageForm({ data }: any) {
 
       <Box
         style={{
-          background: "#DDD",
+          background: "#0068BF",
           color: "#444",
         }}
         px={5}
@@ -155,16 +152,16 @@ export default function PageForm({ data }: any) {
         alignItems="center"
         width="100%"
       >
-        <Box mt={2} fontWeight={800} fontSize="1.5rem" textAlign={{ xs: "center", lg: "left" }}>{data && data?.app_footer_title}</Box>
+        <Box color="#FFF" mt={2} fontWeight={800} fontSize="1.5rem" textAlign={{ xs: "center", lg: "left" }}>{data && data?.app_footer_title}</Box>
         <Box maxWidth={600} display="flex" mt={1} justifyContent="space-between">
-          <Box flex={1} maxWidth={200} textAlign="center" mr={2} fontSize="1rem" color="#555">{data && data?.app_address}</Box>
+          <Box flex={1} maxWidth={200} textAlign="center" mr={2} fontSize="1rem" color="#FFF">{data && data?.app_address}</Box>
           <Box flex={1} ml={3}>
-            <Box fontSize="1rem" color="#555">{data && `phone: ${data?.app_footer_phone}` }</Box>
-            <Box fontSize="1rem" color="#555">{data && `email: ${data?.app_footer_email}` }</Box>
-            <Box fontSize="1rem" color="#555">{data && data?.app_website}</Box>
+            <Box fontSize="1rem" color="#FFF">{data && `phone: ${data?.app_footer_phone}` }</Box>
+            <Box fontSize="1rem" color="#FFF">{data && `email: ${data?.app_footer_email}` }</Box>
+            <Box fontSize="1rem" color="#FFF">{data && data?.app_website}</Box>
           </Box>
         </Box>
-        <Box mt={3} fontWeight={500}>
+        <Box color="#FFF" mt={3} fontWeight={500}>
           &copy; teklogix &nbsp;
           { new Date().getFullYear() }
         </Box>
