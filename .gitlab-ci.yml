@@ -18,7 +18,7 @@ install_dependencies:
   script:
     - yarn install --ignore-scripts
   cache:
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    key: $CI_PROJECT_DIR
     paths:
       - node_modules/
     policy: push
@@ -31,7 +31,7 @@ test_current_branch:
   stage: test
   image: node:14-alpine
   cache: 
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    key: $CI_PROJECT_DIR
     paths:
       - node_modules/
     policy: pull
@@ -45,7 +45,7 @@ test_current_branch:
 build:
   stage: build
   cache: 
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    key: $CI_PROJECT_DIR
     paths:
       - node_modules/
     policy: pull
