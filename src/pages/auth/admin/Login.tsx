@@ -1,5 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
 import { Helmet } from "react-helmet";
 import {
   Box,
@@ -10,16 +14,19 @@ import {
   createStyles,
   makeStyles,
 } from "@material-ui/core";
-import { RouteComponentProps, useHistory, useLocation } from "react-router";
-import { Controller, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import TextComponent from "../../../components/shared/TextComponent";
 import firebase from "../../../firebase";
+import { useFireMutation } from "../../../FireQuery";
+import {
+  Zion,
+  ZionForm,
+  ZionValidation,
+  useZion
+} from "../../../zion";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/auth/AuthProvider";
 import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
+import { RouteComponentProps, useHistory, useLocation } from "react-router";
 import { getUserRoles, redirectUserHome } from "../../../utils/userRoleUtils";
-import { useFireMutation } from "../../../FireQuery";
-import uuid from "../../../utils/uuid";
 
 interface Props extends RouteComponentProps<{ state?: string }> {
   // props.location.state.myStateProp
@@ -79,11 +86,14 @@ const Signup: React.FC<Props> = () => {
   const classes = useStyles();
   const history = useHistory();
   const location: any = useLocation<any>();
-  const [userEmail, setUserEmail] = useState(location.state?.email || "");
-  const [pass, setPass] = useState(location.state?.password || "");
   const { user, dispatch } = useContext(AuthContext);
   const { setSnackbar } = useSnackBar();
-  const [isLoggingIn, setIsLogginIn] = useState(false);
+  const [isLoggingIn, setIsLoggedIn] = useState(false);
+
+  const [form, setForm] = useState<ZionForm>();
+  const [submitElement, setSubmitElement] = useState<any>();
+ 
+  const zionForm = useZion({});
 
   const { mutate: mutateUser } = useFireMutation("online");
 
@@ -96,26 +106,49 @@ const Signup: React.FC<Props> = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (history) {
-      setUserEmail(location.state?.email || "");
-      setPass(location.state?.password || "");
-    }
+  useMemo(() => {
+    setForm({
+      stepperSuccess: "All Done.",
+      gridContainer: { spacing: 2, justify: "space-around" },
+      formSchemas: [
+        {
+          title: "Company details",
+          grid: { xs: 12 },
+          gridContainer: { spacing: 2, justify: "center" },
+          schema: [
+            {
+              grid: { xs: 12 },
+              widget: "custom",
+              name: "app_footer_registration_message",
+              label: "App Footer Registration Message.",
+              component: (zionForm, designSystem) => <Box mt={2} />
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "email",
+              type: "email",
+              variant: "outlined",
+              label: "Email Address",
+              rules: new ZionValidation(zionForm).required("Required Field.").email("Invalid email address.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "password",
+              type: "password",
+              variant: "outlined",
+              label: "Password",
+              rules: new ZionValidation(zionForm).required("Required Field.").minLength(6, "Value should be greater than 6 characters.").rules
+            }
+          ],
+        }
+      ]
+    });
   }, []);
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    defaultValues: {
-      email: userEmail,
-      password: pass,
-    },
-  });
-
   const onSubmit = (data: { email: string; password: string }) => {
-    setIsLogginIn(true);
+    setIsLoggedIn(true);
     firebase
       .auth()
       .signInWithEmailAndPassword(data.email, data.password)
@@ -128,7 +161,7 @@ const Signup: React.FC<Props> = () => {
             .get()
             .then((res) => {
               const user = res.data();
-              setIsLogginIn(false);
+              setIsLoggedIn(false);
               setSnackbar({
                 open: true,
                 type: "success",
@@ -166,7 +199,7 @@ const Signup: React.FC<Props> = () => {
         }
       })
       .catch((err) => {
-        setIsLogginIn(false);
+        setIsLoggedIn(false);
         setSnackbar({
           open: true,
           type: "error",
@@ -187,56 +220,43 @@ const Signup: React.FC<Props> = () => {
         justifyContent="center"
         minHeight="90vh"
       >
-        <Box maxWidth={350}>
+        <Box maxWidth={400}>
           <Typography>
             <Box fontWeight={900} fontSize="2.5rem" textAlign="center">
               Login A2P
             </Box>
           </Typography>
 
-          <form noValidate onSubmit={handleSubmit(onSubmit)}>
-            {signUpFields.map((value: any) => (
-              <Controller
-                key={uuid()}
-                name={value.name}
-                render={({ field }) => (
-                  <TextComponent
-                    label={value.label}
-                    field={field}
-                    errors={errors}
-                    name={value.name}
-                    type={value.type}
-                    value={field.value}
-                    variant={value.variant}
-                  />
-                )}
-                control={control}
-                rules={value.rules}
-              />
-            ))}
+          <Zion
+            designSystem="mui"
+            form={form}
+            noSubmitButton
+            zionForm={zionForm}
+            submitElement={(element: any) => setSubmitElement(element)}
+            onSubmit={(formData: any) => onSubmit(formData)}
+          />
 
-            <Box my={3}>
-              <div className={classes.wrapper}>
-                <Button
-                  type="submit"
-                  disableElevation
-                  color="primary"
-                  fullWidth
-                  disabled={isLoggingIn}
-                  size="large"
-                  variant="contained"
-                >
-                  Login
-                </Button>
-                {isLoggingIn && (
-                  <CircularProgress size={30} className={classes.buttonProgress} />
-                )}
-              </div>
-              <Box mt={2} textAlign="end">
-                <Link to="/auth-admin/signup">Don&apos;t have account Signup</Link>
-              </Box>
+          <Box my={3}>
+            <div className={classes.wrapper}>
+              <Button
+                disableElevation
+                color="primary"
+                fullWidth
+                disabled={isLoggingIn}
+                size="large"
+                variant="contained"
+                onClick={() => submitElement.click()}
+              >
+                Login
+              </Button>
+              {isLoggingIn && (
+                <CircularProgress size={30} className={classes.buttonProgress} />
+              )}
+            </div>
+            <Box mt={2} textAlign="end">
+              <Link to="/auth-admin/signup">Don&apos;t have account Signup</Link>
             </Box>
-          </form>
+          </Box>
         </Box>
       </Box>
     </Container>

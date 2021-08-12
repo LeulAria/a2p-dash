@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function FullWidthTabs() {
   const classes = useStyles();
   // const { data: payedCount } = useFireQuery('orders', {
-  //   query: [['status ==', 'payed']],
+  //   query: [['status ==', 'paid']],
   // });
   const { data: subscriptions, loading: loadingSubscriptions } = useFireQuery(
     "orders",

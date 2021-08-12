@@ -10,8 +10,8 @@ import Particles from "react-tsparticles";
 import { useHistory } from "react-router";
 import { Theme, makeStyles } from "@material-ui/core/styles";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import smsMarketingIMG from "../../../assets/images/smsmarketing.png";
 import { motion } from "framer-motion";
+import AppToPeer from '../../../assets/images/application_to_peer.png';
 
 import ethiotelecomLogo from '../../../assets/logos/ethiotelecom.svg';
 import teclogixLogo from '../../../assets/logos/teclogix.png';
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     // backgroundSize: 'cover',
   },
   appHeroTitle: {
-    width: "70%",
+    width: "72%",
     color: "#FFF",
     fontWeight: 900,
     fontSize: "2.8rem",
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "70%",
     color: "#FFF",
     fontWeight: 400,
-    fontSize: "1rem",
+    fontSize: "1.2rem",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       fontSize: "1rem",
@@ -224,6 +224,8 @@ const Hero = ({ data }: any) => {
           Register
         </Button>
         <Button
+          variant="outlined"
+          color="secondary"
           className={`${classes.navBarButtons} ${classes.navBarButtonLogin}`}
           onClick={() => history.push("/user/login")}
         >
@@ -313,7 +315,7 @@ const Hero = ({ data }: any) => {
                 }}
               >
                 <Box flex={1}>
-                  <img style={{ maxWidth: 350 }} src={smsMarketingIMG} alt="sms marketing png" />
+                  <img style={{ maxWidth: 350 }} src={AppToPeer} alt="sms marketing png" />
                 </Box>
               </motion.div>
             </Hidden>

@@ -23,6 +23,7 @@ const useStyles = makeStyles(() => createStyles({
     justifyContent: "center",
     zIndex: 200000,
     background: "#FFF",
+    color: "#222",
     boxShadow: "0 2px 20px rgba(0,0,0,0.3)"
   },
   closePopupButton: {
@@ -69,9 +70,11 @@ const EmailConfirmationPopup = ({ open, data }: {open: boolean, data: any}) => {
             }}
             exit={{ opacity: 0, scale: 1, transition: { duration: 0.2 } }}
           >
-            <Box fontWeight={900} fontSize="1.5rem" mb={1}>{ data && data?.confirmation_popup_message_title }</Box>
+            <Box fontWeight={900} fontSize="1.5rem" mb={1}>
+              { data?.confirmation_popup_message_title }
+            </Box>
             <Box fontWeight={500} fontSize="1rem">
-              { data && data?.confirmation_popup_message_description }
+              { data?.confirmation_popup_message_description }
             </Box>
             <IconButton
               onClick={() => setOpenDialog(false)}

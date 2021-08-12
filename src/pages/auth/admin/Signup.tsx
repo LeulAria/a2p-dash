@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Helmet } from "react-helmet";
 import {
@@ -12,13 +12,15 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
 import firebase from "firebase";
-import TextComponent from "../../../components/shared/TextComponent";
 import { useFireMutation } from "../../../FireQuery";
-import AuthSelectors from "../../../components/auth/AuthSelectors";
 import { useSnackBar } from "../../../contexts/snackbar/SnackBarContext";
-import uuid from "../../../utils/uuid";
+import {
+  Zion,
+  ZionForm,
+  ZionValidation,
+  useZion
+} from "../../../zion";
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -85,14 +87,91 @@ const Signup = () => {
   const [isAtuthing, setIsAtuthing] = useState(false);
   const { setSnackbar } = useSnackBar();
 
+  const [form, setForm] = useState<ZionForm>();
+  const [submitElement, setSubmitElement] = useState<any>();
+ 
+  const zionForm = useZion({});
+
   const { loading, success, mutate } = useFireMutation("users");
   const { mutate: mutateUser } = useFireMutation("online");
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
+  useMemo(() => {
+    setForm({
+      stepperSuccess: "All Done.",
+      gridContainer: { spacing: 2, justify: "space-around" },
+      formSchemas: [
+        {
+          title: "Company details",
+          grid: { xs: 12 },
+          gridContainer: { spacing: 2, justify: "center" },
+          schema: [
+            {
+              grid: { xs: 12 },
+              widget: "custom",
+              name: "app_footer_registration_message",
+              label: "App Footer Registration Message.",
+              component: (zionForm, designSystem) => <Box mt={2} />
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "userName",
+              type: "userName",
+              variant: "outlined",
+              label: "User Name",
+              rules: new ZionValidation(zionForm).required("Required Field.").minLength(2, "Should be greater than 2.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "email",
+              type: "email",
+              variant: "outlined",
+              label: "Email Address",
+              rules: new ZionValidation(zionForm).required("Required Field.").email("Invalid email address.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "password",
+              type: "password",
+              variant: "outlined",
+              label: "Password",
+              rules: new ZionValidation(zionForm).required("Required Field.").minLength(6, "Value should be greater than 6 characters.").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "text",
+              name: "confirmPassword",
+              type: "password",
+              variant: "outlined",
+              label: "Confirm New Password",
+              rules: new ZionValidation(zionForm).required("Required Field.").equals("password", "Confirm password must me same as password").rules
+            },
+            {
+              grid: { xs: 12 },
+              widget: "select",
+              name: "role",
+              type: "password",
+              variant: "outlined",
+              options: [
+                {
+                  value: "TECH_SUPPORT",
+                  label: "TECH SUPPORT"
+                },
+                {
+                  value: "SALES_SUPPORT",
+                  label: "SALES SUPPORT"
+                }
+              ],
+              label: "UserRole",
+              rules: new ZionValidation(zionForm).required("Required Field.").rules
+            },
+          ],
+        }
+      ]
+    });
+  }, []);
 
   const onSubmit = (data: any) => {
     setIsAtuthing(true);
@@ -163,65 +242,45 @@ const Signup = () => {
         justifyContent="center"
         minHeight="90vh"
       >
-        <Box maxWidth={350}>
+        <Box maxWidth={400}>
           <Typography>
             <Box fontWeight={900} fontSize="2.5rem" textAlign="center">
               Signup A2P
             </Box>
           </Typography>
 
-          <form noValidate onSubmit={handleSubmit(onSubmit)}>
-            {signUpFields.map((value) => (
-              <Controller
-                key={uuid()}
-                name={value.name}
-                render={({ field }) => (
-                  <TextComponent
-                    label={value.label}
-                    field={field}
-                    errors={errors}
-                    name={value.name}
-                    type={value.type}
-                    variant={value.variant}
-                  />
-                )}
-                control={control}
-                rules={value.rules}
-              />
-            ))}
-            <Box mt={1} />
-            <Controller
-              name="role"
-              render={({ field }) => <AuthSelectors {...field} />}
-              control={control}
-              rules={{
-                required: "this field is required",
-              }}
-            />
+          <Zion
+            designSystem="mui"
+            form={form}
+            noSubmitButton
+            zionForm={zionForm}
+            submitElement={(element: any) => setSubmitElement(element)}
+            onSubmit={(formData: any) => onSubmit(formData)}
+          />
 
-            <Box my={3} mx={1}>
-              <div className={classes.wrapper}>
-                <Button
-                  disableElevation
-                  fullWidth
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                  type="submit"
-                  disabled={loading || isAtuthing}
-                >
-                  SIGNUP
-                </Button>
-                {loading
-                  || (isAtuthing && (
-                    <CircularProgress size={30} className={classes.buttonProgress} />
-                  ))}
-              </div>
-              <Box mt={2} textAlign="end">
-                <Link to="/auth-admin/login">Already meber Login?</Link>
-              </Box>
+          <Box my={3} mx={1}>
+            <div className={classes.wrapper}>
+              <Button
+                disableElevation
+                fullWidth
+                color="primary"
+                variant="contained"
+                size="large"
+                type="submit"
+                disabled={loading || isAtuthing}
+                onClick={() => submitElement.click()}
+              >
+                SIGNUP
+              </Button>
+              {loading
+                || (isAtuthing && (
+                  <CircularProgress size={30} className={classes.buttonProgress} />
+                ))}
+            </div>
+            <Box mt={2} textAlign="end">
+              <Link to="/auth-admin/login">Already meber Login?</Link>
             </Box>
-          </form>
+          </Box>
         </Box>
       </Box>
     </Container>

@@ -54,7 +54,7 @@ const InspectionDetail = () => {
 
   const { data, loading } = useFireQuery("orders", {
     query: [
-      ["status ==", "payed"],
+      ["status ==", "paid"],
       ["hasSalesReviewer ==", true],
       ["hasTechReviewer ==", false],
       ["isPayApproved ==", true],
@@ -88,7 +88,7 @@ const InspectionDetail = () => {
   return (
     <Box>
       <Box fontWeight={800} fontSize="1.4rem" mb={2}>
-        Payed Orders
+        Paid Orders
       </Box>
       <Divider />
       <Box my={2} />
@@ -109,7 +109,7 @@ const InspectionDetail = () => {
                 <Grid item xs>
                   <TextField
                     fullWidth
-                    placeholder="Search from payed orders ..."
+                    placeholder="Search from paid orders ..."
                     value={filterSearchKey}
                     InputProps={{
                       disableUnderline: true,

@@ -51,7 +51,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         </Box>
         <Box>
           <p className={classes.intro}>{`attended: ${payload[0].value}`}</p>
-          <p className={classes.intro}>{`payed: ${payload[1].value}`}</p>
+          <p className={classes.intro}>{`paid: ${payload[1].value}`}</p>
           <p className={classes.intro}>{`subscribed: ${payload[2].value}`}</p>
         </Box>
       </div>
@@ -77,7 +77,7 @@ const LineChartOrders = () => {
             "ddd-DD-MMM",
           ),
           attended: 0,
-          payed: 0,
+          paid: 0,
           subscribed: 0,
         },
         {
@@ -85,7 +85,7 @@ const LineChartOrders = () => {
             "ddd-DD-MMM",
           ),
           attended: 0,
-          payed: 0,
+          paid: 0,
           subscribed: 0,
         },
         {
@@ -93,7 +93,7 @@ const LineChartOrders = () => {
             "ddd-DD-MMM",
           ),
           attended: 0,
-          payed: 0,
+          paid: 0,
           subscribed: 0,
         },
         {
@@ -101,7 +101,7 @@ const LineChartOrders = () => {
             "ddd-DD-MMM",
           ),
           attended: 0,
-          payed: 0,
+          paid: 0,
           subscribed: 0,
         },
         {
@@ -109,7 +109,7 @@ const LineChartOrders = () => {
             "ddd-DD-MMM",
           ),
           attended: 0,
-          payed: 0,
+          paid: 0,
           subscribed: 0,
         },
         {
@@ -117,7 +117,7 @@ const LineChartOrders = () => {
             "ddd-DD-MMM",
           ),
           attended: 0,
-          payed: 0,
+          paid: 0,
           subscribed: 0,
         },
         {
@@ -125,7 +125,7 @@ const LineChartOrders = () => {
             "ddd-DD-MMM",
           ),
           attended: 0,
-          payed: 0,
+          paid: 0,
           subscribed: 0,
         },
       ];
@@ -142,8 +142,8 @@ const LineChartOrders = () => {
           if (orderFmt.status === "attended payment") {
             weeklyDate[index].attended += 1;
           }
-          if (orderFmt.status === "payed") {
-            weeklyDate[index].payed += 1;
+          if (orderFmt.status === "paid") {
+            weeklyDate[index].paid += 1;
           }
           if (orderFmt.status === "subscribed") {
             weeklyDate[index].subscribed += 1;
@@ -198,7 +198,7 @@ const LineChartOrders = () => {
             />
             <Line
               type="monotone"
-              dataKey="payed"
+              dataKey="paid"
               strokeWidth={1}
               stroke="#8884d8"
               activeDot={{ r: 9 }}

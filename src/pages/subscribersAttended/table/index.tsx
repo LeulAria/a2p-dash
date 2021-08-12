@@ -118,7 +118,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
     //                 "UPDATE",
     //                 id,
     //                 {
-    //                   status: "payed",
+    //                   status: "paid",
     //                   currentTechReviewerRef: null,
     //                   currentTechReviewer: null,
     //                   hasTechReviewer: false
@@ -144,12 +144,6 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
     //   },
     // },
     {
-      field: "clientName",
-      headerName: "Client Name",
-      description: "client name who ordered",
-      width: 180,
-    },
-    {
       field: "companyName",
       headerName: "Company Name",
       description: "company name who ordered",
@@ -163,15 +157,15 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
     },
     {
       field: "isPayed",
-      headerName: "Payed",
-      description: "has the user payed",
+      headerName: "Paid",
+      description: "has the user paid",
       width: 180,
     },
     {
       field: "start_billing",
       headerName: "Start Billing",
       sortable: false,
-      description: "start payed billing subscription.",
+      description: "start paid billing subscription.",
       filterable: false,
       width: 190,
       renderCell: (params: GridCellParams) => {
@@ -239,9 +233,9 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
     },
     {
       field: "order_detail",
-      headerName: "Order Form",
+      headerName: "Order Detail",
       description: "Add Order Information.",
-      width: 130,
+      width: 180,
       sortable: false,
       filterable: false,
       renderCell: (params: GridCellParams) => {

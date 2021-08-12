@@ -85,7 +85,7 @@ const OrderStatus = ({
                   Payment
                 </Box>
                 <Box fontWeight={300} fontSize=".8rem">
-                  {data?.isPayed ? "Payed" : "Not Payed"}
+                  {data?.isPayed ? "Paid" : "Not Paid"}
                 </Box>
               </Box>
               <Box fontWeight={500} className={classes.chip}>

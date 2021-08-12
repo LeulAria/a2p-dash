@@ -38,13 +38,16 @@ const ChatContent = ({ currentOpenedChatId }: any) => {
           setLoading(false);
           scrollToBottom();
 
-          if (unsub && currentOpenedChatId.length > 0) {
+          if (currentOpenedChatId.length > 0) {
+            console.log("GET MESSAGES");
             db.collection(`/chats/${currentOpenedChatId}/messages/`)
               .where("seen", "==", false)
               .where("uid", "not-in", [user.id, "Server"])
               .get()
               .then((res) => {
                 const batch = firebase.firestore().batch();
+
+                console.log("UPDATE SEEN HERE: ", batch);
 
                 res.docs.forEach((d) => {
                   const ref = db.doc(

@@ -10,7 +10,7 @@ import CODE from "../../../assets/images/samplecode.jpg";
 import NoDelay from "../../../assets/images/no_delay.png";
 import NoCable from "../../../assets/images/no_cable.png";
 import NoComplexity from "../../../assets/images/no_complexity.png";
-import AppToPeer from '../../../assets/images/application_to_peer.png';
+import smsMarketingIMG from "../../../assets/images/smsmarketing.png";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   cardDescription: {
     color: "#13141A",
     fontWeight: 400,
-    fontSize: "18px",
+    fontSize: "20px",
     marginTop: "-10px",
     [theme.breakpoints.down("sm")]: {
       padding: "0 2rem",
@@ -109,7 +109,7 @@ export default function Sms() {
 
         <Grid item xs={12} md={5} spacing={2}>
           <Box maxWidth={400} mx="auto">
-            <ImageContainer Image={AppToPeer} className={classes.imageHolder} />
+            <ImageContainer Image={smsMarketingIMG} className={classes.imageHolder} />
           </Box>
         </Grid>
         <Grid item xs={12} md={5}>

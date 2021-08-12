@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const OrderForm = () => {
   const classes = useStyles();
-  const {id} = useParams<{id: string}>();
-  const location = useLocation<any>();
   const history = useHistory();
+  const location = useLocation<any>();
+  const {id} = useParams<{id: string}>();
   const [dataInput, setDataInput] = useState<any>(null);
 
   const {

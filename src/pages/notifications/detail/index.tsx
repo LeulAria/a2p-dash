@@ -236,7 +236,7 @@ export default function OrderDetail() {
                 <br />
               </Box>
               <Box fontWeight={800} mx={1}>
-                {data?.isPayApproved ? "Payed" : "Not Payed"}
+                {data?.isPayApproved ? "Paid" : "Not Paid"}
                 <br />
                 {/* {data?.currentSalesReviewerRef}<br />
                 {data?.currentTechReviewerRef}<br /> */}

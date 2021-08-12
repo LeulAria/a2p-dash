@@ -17,7 +17,7 @@ const PiChartGraph = () => {
   const [data, setData] = useState<PiChartData[]>([]);
 
   useEffect(() => {
-    let payed = 0;
+    let paid = 0;
     let subscribed = 0;
     let attended = 0;
     let unattended = 0;
@@ -33,7 +33,7 @@ const PiChartGraph = () => {
         } else if (order.status === "subscribed") {
           subscribed += 1;
         } else if (order?.payApproval === "done") {
-          payed += 1;
+          paid += 1;
         }
       });
 
@@ -57,9 +57,9 @@ const PiChartGraph = () => {
           color: "hsl(204, 70%, 50%)",
         },
         {
-          id: "payed",
-          label: "Payed",
-          value: payed,
+          id: "paid",
+          label: "Paid",
+          value: paid,
           color: "hsl(311, 70%, 50%)",
         },
       ]);

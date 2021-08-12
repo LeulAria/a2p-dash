@@ -86,7 +86,7 @@ const InspectionDetail = () => {
       setOrders(
         data.map((order: any) => ({
           id: order.id,
-          payed: {id: order.id, data: {...order}},
+          paid: {id: order.id, data: {...order}},
           // restore: { id: order.id, data: { ...order } },
           order_form: {id: order.id, data: {...order}},
           companyName: order.companyName,
@@ -157,7 +157,7 @@ const InspectionDetail = () => {
                     })}
                   >
                     <FilterListRoundedIcon />
-                    Payed
+                    Paid
                   </Button>
                   <Button
                     disableElevation

@@ -105,7 +105,7 @@ const InspectionDetail = () => {
   return (
     <Box>
       <Box fontWeight={800} fontSize="1.4rem" mb={2}>
-        Attended Payed Orders
+        Attended Paid Orders
       </Box>
       <Divider />
       <Box my={2} />

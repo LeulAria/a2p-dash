@@ -93,25 +93,19 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
       field: "email",
       headerName: "email",
       description: "email of the user who ordered",
-      width: 160,
-    },
-    {
-      field: "clientName",
-      headerName: "Client Name",
-      description: "client name who ordered",
-      width: 130,
+      width: 190,
     },
     {
       field: "companyName",
       headerName: "Company Name",
       description: "company name who ordered",
-      width: 130,
+      width: 210,
     },
     {
       field: "solutions",
       headerName: "Solution",
       description: "the ordered solution type",
-      width: 130,
+      width: 190,
     },
     {
       field: "attend",
@@ -119,7 +113,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
       sortable: false,
       filterable: false,
       description: "attend subscriber",
-      width: 170,
+      width: 190,
       renderCell: (params: GridCellParams) => {
         const { id, data } = params.value?.valueOf() as {
           id: string;
@@ -233,7 +227,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
       field: "order_detail",
       headerName: "Order Form",
       description: "Add Order Information.",
-      width: 130,
+      width: 190,
       sortable: false,
       filterable: false,
       renderCell: (params: GridCellParams) => {

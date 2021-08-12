@@ -146,7 +146,7 @@ const InspectionDetail = () => {
                     }`}
                   >
                     <FilterListRoundedIcon />
-                    Payed
+                    Paid
                   </Button>
                   <Button
                     disableElevation

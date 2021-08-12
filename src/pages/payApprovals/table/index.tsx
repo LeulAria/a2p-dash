@@ -150,7 +150,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
                   {
                     isPayApproved: true,
                     payApproval: "done",
-                    status: "payed",
+                    status: "paid",
                     isPayed: true,
                   },
                   {
@@ -185,7 +185,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
                   });
               }}
             >
-              {data.isPayed ? "Order Payed" : "Approve Payment"}
+              {data.isPayed ? "Order Paid" : "Approve Payment"}
               {loading && <CircularProgress style={{ position: "absolute" }} />}
             </Button>
           </Box>

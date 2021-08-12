@@ -164,8 +164,8 @@ const DataGridDisplay: React.FC<IProps> = ({loading, rows, approve}) => {
       width: 180,
     },
     {
-      field: "payed",
-      headerName: "Has Payed",
+      field: "paid",
+      headerName: "Has Paid",
       sortable: false,
       filterable: false,
       width: 200,
@@ -211,10 +211,10 @@ const DataGridDisplay: React.FC<IProps> = ({loading, rows, approve}) => {
               }}
             >
               {data.isPayApproved
-                ? "Order Payed"
+                ? "Order Paid"
                 : data.status === "payment approval"
                 ? "Pending Approval"
-                : "Mark as payed"}
+                : "Mark as paid"}
             </Button>
           </Box>
         );

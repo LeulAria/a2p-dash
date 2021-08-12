@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   footerRegisterFormContainer: {
     padding: "5rem",
     minHeight: "500px",
+    background: "#F4F4F4",
     boxShadow: "inset 0 1px 15px rgba(0,0,0,0.1)"
   },
   particlesBG: {
@@ -117,7 +118,10 @@ export default function PageForm({ data }: any) {
   return (
     <div id="back-to-top-anchor">
       <Box className={classes.footerRegisterFormContainer}>
-        <Grid container justifyContent="center">
+        <svg width="500px" style={{ position: "absolute", zIndex: 1 }} viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#0F62FE11" d="M40.8,-54.8C47.2,-43.3,42.8,-25,46.9,-7.4C51,10.2,63.6,27.1,61.1,38.8C58.5,50.4,40.8,56.8,23.7,61.4C6.6,66.1,-9.8,68.9,-23.2,64C-36.6,59,-47.1,46.1,-59,31.3C-70.9,16.5,-84.1,-0.4,-83,-16C-81.9,-31.7,-66.4,-46.2,-50.2,-55.9C-33.9,-65.7,-17,-70.7,0.1,-70.8C17.2,-71,34.4,-66.3,40.8,-54.8Z" transform="translate(100 100)" />
+        </svg>
+        <Grid container justifyContent="center" style={{ zIndex: 5, position: "relative" }}>
           <Grid item xs={10} md={10} lg={5}>
             <Box padding={{ xs: 3, md: 12 }}>
               <Grid container spacing={3} justifyContent="center" alignItems="center">
