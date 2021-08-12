@@ -3,6 +3,7 @@ import {
   Box, Grid, Theme, makeStyles,
 } from "@material-ui/core";
 import UserForm from "./userForm";
+import { Skeleton } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) => ({
   footerRegisterFormContainer: {
@@ -125,7 +126,25 @@ export default function PageForm({ data }: any) {
                 <Grid item xs={10} md={10}>
                   <Box mt="2rem">
                     <Box className={classes.cardTitle}>Register Now</Box>
-                    <Box className={classes.cardDescription}>{data && data?.app_footer_registration_message}</Box>
+                    {
+                      data 
+                        ? (
+                          <Box className={classes.cardDescription}>
+                            { data?.app_footer_registration_message}
+                          </Box>
+                        )
+                        : (
+                          <>
+                            <Skeleton width="80%" height={20} />
+                            <Skeleton width="70%" height={20} />
+                            <Skeleton width="80%" height={20} />
+                            <Skeleton width="76%" height={20} />
+                            <Skeleton width="80%" height={20} />
+                            <Skeleton width="65%" height={20} />
+                            <Skeleton width="10%" height={20} />
+                          </>
+                        )
+                    }
                   </Box>
                 </Grid>
               </Grid>
@@ -152,15 +171,52 @@ export default function PageForm({ data }: any) {
         alignItems="center"
         width="100%"
       >
-        <Box color="#FFF" mt={2} fontWeight={800} fontSize="1.5rem" textAlign={{ xs: "center", lg: "left" }}>{data && data?.app_footer_title}</Box>
-        <Box maxWidth={600} display="flex" mt={1} justifyContent="space-between">
-          <Box flex={1} maxWidth={200} textAlign="center" mr={2} fontSize="1rem" color="#FFF">{data && data?.app_address}</Box>
-          <Box flex={1} ml={3}>
-            <Box fontSize="1rem" color="#FFF">{data && `phone: ${data?.app_footer_phone}` }</Box>
-            <Box fontSize="1rem" color="#FFF">{data && `email: ${data?.app_footer_email}` }</Box>
-            <Box fontSize="1rem" color="#FFF">{data && data?.app_website}</Box>
-          </Box>
-        </Box>
+        {
+          false 
+            ? (
+              <Box color="#FFF" mt={2} fontWeight={800} fontSize="1.5rem" textAlign={{ xs: "center", lg: "left" }}>
+                {data && data?.app_footer_title}
+              </Box>
+            )
+            : (
+              <>
+                <Box width="60%" minWidth={120} maxWidth={250}>
+                  <Skeleton height={55} />
+                </Box>
+              </>
+            )
+        }
+
+        {
+          data 
+            ? (
+              <Box maxWidth={600} display="flex" mt={1} justifyContent="space-between">
+                <Box flex={1} maxWidth={200} textAlign="center" mr={2} fontSize="1rem" color="#FFF">{data && data?.app_address}</Box>
+                <Box flex={1} ml={3}>
+                  <Box fontSize="1rem" color="#FFF">{data && `phone: ${data?.app_footer_phone}` }</Box>
+                  <Box fontSize="1rem" color="#FFF">{data && `email: ${data?.app_footer_email}` }</Box>
+                  <Box fontSize="1rem" color="#FFF">{data && data?.app_website}</Box>
+                </Box>
+              </Box>
+            )
+            : (
+              <Box maxWidth={600} display="flex" mt={1} justifyContent="space-between">
+                <Box flex={1} maxWidth={200} textAlign="center" mr={2}>
+                  <Skeleton width="140px" height={20} />
+                  <Skeleton width="130px" height={20} />
+                  <Box ml={3}>
+                    <Skeleton width="80px" height={20} />
+                  </Box>
+                </Box>
+                <Box flex={1} ml={3}>
+                  <Skeleton width="140px" height={20} />
+                  <Skeleton width="110px" height={20} />
+                  <Skeleton width="130px" height={20} />
+                </Box>
+              </Box>
+            )
+        }
+
         <Box color="#FFF" mt={3} fontWeight={500}>
           &copy; teklogix &nbsp;
           { new Date().getFullYear() }

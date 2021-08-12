@@ -15,6 +15,7 @@ import AppToPeer from '../../../assets/images/application_to_peer.png';
 
 import ethiotelecomLogo from '../../../assets/logos/ethiotelecom.svg';
 import teclogixLogo from '../../../assets/logos/teclogix.png';
+import { Skeleton } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -251,9 +252,20 @@ const Hero = ({ data }: any) => {
                   type: "spring"
                 }}
               >
-                <Box className={classes.appHeroTitle}>
-                  { data && data?.app_hero_title }
-                </Box>
+                {
+                  data 
+                    ? (
+                      <Box className={classes.appHeroTitle}>
+                        { data?.app_hero_title }
+                      </Box>
+                    )
+                    : (
+                      <>
+                        <Skeleton width="45%" height={80} />
+                        <Skeleton width="65%" height={80} />
+                      </>
+                    )
+                }
               </motion.div>
               <motion.div
                 initial={{
@@ -270,9 +282,21 @@ const Hero = ({ data }: any) => {
                   type: "spring"
                 }}
               >
-                <Box className={classes.appHeroDescription}>
-                  { data && data?.app_hero_body }
-                </Box>
+                {
+                  data 
+                    ? (
+                      <Box className={classes.appHeroDescription}>
+                        {data?.app_hero_body}
+                      </Box>
+                    )
+                    : (
+                      <>
+                        <Skeleton width="80%" height={20} />
+                        <Skeleton width="65%" height={20} />
+                        <Skeleton width="75%" height={20} />
+                      </>
+                    )
+                }
               </motion.div>
               <motion.div
                 initial={{
