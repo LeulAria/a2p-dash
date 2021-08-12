@@ -1,0 +1,78 @@
+default:
+  image: node:14-alpine
+
+stages:
+  - install_dependencies
+  - test
+  - build
+  - deploy
+
+variables:
+  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+
+install_dependencies:
+  stage: install_dependencies
+  image: node:14-alpine
+  tags: 
+    - gitlab-react
+  script:
+    - yarn install --ignore-scripts
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - node_modules/
+    policy: push
+  only:
+    changes:
+      - package-lock.json
+      - yarn.lock
+
+test_current_branch:
+  stage: test
+  image: node:14-alpine
+  cache: 
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - node_modules/
+    policy: pull
+  tags:
+    - gitlab-react
+  script:
+    - echo "Linting and Formating"
+    - yarn lint || lint_status=?
+    - yarn format
+    
+build:
+  stage: build
+  cache: 
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - node_modules/
+    policy: pull
+  image: node:14-alpine
+  tags:
+    - gitlab-react
+
+  script:
+    - echo "Start building App"
+    - yarn build || build_status=$?
+    - if [ $build_status -eq 0 ]; then echo "Build successfully!";fi;
+
+  artifacts:
+    paths:
+      - build/
+
+firebase-deploy:
+  stage: deploy
+  tags:
+    - gitlab-react
+  image: node:14-alpine
+  before_script:
+    - npm i -g firebase-tools --silent
+  script:
+    - firebase deploy --token "$FIREBASE_TOKEN"
+  dependencies:
+    - build
+  only:
+    refs:
+      - production
