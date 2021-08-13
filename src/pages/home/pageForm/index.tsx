@@ -172,10 +172,10 @@ export default function PageForm({ data }: any) {
         width="100%"
       >
         {
-          false 
+          data
             ? (
               <Box color="#FFF" mt={2} fontWeight={800} fontSize="1.5rem" textAlign={{ xs: "center", lg: "left" }}>
-                {data && data?.app_footer_title}
+                { data?.app_footer_title}
               </Box>
             )
             : (
