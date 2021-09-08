@@ -11,6 +11,7 @@ import {
   Button,
   CircularProgress,
   Container,
+  Grid,
   Typography,
   createStyles,
   makeStyles,
@@ -30,6 +31,7 @@ import {
   ZionValidation,
   useZion
 } from "../../../zion";
+import AppToPeer from "../../../assets/images/application_to_peer.png";
 
 const useStyles = makeStyles(() => createStyles({
   root: {
@@ -156,47 +158,59 @@ const Signup = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        minHeight="90vh"
+        width="100%"
+        minHeight="100vh"
       >
-        <Box maxWidth={450}>
-          <Typography>
-            <Box fontWeight={900} fontSize="2.5rem" textAlign="center">
-              Login A2P
+        <Grid container justify="space-between" spacing={5}>
+          <Grid item xs={false} md={5} lg={6}>
+            <img
+              style={{ maxWidth: 350 }}
+              src={AppToPeer}
+              alt='sms marketing png'
+            />
+          </Grid>
+          <Grid item xs={false} md={5} lg={5}>
+            <Box maxWidth={450}>
+              <Typography>
+                <Box fontWeight={900} fontSize="2.5rem" textAlign="center" mb="1rem">
+                  Login A2P
+                </Box>
+              </Typography>
+
+              <Zion
+                designSystem="mui"
+                form={form}
+                noSubmitButton
+                zionForm={zionForm}
+                submitElement={(element: any) => setSubmitElement(element)}
+                onSubmit={(formData: any) => onSubmit(formData)}
+              />
+
+              <Box my={3}>
+                <div className={classes.wrapper}>
+                  <Button
+                    disableElevation
+                    color="primary"
+                    fullWidth
+                    disabled={loggingIn}
+                    size="large"
+                    variant="contained"
+                    onClick={() => submitElement.click()}
+                  >
+                    Login
+                  </Button>
+                  {(loggingIn || loadingCred) && (
+                    <CircularProgress size={30} className={classes.buttonProgress} />
+                  )}
+                </div>
+              </Box>
+
+              <Box textAlign="right" mr={1}>
+                <Link to="/forgot-password">Forgot Password ?</Link>
+              </Box>
             </Box>
-          </Typography>
-
-          <Zion
-            designSystem="mui"
-            form={form}
-            noSubmitButton
-            zionForm={zionForm}
-            submitElement={(element: any) => setSubmitElement(element)}
-            onSubmit={(formData: any) => onSubmit(formData)}
-          />
-
-          <Box my={3}>
-            <div className={classes.wrapper}>
-              <Button
-                disableElevation
-                color="primary"
-                fullWidth
-                disabled={loggingIn}
-                size="large"
-                variant="contained"
-                onClick={() => submitElement.click()}
-              >
-                Login
-              </Button>
-              {(loggingIn || loadingCred) && (
-                <CircularProgress size={30} className={classes.buttonProgress} />
-              )}
-            </div>
-          </Box>
-
-          <Box textAlign="right" mr={1}>
-            <Link to="/forgot-password">Forgot Password ?</Link>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );

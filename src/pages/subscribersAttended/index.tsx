@@ -38,9 +38,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   block: {
     display: "block",
   },
-  addInspection: {
+  statusBtn: {
     marginRight: theme.spacing(1),
-    borderRadius: 10,
+    borderRadius: 20,
+    padding: "5px 15px",
   },
   contentWrapper: {
     margin: "20px 16px",
@@ -150,9 +151,9 @@ const InspectionDetail = () => {
                       });
                       setApprove(false);
                     }}
-                    variant="outlined"
                     size="small"
-                    className={`${classes.addInspection} ${
+                    variant="contained"
+                    className={`${classes.statusBtn} ${
                       !approve && classes.btnActive
                     }`}
                   >
@@ -179,9 +180,9 @@ const InspectionDetail = () => {
                       });
                       setApprove(true);
                     }}
-                    variant="outlined"
                     size="small"
-                    className={`${classes.addInspection} ${
+                    variant="contained"
+                    className={`${classes.statusBtn} ${
                       approve && classes.btnActive
                     }`}
                   >
@@ -197,7 +198,7 @@ const InspectionDetail = () => {
                     variant="contained"
                     color="primary"
                     size="small"
-                    className={classes.addInspection}
+                    className={classes.statusBtn}
                   >
                     Go Back
                   </Button>

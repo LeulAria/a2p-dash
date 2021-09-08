@@ -24,13 +24,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       padding: "0 1rem",
     },
     "& .MuiButton-label": {
-      margin: "0 10px",
+      margin: "5px 10px",
       color: theme.palette.type === "dark" ? "#999" : "#666",
     },
     "& .MuiButton-root": {
       borderRadius: 0,
-      borderLeft:
-          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
     "& .MuiSvgIcon-root": {
       fontSize: "1.5rem",

@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   block: {
     display: "block",
   },
-  addInspection: {
+  statusBtn: {
     marginRight: theme.spacing(1),
-    borderRadius: 10,
+    borderRadius: 20,
+    padding: "5px 15px",
   },
   contentWrapper: {
     margin: "20px 16px",
@@ -122,7 +123,7 @@ const InspectionDetail = () => {
                     variant="contained"
                     color="primary"
                     size="small"
-                    className={classes.addInspection}
+                    className={classes.statusBtn}
                   >
                     Go Back
                   </Button>

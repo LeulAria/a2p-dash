@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   navLink: {
     width: "100%",
-    margin: "auto",
+    margin: "5px auto",
     display: "flex",
     alignItems: "center",
     textDecoration: "none",
@@ -148,7 +148,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
   },
   navTitle: {
-    fontSize: ".93em",
+    fontSize: "1rem",
     marginTop: "-5px",
   },
 }));
@@ -537,9 +537,9 @@ export default function Layout({
                 activeClassName={classes.currentActiveRoute}
                 className={classes.navLink}
               >
-                <Box display="flex" alignItems="center" mx="10%">
+                <Box display="flex" alignItems="center" mx="6%">
                   <Box mr={2}>{nav.icon}</Box>
-                  <Box fontWeight={500} className={classes.navTitle}>
+                  <Box fontWeight={600} className={classes.navTitle}>
                     {nav.title}
                     <Badge
                       badgeContent={nav?.badge}

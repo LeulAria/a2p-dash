@@ -68,7 +68,6 @@ const PiChartGraph = () => {
 
   return (
     <>
-      <Box fontSize=".8rem">Chart data for all orders status.</Box>
       <Box height="100%" display="flex" alignItems="center" justifyContent="center">
         {loading && data.length === 0 ? (
           <CircularProgress />

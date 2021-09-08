@@ -42,13 +42,11 @@ const useStyles = makeStyles((theme: Theme) =>
           theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
       },
       "& .MuiButton-label": {
-        margin: "0 10px",
+        margin: "5px 10px",
         color: theme.palette.type === "dark" ? "#999" : "#666",
       },
       "& .MuiButton-root": {
         borderRadius: 0,
-        borderLeft:
-          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
       },
       "& .MuiSvgIcon-root": {
         fontSize: "1.5rem",
@@ -189,6 +187,7 @@ const DataGridDisplay: React.FC<IProps> = ({loading, rows, approve}) => {
               style={{
                 borderRadius: 20,
                 fontWeight: 700,
+                height: "35px",
               }}
               onClick={() => {
                 mutate("UPDATE", id, {
@@ -244,6 +243,7 @@ const DataGridDisplay: React.FC<IProps> = ({loading, rows, approve}) => {
               position: "relative",
               borderRadius: 20,
               fontWeight: 700,
+              height: 35,
             }}
             onClick={() => {
               history.push(`/app/order/form/${data.id}`, {

@@ -43,6 +43,10 @@
         "react/require-default-props": "off",
         "react/jsx-filename-extension": "off",
         "unused-imports/no-unused-imports": "error",
+        "jsx-quotes": "off",
+        "object-curly-newline": "off",
+        "react/jsx-tag-spacing": "off",
+        "sort-imports": "off",
         "unused-imports/no-unused-vars": [
             "warn",
             {

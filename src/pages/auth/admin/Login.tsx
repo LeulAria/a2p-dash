@@ -222,7 +222,7 @@ const Signup: React.FC<Props> = () => {
       >
         <Box maxWidth={400}>
           <Typography>
-            <Box fontWeight={900} fontSize="2.5rem" textAlign="center">
+            <Box fontWeight={900} fontSize="2.5rem" textAlign="center" mb="1rem">
               Login A2P
             </Box>
           </Typography>

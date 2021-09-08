@@ -40,13 +40,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
           theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
     "& .MuiButton-label": {
-      margin: "0 10px",
+      margin: "5px 10px",
       color: theme.palette.type === "dark" ? "#999" : "#666",
     },
     "& .MuiButton-root": {
       borderRadius: 0,
-      borderLeft:
-          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
     "& .MuiSvgIcon-root": {
       fontSize: "1.5rem",
@@ -130,6 +128,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
               style={{
                 borderRadius: 20,
                 fontWeight: 700,
+                height: "35px",
               }}
               onClick={() => {
                 mutate(
@@ -200,6 +199,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
               position: "relative",
               borderRadius: 20,
               fontWeight: 700,
+              height: 35,
             }}
             onClick={() => {
               history.push(`/app/order/form/${data.id}`, {
@@ -208,7 +208,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows }: any) => {
               });
             }}
           >
-            <FormatListBulletedIcon />
+            <FormatListBulletedIcon style={{ marginRight: "10px", fontSize: "18px" }} />
             {' '}
             Detail
           </Button>

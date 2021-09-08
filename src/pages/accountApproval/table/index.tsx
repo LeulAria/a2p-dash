@@ -34,21 +34,22 @@ interface IProps {
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     borderRadius: 3,
-    "& .MuiDataGrid-toolbar": {
+    "& .MuiDataGrid-toolbarContainer": {
       display: "flex",
       justifyContent: "flex-end",
-      padding: "0 1rem",
       borderBottom:
           theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
+    "& .MuiDataGrid-toolbar": {
+      display: "flex",
+      padding: "0 1rem",
+    },
     "& .MuiButton-label": {
-      margin: "0 10px",
+      margin: "5px 10px",
       color: theme.palette.type === "dark" ? "#999" : "#666",
     },
     "& .MuiButton-root": {
       borderRadius: 0,
-      borderLeft:
-          theme.palette.type === "dark" ? "1px solid #555" : "1px solid #ddd",
     },
     "& .MuiSvgIcon-root": {
       fontSize: "1.5rem",
@@ -131,6 +132,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
               color="primary"
               disabled={loading || user.id === data.id}
               style={{
+                height: 35,
                 width: 100,
                 borderRadius: 20,
                 fontWeight: 700,
@@ -172,9 +174,9 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
-                  width="90px"
+                  width="120px"
                 >
-                  <LockOpenIcon />
+                  <LockOpenIcon style={{ fontSize: "18px", marginRight: "10px" }} />
                   {' '}
                   {" UnBlock"}
                 </Box>
@@ -183,9 +185,9 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
-                  width="90px"
+                  width="120px"
                 >
-                  <LockIcon />
+                  <LockIcon style={{ fontSize: "18px", marginRight: "10px" }} />
                   {' '}
                   {" Block"}
                 </Box>
@@ -223,6 +225,7 @@ const DataGridDisplay: React.FC<IProps> = ({ loading, rows, approve }: any) => {
               style={{
                 borderRadius: 20,
                 fontWeight: 700,
+                height: "35px",
               }}
               onClick={() => {
                 setLoading(true);

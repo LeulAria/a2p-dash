@@ -3,18 +3,18 @@ import { Theme, makeStyles } from "@material-ui/core/styles";
 import {
   Box, Card, CircularProgress, Divider, Grid,
 } from "@material-ui/core";
+import { Helmet } from "react-helmet";
 import { useFireQuery } from "../../FireQuery";
 import PiChartGraph from "../../components/dashboard/PiChartGraph";
 import LineChratOrders from "../../components/dashboard/LineChartOrders";
 import OrdersStat from "../../components/dashboard/OrdersStat";
-import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
   },
   dashboardTopCard: {
-    borderRadius: 20,
+    borderRadius: 10,
     boxShadow: "0 1px 10px rgba(0,0,0,0.063)",
   },
   dashboardTopCardData: {
@@ -87,7 +87,7 @@ export default function FullWidthTabs() {
                 )}
                 <Box className={classes.dashboardTopCardTitle}>Total Orders</Box>
               </Box>
-              <Box>
+              <Box ml="auto" mr={3}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="40"
@@ -114,7 +114,7 @@ export default function FullWidthTabs() {
                 )}
                 <Box className={classes.dashboardTopCardTitle}>Users</Box>
               </Box>
-              <Box>
+              <Box ml="auto" mr={3}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="40"
@@ -141,7 +141,7 @@ export default function FullWidthTabs() {
                 )}
                 <Box className={classes.dashboardTopCardTitle}>Employees</Box>
               </Box>
-              <Box>
+              <Box ml="auto" mr={3}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="40"
@@ -168,7 +168,7 @@ export default function FullWidthTabs() {
                 )}
                 <Box className={classes.dashboardTopCardTitle}>Subscriptions</Box>
               </Box>
-              <Box>
+              <Box ml="auto" mr={3}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="40"
@@ -185,12 +185,12 @@ export default function FullWidthTabs() {
       </Grid>
 
       <Box my={2} />
-      <Grid container spacing={5} justifyContent="center">
+      <Grid container spacing={3} justifyContent="center">
         <Grid item xs={12} lg={7}>
           <Card elevation={0} className={classes.dashboardGraphCards}>
             <Box minHeight="470px" minWidth={300}>
               <Box p={3}>
-                <Box fontWeight={700}>Weekly Orders Stat</Box>
+                <Box fontWeight={800}>Weekly Orders Stat</Box>
               </Box>
               <Box height={300}>
                 <LineChratOrders />
@@ -200,8 +200,11 @@ export default function FullWidthTabs() {
         </Grid>
         <Grid item xs={12} lg={5}>
           <Card elevation={0} className={classes.dashboardGraphCards}>
-            <Box minHeight="470px" minWidth={300} p={1}>
-              <Box fontWeight={700}>Overall Orders Status.</Box>
+            <Box minHeight="470px" minWidth={300}>
+              <Box p={3}>
+                <Box fontWeight={800}>Overall Orders Status.</Box>
+                <Box fontSize=".8rem">Chart data for all orders status.</Box>
+              </Box>
               <Box height={400}>
                 <PiChartGraph />
               </Box>

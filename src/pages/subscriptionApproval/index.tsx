@@ -37,9 +37,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   block: {
     display: "block",
   },
-  addInspection: {
-    margin: theme.spacing(1),
-    borderRadius: 10,
+  statusBtn: {
+    marginRight: theme.spacing(1),
+    borderRadius: 20,
+    padding: "5px 15px",
   },
   contentWrapper: {
     margin: "20px 16px",
@@ -141,9 +142,9 @@ const InspectionDetail = () => {
                       });
                       setApprove(false);
                     }}
-                    variant="outlined"
+                    variant="contained"
                     size="small"
-                    className={`${classes.addInspection} ${
+                    className={`${classes.statusBtn} ${
                       !approve && classes.btnActive
                     }`}
                   >
@@ -169,9 +170,9 @@ const InspectionDetail = () => {
                       });
                       setApprove(true);
                     }}
-                    variant="outlined"
+                    variant="contained"
                     size="small"
-                    className={`${classes.addInspection} ${
+                    className={`${classes.statusBtn} ${
                       approve && classes.btnActive
                     }`}
                   >
@@ -180,14 +181,14 @@ const InspectionDetail = () => {
                   </Button>
                 </Grid>
                 <Grid item xs />
-                <Grid item xs={12} md={3}>
+                <Grid item>
                   <Button
                     disableElevation
                     onClick={() => history.goBack()}
                     variant="contained"
                     color="primary"
                     size="small"
-                    className={classes.addInspection}
+                    className={classes.statusBtn}
                   >
                     Go Back
                   </Button>

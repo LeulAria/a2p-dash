@@ -15,13 +15,13 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
-import SearchIcon from "@material-ui/icons/Search";
-import InspectionsPointsDisplay from "./table";
-import { useFireQuery } from "../../FireQuery";
 import CreateNewStuff from "./CreateNewStuff";
 import useSearch from "../../hooks/useSearch";
+import InspectionsPointsDisplay from "./table";
+import { useFireQuery } from "../../FireQuery";
+import SearchIcon from "@material-ui/icons/Search";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
@@ -38,9 +38,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   block: {
     display: "block",
   },
-  addInspection: {
+  statusBtn: {
     marginRight: theme.spacing(1),
-    borderRadius: 10,
+    borderRadius: 20,
+    padding: "5px 15px",
   },
   contentWrapper: {
     margin: "20px 16px",
@@ -164,7 +165,7 @@ const InspectionDetail = () => {
                   variant="contained"
                   color="primary"
                   size="small"
-                  className={classes.addInspection}
+                  className={classes.statusBtn}
                 >
                   Add New Stuff
                 </Button> */}
@@ -183,9 +184,9 @@ const InspectionDetail = () => {
                       });
                       setApprove(false);
                     }}
-                    variant="outlined"
                     size="small"
-                    className={`${classes.addInspection} ${
+                    variant="contained"
+                    className={`${classes.statusBtn} ${
                       !approve && classes.btnActive
                     }`}
                   >
@@ -204,9 +205,9 @@ const InspectionDetail = () => {
                       });
                       setApprove(true);
                     }}
-                    variant="outlined"
                     size="small"
-                    className={`${classes.addInspection} ${
+                    variant="contained"
+                    className={`${classes.statusBtn} ${
                       approve && classes.btnActive
                     }`}
                   >
@@ -223,7 +224,7 @@ const InspectionDetail = () => {
                     variant="contained"
                     color="primary"
                     size="small"
-                    className={classes.addInspection}
+                    className={classes.statusBtn}
                   >
                     Go Back
                   </Button>

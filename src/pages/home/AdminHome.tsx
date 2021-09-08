@@ -30,7 +30,7 @@ const AdminHome = () => {
               history.push("/auth-admin/login");
             }}
           >
-            <LockOpenIcon />
+            <LockOpenIcon style={{ fontSize: "18px", marginRight: "10px" }} />
             &nbsp;&nbsp; Login
           </Button>
         </Box>
