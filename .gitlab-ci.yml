@@ -62,7 +62,7 @@ build:
     paths:
       - build/
 
-firebase-deploy:
+staging-deploy:
   stage: deploy
   tags:
     - gitlab-react
@@ -70,7 +70,22 @@ firebase-deploy:
   before_script:
     - npm i -g firebase-tools --silent
   script:
-    - firebase deploy --token "$FIREBASE_TOKEN"
+    - firebase deploy --token "$FIREBASE_TOKEN_STAGING"
+  dependencies:
+    - build
+  only:
+    refs:
+      - staging
+
+production-deploy:
+  stage: deploy
+  tags:
+    - gitlab-react
+  image: node:14-alpine
+  before_script:
+    - npm i -g firebase-tools --silent
+  script:
+    - firebase deploy --token "$FIREBASE_TOKEN_PRODUCTION"
   dependencies:
     - build
   only:
